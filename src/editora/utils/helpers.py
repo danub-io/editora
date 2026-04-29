@@ -61,7 +61,7 @@ def sanitize_filename(filename: str, replacement: str = "_") -> str:
     filename = filename.encode("ascii", "ignore").decode("ascii")
 
     # Substitui espaços e caracteres problemáticos
-    filename = re.sub(r'[<>:"/\\|?*\x00-\x1F]', replacement, filename)
+    filename = re.sub(r'[ <>:"/\\|?*\x00-\x1F]', replacement, filename)
 
     # Remove múltiplos caracteres de substituição consecutivos
     filename = re.sub(rf"{re.escape(replacement)}+", replacement, filename)
@@ -101,7 +101,7 @@ def truncate_text(text: str, max_length: int = 100, suffix: str = "...") -> str:
 
 def extract_first_heading(markdown: str) -> str | None:
     """Extrai o primeiro heading (# Título) do Markdown."""
-    match = re.match(r"^#+\s+(.+)$", markdown.strip(), re.MULTILINE)
+    match = re.search(r"^#+\s+(.+)$", markdown, re.MULTILINE)
     if match:
         return match.group(1).strip()
     return None
