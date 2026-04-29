@@ -13,10 +13,14 @@ import {
   Redo,
   Strikethrough,
   Code,
+  Maximize2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useProjectStore } from "@/stores/projectStore";
 
 export function EditorToolbar({ editor }: { editor: Editor }) {
+  const { focusMode, toggleFocusMode } = useProjectStore();
+
   if (!editor) return null;
 
   const groups = [
@@ -96,9 +100,21 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
         </div>
 
         {/* Save Indicator */}
-        <div className="ml-auto text-ui-label text-outline flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-primary-container" />
-          Salvo
+        <div className="ml-auto text-ui-label text-outline flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-primary-container" />
+            Salvo
+          </div>
+          
+          <div className="w-px h-4 bg-outline-variant/50" />
+          
+          <button
+            onClick={toggleFocusMode}
+            className="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded transition-colors"
+            title="Focus Mode"
+          >
+            <Maximize2 className="h-5 w-5" />
+          </button>
         </div>
       </div>
     </div>

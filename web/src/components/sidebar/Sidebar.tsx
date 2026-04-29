@@ -126,7 +126,7 @@ export function Sidebar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="fixed left-0 top-0 flex flex-col h-full z-50 bg-[#1e293b] text-slate-300 w-64 flex-shrink-0 select-none">
+    <nav className="fixed left-0 top-0 flex flex-col h-full z-30 bg-surface-container text-on-surface w-64 flex-shrink-0 select-none border-r border-outline-variant">
       {/* ── Header: "Manuscript" + Add ── */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700/50">
         <Link
@@ -138,9 +138,9 @@ export function Sidebar() {
         <div className="relative">
           <button
             onClick={() => setAddMenuOpen(!addMenuOpen)}
-            className="flex items-center gap-1 text-xs font-medium text-emerald-400 hover:text-emerald-300 transition-colors px-2 py-1 rounded hover:bg-slate-700"
+            className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors px-2 py-1 rounded hover:bg-surface-container-high"
           >
-            Add
+            Adicionar
             <Plus className="h-3.5 w-3.5" />
           </button>
 
@@ -224,7 +224,7 @@ export function Sidebar() {
                 ) : (
                   <ChevronRight className="h-3 w-3" />
                 )}
-                Front Matter
+                Páginas Iniciais
               </span>
               <span className="text-[10px] text-slate-500 font-normal normal-case">
                 edit
@@ -254,7 +254,7 @@ export function Sidebar() {
               ) : (
                 <ChevronRight className="h-3 w-3" />
               )}
-              Body
+               Conteúdo Principal
             </span>
             <span className="text-[10px] text-slate-500 font-normal normal-case">
               edit

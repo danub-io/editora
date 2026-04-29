@@ -3,21 +3,33 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { EditorToolbar } from "./EditorToolbar";
+import { cn } from "@/lib/utils";
+import { Check, Loader2, AlertCircle } from "lucide-react";
 
 export function Editor({ chapterId }: { chapterId: string }) {
-  const { getChapter, updateChapter } = useProjectStore();
+  const { getChapter, updateChapter, focusMode } = useProjectStore();
   const chapter = getChapter(chapterId);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
 
   // Debounced save to API (800ms after stop typing)
   const debouncedSave = useCallback(
     (html: string, wordCount: number) => {
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
-      saveTimerRef.current = setTimeout(() => {
-        updateChapter(chapterId, { content: html, wordCount });
+      
+      setSaveStatus('saving');
+      
+      saveTimerRef.current = setTimeout(async () => {
+        try {
+          await updateChapter(chapterId, { content: html, wordCount });
+          setSaveStatus('saved');
+          setTimeout(() => setSaveStatus('idle'), 2000);
+        } catch (e) {
+          setSaveStatus('error');
+        }
       }, 800);
     },
     [chapterId, updateChapter]
@@ -61,13 +73,28 @@ export function Editor({ chapterId }: { chapterId: string }) {
 
   return (
     <div className="flex flex-col h-full bg-surface-container-lowest">
-      <EditorToolbar editor={editor} />
-      <div className="flex-1 overflow-y-auto px-8 pb-32 pt-16 flex justify-center">
+      {!focusMode && <EditorToolbar editor={editor} />}
+      
+      {/* Status de Salvamento */}
+      {!focusMode && (
+        <div className="absolute right-6 top-[5.5rem] flex items-center gap-1.5 text-xs text-on-surface-variant">
+          {saveStatus === 'saving' && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+          {saveStatus === 'saved' && <Check className="h-3.5 w-3.5 text-green-600" />}
+          {saveStatus === 'error' && <AlertCircle className="h-3.5 w-3.5 text-red-600" />}
+          
+          <span>
+            {saveStatus === 'saving' && 'Salvando...'}
+            {saveStatus === 'saved' && 'Salvo'}
+            {saveStatus === 'error' && 'Erro ao salvar'}
+          </span>
+        </div>
+      )}
+      <div className={cn("flex-1 overflow-y-auto px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
         <article className="w-full max-w-[800px]">
-          <h1 className="font-serif text-editor-chapter text-on-surface mb-12">
+          <h1 className={cn("font-serif text-editor-chapter text-on-surface outline-none", focusMode ? "mb-12 uppercase text-center tracking-widest" : "mb-12")}>
             {chapter?.title || "Sem Título"}
           </h1>
-          <div className="font-serif text-editor-text text-on-surface">
+          <div className={cn("font-serif text-editor-text outline-none", focusMode ? "text-on-surface-variant space-y-8 leading-relaxed" : "text-on-surface")}>
             <EditorContent editor={editor} />
           </div>
         </article>

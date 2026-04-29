@@ -1,7 +1,7 @@
 "use client";
 
 import { useProjectStore } from "@/stores/projectStore";
-import { Bell, UserCircle, Download, Search } from "lucide-react";
+import { Bell, UserCircle, Download, Search, Minimize2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -9,9 +9,15 @@ import { useState, useEffect } from "react";
 import { GlobalSearch } from "../search/GlobalSearch";
 
 export function ProjectTopBar() {
-  const { activeProjectId } = useProjectStore();
+  const { activeProjectId, focusMode, toggleFocusMode, getProject, getChapter, activeChapterId, chapters } = useProjectStore();
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  
+  const currentProject = activeProjectId ? getProject(activeProjectId) : null;
+  const currentChapter = activeChapterId ? getChapter(activeChapterId) : null;
+  
+  // Calculate total words for active chapter (or project)
+  const wordCount = currentChapter?.wordCount || 0;
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -39,6 +45,31 @@ export function ProjectTopBar() {
       return pathname === `/projects/${activeProjectId}`;
     return false;
   };
+
+  if (focusMode) {
+    return (
+      <header className="bg-surface-container-lowest text-on-surface flex justify-between items-center w-full px-6 py-3 h-14 border-b border-surface-variant/50 font-['Inter'] font-medium text-sm opacity-20 hover:opacity-100 transition-opacity duration-300 absolute top-0 z-50">
+        <div className="flex items-center gap-4">
+          <div className="text-on-surface font-semibold">{currentProject?.title || "Lumina Editor"}</div>
+          {currentChapter && (
+            <span className="text-outline text-xs border-l border-surface-variant pl-4">{currentChapter.title}</span>
+          )}
+        </div>
+        <div className="flex items-center gap-6">
+          <span className="text-outline text-ui-label font-ui-label">Saving...</span>
+          <span className="text-outline text-ui-label font-ui-label">{wordCount.toLocaleString("pt-BR")} words</span>
+          <button 
+            onClick={toggleFocusMode}
+            className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors cursor-pointer bg-primary/10 px-3 py-1.5 rounded-DEFAULT" 
+            title="Exit Focus Mode"
+          >
+            <Minimize2 className="h-[18px] w-[18px]" />
+            <span className="font-ui-label">Exit Focus Mode</span>
+          </button>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="sticky top-0 z-40 flex items-center justify-between px-8 h-16 bg-white/80 backdrop-blur-md border-b border-outline-variant/50 text-sm font-medium">
