@@ -20,6 +20,27 @@ class Proofreader:
         self.proofreading_config = proofreading_config or ProofreadingConfig()
         self.llm = LLMClient(llm_config or LLMConfig())
         self._languagetool = None
+        # Pre-compiled regex patterns for quick_check
+        self._common_errors_patterns = [
+            # Concordância verbal
+            (
+                re.compile(r"\b(houve|havia)\s+(muitos|vários|diversos)\b", re.IGNORECASE),
+                "Houve/Havia + plural",
+            ),
+            # Crase
+            (re.compile(r"\b(a\s+a)\b", re.IGNORECASE), "Possível crase: à"),
+            # Porquê
+            (re.compile(r"\b(por que)\b(?!\?)", re.IGNORECASE), "Verificar: por que/porquê"),
+            # Mau/mal
+            (re.compile(r"\b(mau\s+\w+)\b", re.IGNORECASE), "Verificar: mau (oposto de bom) vs mal"),
+            # Onde/aonde
+            (re.compile(r"\b(aonde\s+\w+)\b", re.IGNORECASE), "Verificar: onde vs aonde"),
+            # Este/esse
+            (
+                re.compile(r"\b(este|essa|isso|aquilo)\b", re.IGNORECASE),
+                "Verificar pronome demonstrativo",
+            ),
+        ]
 
     def _get_languagetool(self):
         """Inicializa o LanguageTool se necessário."""
@@ -199,25 +220,9 @@ Importante: Retorne APENAS o JSON, sem markdown ou explicações adicionais."""
 
     def quick_check(self, text: str) -> dict[str, Any]:
         """Verificação rápida apenas de erros críticos."""
-        # Regex patterns para erros comuns em português
-        common_errors = [
-            # Concordância verbal
-            (r"\b(houve|havia)\s+(muitos|vários|diversos)\b", "Houve/Havia + plural"),
-            # Crase
-            (r"\b(a\s+a)\b", "Possível crase: à"),
-            # Porquê
-            (r"\b(por que)\b(?!\?)", "Verificar: por que/porquê"),
-            # Mau/mal
-            (r"\b(mau\s+\w+)\b", "Verificar: mau (oposto de bom) vs mal"),
-            # Onde/aonde
-            (r"\b(aonde\s+\w+)\b", "Verificar: onde vs aonde"),
-            # Este/esse
-            (r"\b(este|essa|isso|aquilo)\b", "Verificar pronome demonstrativo"),
-        ]
-
         errors = []
-        for pattern, description in common_errors:
-            matches = re.finditer(pattern, text, re.IGNORECASE)
+        for pattern, description in self._common_errors_patterns:
+            matches = pattern.finditer(text)
             for match in matches:
                 errors.append({
                     "original": match.group(),
