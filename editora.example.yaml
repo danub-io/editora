@@ -1,0 +1,209 @@
+# Editora - Arquivo de Configuração de Exemplo
+# Copie para editora.yaml e personalize
+
+# ============================================
+# METADADOS DO LIVRO
+# ============================================
+book:
+  title: "Meu Livro Incrível"
+  author: "Seu Nome"
+  language: "pt-BR"
+  isbn: null  # Adicione se tiver ISBN
+  description: null
+  categories:
+    - Ficção
+    - Fantasia
+  keywords:
+    - aventura
+    - magia
+  copyright_year: "2026"
+  edition: "1"
+  publisher: null
+
+# ============================================
+# CONFIGURAÇÕES DE DIAGRAMAÇÃO (TYPESETTING)
+# ============================================
+typesetting:
+  # Formatos de saída: pdf, epub, both
+  format: both
+
+  # Tamanho da página (padrão KDP: 6x9 polegadas)
+  # Opções: A5, 6x9, 5x8, 5.5x8.5
+  page_size: 6x9
+
+  # Fonte principal
+  font_family: Georgia
+
+  # Tamanho da fonte (pontos)
+  font_size: 11
+
+  # Espaçamento entre linhas
+  line_height: 1.4
+
+  # Margens (para livros impressos, inner > outer para encadernação)
+  margins:
+    top: 2cm
+    bottom: 2cm
+    inner: 2.5cm  # Margem interna (lombo)
+    outer: 2cm    # Margem externa
+
+  # Tamanho da fonte para cabeçalhos
+  header_font_size: 14
+
+  # Incluir sumário automático
+  include_toc: true
+
+  # Incluir numeração de páginas
+  include_page_numbers: true
+
+  # Template personalizado (deixe null para usar o padrão)
+  template: null
+
+# ============================================
+# CONFIGURAÇÕES DE IA / LLM
+# ============================================
+llm:
+  # Provider: openai, anthropic, google, ollama
+  provider: anthropic
+
+  # Modelo específico
+  # Anthropic: claude-sonnet-4-20250514, claude-opus-4-20250514
+  # OpenAI: gpt-4-turbo, gpt-4o, gpt-4o-mini
+  # Google: gemini-1.5-pro, gemini-1.5-flash
+  # Ollama: llama3.3, mistral, command-r
+  model: claude-sonnet-4-20250514
+
+  # Temperatura (0 = determinístico, 2 = criativo)
+  temperature: 0.3
+
+  # Máximo de tokens na resposta
+  max_tokens: 4096
+
+  # Chave de API (pode ser definida via variável de ambiente)
+  api_key: null
+
+  # URL base customizada (para servidores locais ou proxies)
+  base_url: null
+
+# ============================================
+# CONFIGURAÇÕES DE EDIÇÃO DE TEXTO
+# ============================================
+editing:
+  # Modo de edição: light, medium, aggressive
+  # light: preserva ao máximo a voz do autor
+  # medium: equilíbrio entre preservação e melhoria
+  # aggressive: reescreve para máxima clareza e impacto
+  mode: light
+
+  # Tentar preservar a voz original do autor
+  preserve_voice: true
+
+  # Porcentagem máxima de mudanças (alerta se ultrapassar)
+  max_changes_percent: 15.0
+
+  # Número de passes de edição (1-3)
+  passes: 1
+
+# ============================================
+# CONFIGURAÇÕES DE PROOFREADING (REVISÃO)
+# ============================================
+proofreading:
+  # Habilitar proofreading
+  enabled: true
+
+  # Idioma para verificação gramatical
+  language: pt-BR
+
+  # Verificar gramática
+  check_grammar: true
+
+  # Verificar ortografia
+  check_spelling: true
+
+  # Verificar pontuação
+  check_punctuation: true
+
+  # Usar LLM para proofreading contextual (mais preciso, mais lento)
+  # Se false, usa apenas LanguageTool (baseado em regras)
+  use_llm: true
+
+# ============================================
+# CONFIGURAÇÕES DE CONSISTÊNCIA
+# ============================================
+consistency:
+  # Habilitar verificação de consistência
+  enabled: true
+
+  # Verificar consistência de personagens
+  # (descrições físicas, personalidade, relacionamentos)
+  check_characters: true
+
+  # Verificar consistência de timeline
+  # (ordem de eventos, referências temporais)
+  check_timeline: true
+
+  # Verificar consistência de fatos
+  # (regras do mundo, informações históricas, lógica interna)
+  check_facts: true
+
+  # Verificar consistência de tom
+  # (voz narrativa, estilo, formalidade)
+  check_tone: true
+
+# ============================================
+# CONFIGURAÇÕES DE SAÍDA
+# ============================================
+output:
+  # Diretório para arquivos gerados
+  output_dir: output
+
+  # Diretório para versionamento do manuscrito
+  versions_dir: versions
+
+  # Manter arquivos intermediários (Markdown compilado, etc.)
+  keep_intermediate: false
+
+  # Validar compatibilidade com KDP (Kindle Direct Publishing)
+  kdp_compliant: true
+
+# ============================================
+# CONFIGURAÇÕES GERAIS
+# ============================================
+
+# Diretório do projeto (padrão: diretório atual)
+project_dir: .
+
+# Diretório dos capítulos (relativo ao project_dir)
+chapters_dir: chapters
+
+# Diretório de recursos/imagens (relativo ao project_dir)
+assets_dir: assets
+
+# Modo debug (mais logs e informações)
+debug: false
+
+# Modo verbose (output detalhado)
+verbose: false
+
+# ============================================
+# EXEMPLOS DE USO
+# ============================================
+#
+# Iniciar novo projeto:
+#   editora init --title "Meu Livro" --author "Seu Nome"
+#
+# Compilar livro:
+#   editora build
+#   editora build --format pdf
+#
+# Editar capítulos:
+#   editora edit --preview --mode light
+#   editora edit --mode medium
+#
+# Revisar gramática:
+#   editora proofread --report
+#
+# Verificar consistência:
+#   editora consistency
+#
+# ============================================

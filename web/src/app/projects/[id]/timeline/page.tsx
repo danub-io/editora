@@ -1,0 +1,147 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useProjectStore } from "@/stores/projectStore";
+import { useParams } from "next/navigation";
+import { Plus, Clock, Users, Calendar, Trash2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+
+export default function TimelinePage() {
+  const params = useParams();
+  const projectId = params.id as string;
+  const {
+    getTimelineByProject,
+    createTimelineEvent,
+    deleteTimelineEvent,
+    fetchTimeline,
+  } = useProjectStore();
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    description: "",
+    date: "",
+  });
+
+  useEffect(() => {
+    fetchTimeline(projectId);
+  }, [projectId, fetchTimeline]);
+
+  const events = getTimelineByProject(projectId);
+
+  const handleAdd = async () => {
+    if (!newEvent.title) return;
+    await createTimelineEvent({
+      projectId,
+      title: newEvent.title,
+      description: newEvent.description,
+      date: newEvent.date,
+      characterIds: [],
+      order: events.length,
+    });
+    setNewEvent({ title: "", description: "", date: "" });
+    setIsAddOpen(false);
+  };
+
+  return (
+    <div className="p-8 md:p-12">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-h2 font-semibold text-on-background">Timeline</h2>
+          <p className="text-ui-body text-on-surface-variant mt-1">
+            Visualize e gerencie a cronologia da sua narrativa.
+          </p>
+        </div>
+        <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
+          <DialogTrigger asChild>
+            <button className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label hover:bg-primary/90 transition-colors shadow-sm">
+              <Plus className="h-4 w-4" />
+              Novo Evento
+            </button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Novo Evento</DialogTitle>
+              <DialogDescription>Adicione um evento à linha do tempo.</DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="title">Título</Label>
+                <Input id="title" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="date">Data / Período</Label>
+                <Input id="date" placeholder="Ex: Ano 1042, Primavera" value={newEvent.date} onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="description">Descrição</Label>
+                <Textarea id="description" value={newEvent.description} onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })} />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsAddOpen(false)}>Cancelar</Button>
+              <Button onClick={handleAdd}>Criar</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      {events.length === 0 ? (
+        <div className="border-2 border-dashed border-outline-variant rounded-xl p-20 text-center">
+          <Clock className="h-16 w-16 text-on-surface-variant mx-auto mb-4 opacity-20" />
+          <h3 className="text-xl font-medium mb-2 text-on-background">Nenhum evento na timeline</h3>
+          <p className="text-on-surface-variant mb-6">Comece a mapear a cronologia da sua história.</p>
+          <button onClick={() => setIsAddOpen(true)} className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label mx-auto">
+            <Plus className="h-4 w-4" />
+            Adicionar Evento
+          </button>
+        </div>
+      ) : (
+        <div className="relative max-w-3xl mx-auto">
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-outline-variant to-transparent" />
+          <div className="space-y-8">
+            {events.map((event, index) => (
+              <div key={event.id} className={`flex items-start gap-8 ${index % 2 === 0 ? "" : "flex-row-reverse"}`}>
+                <div className="flex-1">
+                  <div className="group bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
+                    <button
+                      className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-error-container/50 hover:bg-error-container text-error"
+                      onClick={() => deleteTimelineEvent(event.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                    {event.date && (
+                      <div className="flex items-center gap-2 mb-2">
+                        <Calendar className="h-3 w-3 text-primary" />
+                        <span className="text-ui-label text-primary font-medium">{event.date}</span>
+                      </div>
+                    )}
+                    <h3 className="text-[18px] font-semibold text-on-background mb-2">{event.title}</h3>
+                    {event.description && (
+                      <p className="text-ui-body text-on-surface-variant">{event.description}</p>
+                    )}
+                  </div>
+                </div>
+                <div className="relative flex items-center justify-center w-4 h-4 mt-6 shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-primary border-2 border-surface-container-lowest shadow-sm" />
+                </div>
+                <div className="flex-1" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
