@@ -3,7 +3,8 @@
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, Field
+import re
+from pydantic import BaseModel, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -42,6 +43,44 @@ class TypesettingConfig(BaseModel):
     include_page_numbers: bool = Field(default=True)
     include_toc: bool = Field(default=True)
     template: str | None = Field(default=None, description="Template personalizado")
+
+    @field_validator("font_family")
+    @classmethod
+    def validate_font_family(cls, v: str) -> str:
+        """Valida que a fonte contém apenas caracteres seguros e não começa com hífens."""
+        if not re.match(r"^[a-zA-Z0-9][a-zA-Z0-9\s\-_]*$", v):
+            raise ValueError(
+                "Nome de fonte inválido. Deve começar com letra ou número e conter apenas "
+                "letras, números, espaços, hífens e underscores."
+            )
+        return v
+
+    @field_validator("margins")
+    @classmethod
+    def validate_margins(cls, v: dict[str, str]) -> dict[str, str]:
+        """Valida que as margens seguem o formato aceito pelo Pandoc/LaTeX."""
+        pattern = re.compile(r"^(\d+(\.\d+)?|\.\d+)(cm|mm|in|pt|em|ex|pc)$")
+        for key, value in v.items():
+            if not pattern.match(value):
+                raise ValueError(
+                    f"Margem inválida para '{key}': {value}. "
+                    "Use um número seguido de unidade (ex: 2cm, .5in, 12pt)."
+                )
+        return v
+
+    @field_validator("template")
+    @classmethod
+    def validate_template(cls, v: str | None) -> str | None:
+        """Valida que o caminho do template não contém caracteres maliciosos."""
+        if v is None:
+            return v
+        # Permite caminhos básicos, evita injeção de opções (não começa com hífen)
+        if not re.match(r"^[a-zA-Z0-9./][a-zA-Z0-9.\-_/]*$", v):
+            raise ValueError(
+                "Caminho do template inválido. Deve começar com caractere alfanumérico, "
+                "ponto ou barra e não conter caracteres especiais."
+            )
+        return v
 
 
 class LLMConfig(BaseModel):
