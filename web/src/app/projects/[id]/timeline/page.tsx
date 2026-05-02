@@ -64,12 +64,10 @@ export default function TimelinePage() {
           </p>
         </div>
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-          <DialogTrigger asChild>
-            <button className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label hover:bg-primary/90 transition-colors shadow-sm">
-              <Plus className="h-4 w-4" />
-              Novo Evento
-            </button>
-          </DialogTrigger>
+          <DialogTrigger className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label hover:bg-primary/90 transition-colors shadow-sm cursor-pointer">
+          <Plus className="h-4 w-4" />
+          Novo Evento
+        </DialogTrigger>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
               <DialogTitle>Novo Evento</DialogTitle>

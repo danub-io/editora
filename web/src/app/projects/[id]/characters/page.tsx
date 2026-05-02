@@ -81,11 +81,9 @@ export default function CharactersPage() {
             />
           </div>
           <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-            <DialogTrigger asChild>
-              <button className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label hover:bg-primary/90 transition-colors whitespace-nowrap shadow-sm hover:shadow">
-                <UserPlus className="h-4 w-4" />
-                Novo Personagem
-              </button>
+            <DialogTrigger className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label hover:bg-primary/90 transition-colors whitespace-nowrap shadow-sm hover:shadow cursor-pointer">
+              <UserPlus className="h-4 w-4" />
+              Novo Personagem
             </DialogTrigger>
             <DialogContent className="sm:max-w-[500px]">
               <DialogHeader>
