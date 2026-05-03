@@ -34,9 +34,14 @@ env/
 *~
 
 # Configuração com segredos
-.env
+.env*
+!.env.example
 *.local.yaml
 editora.yaml
+
+# Next.js generated
+web/next-env.d.ts
+*.tsbuildinfo
 
 # Output
 output/
