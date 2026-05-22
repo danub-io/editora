@@ -88,13 +88,13 @@ export default function TimelinePage() {
     <div className="p-8 md:p-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="text-h2 font-semibold text-on-background">Timeline</h2>
-          <p className="text-ui-body text-on-surface-variant mt-0">
+          <h2 className="text-2xl font-semibold text-foreground">Timeline</h2>
+          <p className="text-sm text-muted-foreground mt-0">
             Visualize e gerencie a cronologia da sua narrativa.
           </p>
         </div>
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-          <DialogTrigger className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label hover:bg-primary/90 transition-colors shadow-sm cursor-pointer">
+          <DialogTrigger className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-xs hover:bg-primary/90 transition-colors shadow-sm cursor-pointer">
           <Plus className="h-4 w-4" />
           Novo Evento
         </DialogTrigger>
@@ -155,30 +155,30 @@ export default function TimelinePage() {
 
       {events.length === 0 ? (
         <div className="border-2 border-dashed border-border rounded-xl p-20 text-center">
-          <Clock className="h-16 w-16 text-on-surface-variant mx-auto mb-4 opacity-20" />
-          <h3 className="text-xl font-medium mb-2 text-on-background">Nenhum evento na timeline</h3>
-          <p className="text-on-surface-variant mb-4">Comece a mapear a cronologia da sua história.</p>
-          <button onClick={() => setIsAddOpen(true)} className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label mx-auto">
+          <Clock className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-20" />
+          <h3 className="text-xl font-medium mb-2 text-foreground">Nenhum evento na timeline</h3>
+          <p className="text-muted-foreground mb-4">Comece a mapear a cronologia da sua história.</p>
+          <button onClick={() => setIsAddOpen(true)} className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-xs mx-auto">
             <Plus className="h-4 w-4" />
             Adicionar Evento
           </button>
         </div>
       ) : (
         <div className="relative max-w-3xl mx-auto">
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-md-outline-variant to-transparent" />
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-border to-transparent" />
           <div className="space-y-4">
             {events.map((event, index) => (
               <div key={event.id} className={`flex items-start gap-4 ${index % 2 === 0 ? "" : "flex-row-reverse"}`}>
                 <div className="flex-1">
-                  <div className="group bg-surface-container-lowest border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
+                  <div className="group bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
                     <button
-                      className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant"
+                      className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-muted hover:bg-muted/80 text-muted-foreground"
                       onClick={() => openEditDialog(event)}
                     >
                       <Edit2 className="h-4 w-4" />
                     </button>
                     <button
-                      className="absolute top-3 right-10 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-error-container/50 hover:bg-error-container text-error"
+                      className="absolute top-3 right-10 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-destructive/10 hover:bg-destructive/20 text-destructive"
                       onClick={() => deleteTimelineEvent(event.id)}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -186,12 +186,12 @@ export default function TimelinePage() {
                     {event.date && (
                       <div className="flex items-center gap-2 mb-2">
                         <Calendar className="h-3 w-3 text-primary" />
-                        <span className="text-ui-label text-primary font-medium">{event.date}</span>
+                        <span className="text-xs text-primary font-medium">{event.date}</span>
                       </div>
                     )}
-                    <h3 className="text-[18px] font-semibold text-on-background mb-4">{event.title}</h3>
+                    <h3 className="text-[18px] font-semibold text-foreground mb-4">{event.title}</h3>
                     {event.description && (
-                      <p className="text-ui-body text-on-surface-variant">{event.description}</p>
+                      <p className="text-sm text-muted-foreground">{event.description}</p>
                     )}
                   </div>
                 </div>

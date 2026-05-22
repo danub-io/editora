@@ -127,18 +127,18 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-h2 font-semibold text-on-background flex items-center gap-3">
+            <h2 className="text-2xl font-semibold text-foreground flex items-center gap-3">
               <Settings className="h-6 w-6 text-primary" />
               Configurações
             </h2>
-            <p className="text-ui-body text-on-surface-variant mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Gerencie as configurações do seu projeto.
             </p>
           </div>
           <Button
             onClick={handleSave}
             disabled={isSaving}
-            className="flex items-center gap-2 bg-primary text-on-primary hover:bg-primary/90"
+            className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
           >
             <Save className="h-4 w-4" />
             {isSaving ? "Salvando..." : saved ? "Salvo ✓" : "Salvar"}
@@ -146,10 +146,10 @@ export default function SettingsPage() {
         </div>
 
         {/* ── Book Info ── */}
-        <section className="bg-surface rounded-xl border border-border p-6 shadow-sm space-y-6">
+        <section className="bg-card rounded-xl border border-border p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <BookOpen className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold text-on-background">
+            <h3 className="text-lg font-semibold text-foreground">
               Informações do Livro
             </h3>
           </div>
@@ -206,10 +206,10 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Page Format ── */}
-        <section className="bg-surface rounded-xl border border-border p-6 shadow-sm space-y-6">
+        <section className="bg-card rounded-xl border border-border p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Ruler className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold text-on-background">
+            <h3 className="text-lg font-semibold text-foreground">
               Formato da Página
             </h3>
           </div>
@@ -222,8 +222,8 @@ export default function SettingsPage() {
                   onClick={() => setForm({ ...form, pageFormat: fmt.value })}
                   className={`p-3 rounded-lg border text-sm font-medium transition-all ${
                     form.pageFormat === fmt.value
-                      ? "border-primary bg-primary-container/20 text-primary"
-                      : "border-border text-on-surface-variant hover:border-md-outline"
+                      ? "border-primary bg-primary/20 text-primary"
+                      : "border-border text-muted-foreground hover:border-muted-foreground"
                   }`}
                 >
                   {fmt.label}
@@ -276,10 +276,10 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Typography ── */}
-        <section className="bg-surface rounded-xl border border-border p-6 shadow-sm space-y-6">
+        <section className="bg-card rounded-xl border border-border p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Type className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold text-on-background">
+            <h3 className="text-lg font-semibold text-foreground">
               Tipografia
             </h3>
           </div>
@@ -321,10 +321,10 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Theme ── */}
-        <section className="bg-surface rounded-xl border border-border p-6 shadow-sm space-y-6">
+        <section className="bg-card rounded-xl border border-border p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Palette className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold text-on-background">Tema</h3>
+            <h3 className="text-lg font-semibold text-foreground">Tema</h3>
           </div>
           <div className="grid grid-cols-3 gap-4">
             {THEMES.map((t) => (
@@ -334,7 +334,7 @@ export default function SettingsPage() {
                 className={`p-4 rounded-lg border flex flex-col items-center gap-3 transition-all ${
                   form.theme === t.value
                     ? "border-primary shadow-md"
-                      : "border-border hover:border-md-outline"
+                      : "border-border hover:border-muted-foreground"
                 }`}
               >
                 <div
@@ -347,19 +347,18 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Danger Zone ── */}
-        <section className="bg-error-container/10 rounded-xl border border-error/20 p-6 space-y-4">
-          <h3 className="text-lg font-semibold text-error flex items-center gap-3">
+        <section className="bg-destructive/10 rounded-xl border border-destructive/20 p-6 space-y-4">
+          <h3 className="text-lg font-semibold text-destructive flex items-center gap-3">
             <Trash2 className="h-5 w-5" />
             Zona de Perigo
           </h3>
-          <p className="text-ui-body text-on-surface-variant">
+          <p className="text-sm text-muted-foreground">
             Excluir este projeto removerá permanentemente todos os capítulos,
             personagens, locais e eventos de timeline associados.
           </p>
           <Button
             variant="destructive"
             onClick={handleDelete}
-            className="bg-error text-on-error hover:bg-error/90"
           >
             <Trash2 className="h-4 w-4 mr-2" />
             Excluir Projeto

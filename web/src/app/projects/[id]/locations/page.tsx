@@ -105,24 +105,24 @@ export default function LocationsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="text-h2 font-semibold text-on-background">Locais</h2>
-          <p className="text-ui-body text-on-surface-variant mt-0">
+          <h2 className="text-2xl font-semibold text-foreground">Locais</h2>
+          <p className="text-sm text-muted-foreground mt-0">
             Construa o mundo da sua história.
           </p>
         </div>
         <div className="flex items-center gap-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <input
               type="text"
               placeholder="Buscar local..."
-              className="pl-10 pr-4 py-2 bg-surface border border-border rounded-lg text-ui-body text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full md:w-64"
+              className="pl-10 pr-4 py-2 bg-muted border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full md:w-64"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
           <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-            <DialogTrigger className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label hover:bg-primary/90 transition-colors whitespace-nowrap shadow-sm cursor-pointer">
+            <DialogTrigger className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-xs hover:bg-primary/90 transition-colors whitespace-nowrap shadow-sm cursor-pointer">
               <MapPin className="h-4 w-4" />
               Novo Local
             </DialogTrigger>
@@ -148,7 +148,7 @@ export default function LocationsPage() {
                   <Label htmlFor="type">Tipo</Label>
                   <select
                     id="type"
-                    className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex h-10 w-full rounded-md border border-border bg-muted px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                     value={newLocation.type}
                     onChange={(e) =>
                       setNewLocation({ ...newLocation, type: e.target.value })
@@ -208,7 +208,7 @@ export default function LocationsPage() {
                   <Label htmlFor="edit-type">Tipo</Label>
                   <select
                     id="edit-type"
-                    className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex h-10 w-full rounded-md border border-border bg-muted px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                     value={newLocation.type}
                     onChange={(e) =>
                       setNewLocation({ ...newLocation, type: e.target.value })
@@ -249,16 +249,16 @@ export default function LocationsPage() {
       {/* Grid */}
       {locations.length === 0 ? (
         <div className="border-2 border-dashed border-border rounded-xl p-20 text-center">
-          <Map className="h-16 w-16 text-on-surface-variant mx-auto mb-4 opacity-20" />
-          <h3 className="text-xl font-medium mb-2 text-on-background">
+          <Map className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-20" />
+          <h3 className="text-xl font-medium mb-2 text-foreground">
             Nenhum local encontrado
           </h3>
-          <p className="text-on-surface-variant mb-4">
+          <p className="text-muted-foreground mb-4">
             Adicione os cenários onde sua história acontece.
           </p>
           <button
             onClick={() => setIsAddOpen(true)}
-            className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label mx-auto"
+            className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-xs mx-auto"
           >
             <Plus className="h-4 w-4" />
             Adicionar Local
@@ -269,40 +269,40 @@ export default function LocationsPage() {
           {locations.map((location) => (
             <div
               key={location.id}
-              className="group relative flex flex-col bg-surface-container-lowest border border-border rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
+              className="group relative flex flex-col bg-card border border-border rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
             >
               <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 z-10">
                 <button
-                  className="p-1.5 rounded-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant transition-colors"
+                  className="p-1.5 rounded-md bg-muted hover:bg-muted/80 text-muted-foreground transition-colors"
                   onClick={() => openEditDialog(location)}
                 >
                   <Edit2 className="h-4 w-4" />
                 </button>
                 <button
-                  className="p-1.5 rounded-md bg-error-container/50 hover:bg-error-container text-error transition-colors"
+                  className="p-1.5 rounded-md bg-destructive/10 hover:bg-destructive/20 text-destructive transition-colors"
                   onClick={() => deleteLocation(location.id)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
               </div>
 
-              <div className="w-12 h-12 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-lg bg-muted text-muted-foreground flex items-center justify-center mb-4">
                 <MapPin className="h-6 w-6" />
               </div>
 
-              <h3 className="text-[18px] font-semibold text-on-surface mb-4">
+              <h3 className="text-[18px] font-semibold text-foreground mb-4">
                 {location.name}
               </h3>
 
-              <div className="px-2 py-0.5 bg-surface-container rounded-full mb-4 self-start">
-                <span className="text-ui-label text-on-surface-variant text-[10px] uppercase tracking-wider">
+              <div className="px-2 py-0.5 bg-muted rounded-full mb-4 self-start">
+                <span className="text-xs text-muted-foreground text-[10px] uppercase tracking-wider">
                   {LOCATION_TYPES.find((t) => t.value === location.type)
                     ?.label || "Outro"}
                 </span>
               </div>
 
               {location.description && (
-                <p className="text-ui-body text-on-surface-variant line-clamp-3">
+                <p className="text-sm text-muted-foreground line-clamp-3">
                   {location.description}
                 </p>
               )}
@@ -311,12 +311,12 @@ export default function LocationsPage() {
 
           <button
             onClick={() => setIsAddOpen(true)}
-            className="group flex flex-col items-center justify-center bg-transparent border-2 border-dashed border-border rounded-xl p-6 min-h-[200px] hover:border-primary hover:bg-surface-container-low transition-colors"
+            className="group flex flex-col items-center justify-center bg-transparent border-2 border-dashed border-border rounded-xl p-6 min-h-[200px] hover:border-primary hover:bg-muted transition-colors"
           >
-            <div className="w-12 h-12 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center mb-4 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+            <div className="w-12 h-12 rounded-full bg-muted text-muted-foreground flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
               <Plus className="h-6 w-6" />
             </div>
-            <h3 className="text-ui-body font-medium text-on-surface-variant group-hover:text-primary transition-colors">
+            <h3 className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">
               Criar Novo
             </h3>
           </button>

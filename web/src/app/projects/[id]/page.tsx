@@ -78,13 +78,13 @@ export default function ProjectPage() {
       <div className="max-w-6xl mx-auto space-y-4">
         {/* Project Header */}
         <div className="flex flex-col gap-2 mb-4">
-          <span className="text-ui-label text-primary uppercase tracking-wider font-medium">
+          <span className="text-xs text-primary uppercase tracking-wider font-medium">
             Projeto Atual
           </span>
-          <h1 className="text-h1 font-bold text-on-background">
+          <h1 className="text-3xl font-bold text-foreground">
             {activeProject?.title || "Projeto"}
           </h1>
-          <p className="text-ui-body text-on-surface-variant max-w-2xl mt-0">
+          <p className="text-sm text-muted-foreground max-w-2xl mt-0">
             {activeProject?.description ||
               "Sem descrição. Edite as configurações do projeto para adicionar detalhes."}
           </p>
@@ -92,40 +92,40 @@ export default function ProjectPage() {
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-surface rounded-xl border border-border p-6 shadow-sm flex flex-col justify-between">
+          <div className="bg-card rounded-xl border border-border p-6 shadow-sm flex flex-col justify-between">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-ui-label text-on-surface-variant uppercase tracking-wider font-medium">
+              <h3 className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
                 Total de Capítulos
               </h3>
-              <ListOrdered className="h-5 w-5 text-primary-container" />
+              <ListOrdered className="h-5 w-5 text-primary" />
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-h1 font-bold text-on-background">
+              <span className="text-3xl font-bold text-foreground">
                 {chapters.length}
               </span>
-              <span className="text-ui-body text-on-surface-variant">
+              <span className="text-sm text-muted-foreground">
                 capítulos
               </span>
             </div>
           </div>
 
-          <div className="bg-surface rounded-xl border border-border p-6 shadow-sm md:col-span-2 flex flex-col justify-between">
+          <div className="bg-card rounded-xl border border-border p-6 shadow-sm md:col-span-2 flex flex-col justify-between">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-ui-label text-on-surface-variant uppercase tracking-wider font-medium">
+              <h3 className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
                 Progresso Total do Manuscrito
               </h3>
-              <span className="text-ui-label text-primary font-bold">
+              <span className="text-xs text-primary font-bold">
                 {progress}%
               </span>
             </div>
             <div className="space-y-3">
-              <div className="w-full bg-surface-variant rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
                 <div
                   className="bg-primary h-3 rounded-full transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <div className="flex justify-between text-ui-label text-on-surface-variant">
+              <div className="flex justify-between text-xs text-muted-foreground">
                 <span>{totalWords.toLocaleString("pt-BR")} palavras</span>
                 <span>{completedCount} concluídos</span>
               </div>
@@ -135,35 +135,35 @@ export default function ProjectPage() {
 
         {/* Recent Activity */}
         <div className="mt-0">
-          <h2 className="text-h2 font-semibold text-on-background mb-4">
+          <h2 className="text-2xl font-semibold text-foreground mb-4">
             Atividade Recente
           </h2>
 
           {chapters.length === 0 ? (
             <div className="border-2 border-dashed border-border rounded-xl p-12 text-center">
-              <FileText className="h-12 w-12 text-on-surface-variant mx-auto mb-4 opacity-30" />
-              <h3 className="text-lg font-medium mb-2 text-on-background">
+              <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-30" />
+              <h3 className="text-lg font-medium mb-2 text-foreground">
                 Nenhum capítulo ainda
               </h3>
-              <p className="text-on-surface-variant mb-4">
+              <p className="text-muted-foreground mb-4">
                 Comece criando seu primeiro capítulo na barra lateral.
               </p>
             </div>
           ) : (
-            <div className="bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
+            <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
               <ul className="divide-y divide-border/50">
                 {chapters.slice(0, 5).map((chapter) => (
                   <li
                     key={chapter.id}
                     onClick={() => setActiveChapter(chapter.id)}
-                    className="p-5 flex items-center justify-between hover:bg-surface-variant/30 transition-colors cursor-pointer"
+                    className="p-5 flex items-center justify-between hover:bg-muted/30 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center ${
                           chapter.status === "completed"
-                            ? "bg-primary-container/20 text-primary"
-                            : "bg-secondary-container text-on-secondary-container"
+                            ? "bg-primary/20 text-primary"
+                            : "bg-secondary text-secondary-foreground"
                         }`}
                       >
                         {chapter.status === "completed" ? (
@@ -173,21 +173,21 @@ export default function ProjectPage() {
                         )}
                       </div>
                       <div>
-                        <h4 className="text-ui-body font-medium text-on-background">
+                        <h4 className="text-sm font-medium text-foreground">
                           {chapter.title}
                         </h4>
-                        <p className="text-ui-label text-on-surface-variant mt-0">
+                        <p className="text-xs text-muted-foreground mt-0">
                           {chapter.wordCount || 0} palavras
                         </p>
                       </div>
                     </div>
                     <span
-                      className={`px-3 py-1 rounded-full text-ui-label flex items-center gap-1 border ${
+                      className={`px-3 py-1 rounded-full text-xs flex items-center gap-1 border ${
                         chapter.status === "completed"
-                          ? "bg-primary-container/20 text-primary border-primary/20"
+                          ? "bg-primary/20 text-primary border-primary/20"
                           : chapter.status === "review"
-                          ? "bg-secondary-container text-secondary border-secondary/20"
-                          : "bg-surface-variant text-on-surface-variant border-border/50"
+                          ? "bg-secondary text-secondary-foreground border-secondary/20"
+                          : "bg-muted text-muted-foreground border-border/50"
                       }`}
                     >
                       <span

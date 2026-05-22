@@ -120,13 +120,13 @@ export default function ProjectLayout({
   }, [id, fetchChapters, fetchCharacters, fetchLocations, fetchTimeline]);
 
   return (
-    <div ref={containerRef} className={cn("h-screen flex overflow-hidden", focusMode ? "bg-surface-container-lowest text-on-background group relative" : "bg-surface-container-lowest")}>
+    <div ref={containerRef} className={cn("h-screen flex overflow-hidden", focusMode ? "bg-background text-foreground group relative" : "bg-background")}>
       {/* Hamburger — only when sidebar is closed */}
       {!focusMode && (
         <button
           onClick={() => { setSidebarOpen(true); if (rightOpen && !canFitBoth()) setRightOpen(false); }}
           className={cn(
-            "fixed left-0 top-0 z-50 px-3 pt-4 pb-2 text-on-surface-variant hover:text-on-surface-variant/50 transition-colors",
+            "fixed left-0 top-0 z-50 px-3 pt-4 pb-2 text-muted-foreground hover:text-foreground/50 transition-colors",
             sidebarOpen ? "hidden" : "flex items-center justify-center"
           )}
           title="Abrir painel"
@@ -156,7 +156,7 @@ export default function ProjectLayout({
           >
             <ChevronRight
               className={cn(
-                "h-8 w-8 stroke-[2] transition-transform duration-200 text-slate-400 hover:text-slate-600",
+                "h-8 w-8 stroke-[2] transition-transform duration-200 text-muted-foreground hover:text-foreground",
                 sidebarOpen && "rotate-180"
               )}
             />
@@ -164,8 +164,8 @@ export default function ProjectLayout({
         </div>
       )}
       {!focusMode && <Sidebar isOpen={sidebarOpen} onClose={handleToggleLeft} />}
-      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out bg-surface-container-lowest", focusMode ? "bg-transparent" : (sidebarOpen ? "ml-[296px]" : "ml-10 mr-10"))}>
-        <main className={cn("flex-1 relative overflow-y-auto", focusMode ? "bg-surface-container-lowest scroll-smooth flex justify-center" : "")}>{children}</main>
+      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out bg-background", focusMode ? "bg-transparent" : (sidebarOpen ? "ml-[296px]" : "ml-10 mr-10"))}>
+        <main className={cn("flex-1 relative overflow-y-auto", focusMode ? "bg-background scroll-smooth flex justify-center" : "")}>{children}</main>
       </div>
       {!focusMode && <RightSidebar isOpen={rightOpen} onOpenChange={handleToggleRight} />}
     </div>
