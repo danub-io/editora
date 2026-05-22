@@ -1,23 +1,48 @@
 "use client";
 
 import { useProjectStore } from "@/stores/projectStore";
-import { Bell, UserCircle, Download, Search, Minimize2 } from "lucide-react";
+import { Bell, UserCircle, Download, Search, Minimize2, Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { GlobalSearch } from "../search/GlobalSearch";
 
 export function ProjectTopBar() {
   const { activeProjectId, focusMode, toggleFocusMode, getProject, getChapter, activeChapterId, chapters } = useProjectStore();
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isBuilding, setIsBuilding] = useState(false);
   
   const currentProject = activeProjectId ? getProject(activeProjectId) : null;
   const currentChapter = activeChapterId ? getChapter(activeChapterId) : null;
   
   // Calculate total words for active chapter (or project)
   const wordCount = currentChapter?.wordCount || 0;
+
+  const handleBuild = async () => {
+    if (!currentProject) return;
+    setIsBuilding(true);
+    try {
+      const projectChapters = chapters.filter((c) => c.projectId === activeProjectId);
+      const response = await fetch("/api/build", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ project: currentProject, chapters: projectChapters }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast.success(data.message || "Livro compilado com sucesso!");
+      } else {
+        toast.error(data.error || "Erro ao compilar");
+      }
+    } catch {
+      toast.error("Erro ao conectar com o servidor.");
+    } finally {
+      setIsBuilding(false);
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -106,9 +131,19 @@ export function ProjectTopBar() {
           <kbd className="hidden sm:inline-flex ml-1 px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded font-mono">⌘K</kbd>
         </button>
 
-        <button className="flex items-center gap-2 px-4 py-2 bg-surface border border-border rounded-lg text-primary hover:bg-surface-variant transition-colors">
-          <Download className="h-4 w-4" />
-          <span className="hidden sm:inline">Compilar PDF</span>
+        <button
+          onClick={handleBuild}
+          disabled={isBuilding}
+          className="flex items-center gap-2 px-4 py-2 bg-surface border border-border rounded-lg text-primary hover:bg-surface-variant transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isBuilding ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Download className="h-4 w-4" />
+          )}
+          <span className="hidden sm:inline">
+            {isBuilding ? "Compilando..." : "Compilar PDF"}
+          </span>
         </button>
         <div className="flex items-center gap-2 text-on-surface-variant">
           <button className="p-2 hover:bg-surface-variant rounded-full transition-colors">
