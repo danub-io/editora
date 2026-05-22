@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { 
   Target, 
   Pin, 
@@ -19,15 +20,31 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useProjectStore } from "@/stores/projectStore";
 
-export function RightSidebar() {
+export function RightSidebar({
+  isOpen,
+  onOpenChange,
+}: {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const router = useRouter();
   const [activePanel, setActivePanel] = useState<string | null>("search");
-  const { activeChapterId, getChapter, updateChapter } = useProjectStore();
+  const { activeProjectId, activeChapterId, getChapter, updateChapter } = useProjectStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [replaceQuery, setReplaceQuery] = useState("");
   const [searchOnlyThisChapter, setSearchOnlyThisChapter] = useState(true);
 
+  // Sync internal panel state when isOpen is forced from outside
+  useEffect(() => {
+    if (!isOpen && activePanel !== null) {
+      setActivePanel(null);
+    }
+  }, [isOpen]);
+
   const togglePanel = (panel: string) => {
-    setActivePanel(activePanel === panel ? null : panel);
+    const next = activePanel === panel ? null : panel;
+    setActivePanel(next);
+    onOpenChange(next !== null);
   };
 
   const handleFind = () => {
@@ -172,7 +189,7 @@ export function RightSidebar() {
         <div className="flex flex-col gap-6 items-center flex-1 justify-end">
           <ToolbarButton icon={Download} onClick={() => toast.info("Exportar em breve!")} />
           <ToolbarButton icon={Users} onClick={() => toast.info("Colaboradores em breve!")} />
-          <ToolbarButton icon={Settings} onClick={() => toast.info("Configurações do editor em breve!")} />
+          <ToolbarButton icon={Settings} onClick={() => router.push(`/projects/${activeProjectId}/settings`)} />
         </div>
       </div>
     </div>

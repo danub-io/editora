@@ -8,8 +8,6 @@ import {
   Users,
   Map,
   Clock,
-  Settings,
-  Home,
   Plus,
   ChevronDown,
   ChevronRight,
@@ -19,6 +17,7 @@ import {
   Quote,
   ScrollText,
   Bookmark,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -33,7 +32,13 @@ const FRONT_MATTER_OPTIONS = [
   { subType: "introduction", title: "Introdução", icon: FileText },
 ];
 
-export function Sidebar() {
+export function Sidebar({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   const {
     activeProjectId,
     createChapter,
@@ -126,15 +131,38 @@ export function Sidebar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="fixed left-0 top-0 flex flex-col h-full z-30 bg-surface-container text-on-surface w-64 flex-shrink-0 select-none border-r border-border">
-      {/* ── Header: "Manuscript" + Add ── */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700/50">
-        <Link
-          href={`/projects/${activeProjectId}`}
-          className="text-sm font-bold text-white tracking-wide uppercase"
-        >
-          Manuscrito
-        </Link>
+    <>
+      {/* Overlay backdrop for mobile/small screens */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-20 bg-black/20"
+          onClick={onClose}
+        />
+      )}
+
+      <nav
+        className={cn(
+          "fixed left-0 top-0 flex flex-col h-full z-30 bg-[#fafafa] text-on-surface w-64 flex-shrink-0 select-none border-r border-border transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        {/* ── Header: Hamburger + Title + Add ── */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700/50">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onClose}
+              className="p-1 rounded hover:bg-slate-200 transition-colors text-slate-600 hover:text-slate-800"
+              title="Fechar painel"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <Link
+              href={`/projects/${activeProjectId}`}
+              className="text-sm font-bold text-slate-800 tracking-wide uppercase"
+            >
+              Manuscrito
+            </Link>
+          </div>
         <div className="relative">
           <button
             onClick={() => setAddMenuOpen(!addMenuOpen)}
@@ -299,21 +327,11 @@ export function Sidebar() {
             href={`/projects/${activeProjectId}/timeline`}
             active={isActive(`/projects/${activeProjectId}/timeline`)}
           />
-          <FooterNavItem
-            icon={Settings}
-            label="Configurações"
-            href={`/projects/${activeProjectId}/settings`}
-            active={isActive(`/projects/${activeProjectId}/settings`)}
-          />
-          <FooterNavItem
-            icon={Home}
-            label="Início"
-            href="/"
-            active={false}
-          />
+
         </div>
       </div>
     </nav>
+    </>
   );
 }
 

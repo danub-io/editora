@@ -1,7 +1,7 @@
 "use client";
 
 import { useProjectStore } from "@/stores/projectStore";
-import { Bell, UserCircle, Download, Search, Minimize2, Loader2 } from "lucide-react";
+import { Bell, UserCircle, Download, Search, Minimize2, Loader2, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { GlobalSearch } from "../search/GlobalSearch";
 
-export function ProjectTopBar() {
+export function ProjectTopBar({ onToggleSidebar, sidebarOpen }: { onToggleSidebar: () => void; sidebarOpen: boolean }) {
   const { activeProjectId, focusMode, toggleFocusMode, getProject, getChapter, activeChapterId, chapters, setActiveChapter } = useProjectStore();
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -97,9 +97,16 @@ export function ProjectTopBar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between px-8 h-16 bg-white/80 backdrop-blur-md border-b border-border/50 text-sm font-medium">
-      {/* Left: Navigation Tabs */}
-      <div className="flex items-center gap-6 h-full">
+    <header className="sticky top-0 z-40 flex items-center justify-between px-4 h-16 bg-white/80 backdrop-blur-md border-b border-border/50 text-sm font-medium">
+      {/* Left: Hamburger + Navigation Tabs */}
+      <div className="flex items-center gap-3 h-full">
+        <button
+          onClick={onToggleSidebar}
+          className="p-2 rounded-md hover:bg-surface-variant transition-colors text-on-surface-variant hover:text-on-surface"
+          title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
+        >
+          {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
         <nav className="hidden md:flex items-center gap-6 h-full">
           <Link
             href={`/projects/${activeProjectId}`}

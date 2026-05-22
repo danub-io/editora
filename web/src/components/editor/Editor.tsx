@@ -36,6 +36,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
   );
 
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Placeholder.configure({

@@ -43,6 +43,7 @@
     "drizzle-orm": "^0.45.2",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.4",
+    "playwright": "^1.60.0",
     "tailwindcss": "^4.2.4",
     "typescript": "^5.9.3"
   }
