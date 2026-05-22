@@ -234,7 +234,21 @@ export default function LandingPage() {
 
       {/* ─── Final CTA Section ─── */}
       <section className="bg-primary px-6 py-24 text-center text-on-primary">
-        {/* Content filled in task-03 */}
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-6 font-serif text-h1 font-bold leading-tight">
+            Pronto para publicar sua obra-prima?
+          </h2>
+          <p className="mx-auto mb-10 max-w-2xl font-sans text-editor-text leading-relaxed text-on-primary-container/80">
+            Junte-se a milhares de autores que encontraram a equipe editorial
+            perfeita na Editora.
+          </p>
+          <a
+            href="#"
+            className="inline-flex items-center justify-center rounded-full bg-surface-container-lowest px-8 py-4 text-ui-label font-medium text-primary shadow-sm transition-colors hover:bg-surface-container"
+          >
+            Cadastre-se gratuitamente
+          </a>
+        </div>
       </section>
     </div>
   );
