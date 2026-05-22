@@ -16,6 +16,7 @@ import {
   Settings 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 import { useProjectStore } from "@/stores/projectStore";
 
 export function RightSidebar() {
@@ -103,10 +104,10 @@ export function RightSidebar() {
       <div className="w-14 bg-white flex flex-col py-4 items-center gap-6 overflow-y-auto overflow-x-hidden">
         {/* Top Group */}
         <div className="flex flex-col gap-6 items-center">
-          <ToolbarButton icon={Target} />
-          <ToolbarButton icon={Pin} badge="2" />
-          <ToolbarButton icon={MessageSquare} />
-          <ToolbarButton icon={History} />
+          <ToolbarButton icon={Target} onClick={() => toast.info("Comentários direcionados em breve!")} />
+          <ToolbarButton icon={Pin} badge="2" onClick={() => toast.info("Notas fixadas em breve!")} />
+          <ToolbarButton icon={MessageSquare} onClick={() => toast.info("Comentários em breve!")} />
+          <ToolbarButton icon={History} onClick={() => toast.info("Histórico de versões em breve!")} />
         </div>
 
         <div className="w-6 border-b border-slate-100 my-1" />
@@ -118,19 +119,19 @@ export function RightSidebar() {
             isActive={activePanel === "search"} 
             onClick={() => togglePanel("search")} 
           />
-          <ToolbarButton icon={Type} />
-          <ToolbarButton icon={Plus} />
-          <ToolbarButton icon={Scissors} />
-          <ToolbarButton icon={Trash2} />
+          <ToolbarButton icon={Type} onClick={() => toast.info("Estilos de texto em breve!")} />
+          <ToolbarButton icon={Plus} onClick={() => toast.info("Inserir elementos em breve!")} />
+          <ToolbarButton icon={Scissors} onClick={() => toast.info("Recortar em breve!")} />
+          <ToolbarButton icon={Trash2} onClick={() => toast.info("Excluir seleção em breve!")} />
         </div>
 
         <div className="w-6 border-b border-slate-100 my-1" />
 
         {/* Bottom Group */}
         <div className="flex flex-col gap-6 items-center flex-1 justify-end">
-          <ToolbarButton icon={Download} />
-          <ToolbarButton icon={Users} />
-          <ToolbarButton icon={Settings} />
+          <ToolbarButton icon={Download} onClick={() => toast.info("Exportar em breve!")} />
+          <ToolbarButton icon={Users} onClick={() => toast.info("Colaboradores em breve!")} />
+          <ToolbarButton icon={Settings} onClick={() => toast.info("Configurações do editor em breve!")} />
         </div>
       </div>
     </div>
