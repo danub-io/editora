@@ -63,6 +63,7 @@ interface ProjectStore {
     data: Omit<TimelineEvent, "id" | "createdAt" | "updatedAt">
   ) => Promise<TimelineEvent>;
   deleteTimelineEvent: (id: string) => Promise<void>;
+  updateTimelineEvent: (id: string, updates: Partial<TimelineEvent>) => Promise<void>;
   getTimelineByProject: (projectId: string) => TimelineEvent[];
 
   // UI actions
@@ -349,6 +350,19 @@ export const useProjectStore = create<ProjectStore>()(
         await fetch(`/api/timeline/${id}`, { method: "DELETE" });
         set((s) => ({
           timelineEvents: s.timelineEvents.filter((e) => e.id !== id),
+        }));
+      },
+
+      updateTimelineEvent: async (id, updates) => {
+        await fetch(`/api/timeline/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updates),
+        });
+        set((s) => ({
+          timelineEvents: s.timelineEvents.map((e) =>
+            e.id === id ? { ...e, ...updates, updatedAt: new Date() } : e
+          ),
         }));
       },
 
