@@ -57,12 +57,18 @@ export default function HomePage() {
             </span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <a
-              href="#"
+            <Link
+              href="/"
               className="text-primary text-sm font-medium border-b-2 border-primary pb-[18px] pt-[20px]"
             >
               Dashboard
-            </a>
+            </Link>
+            <Link
+              href="/lp"
+              className="text-on-surface-variant text-sm font-medium hover:text-primary pb-[18px] pt-[20px] transition-colors"
+            >
+              Conheça a Editora
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-4">
