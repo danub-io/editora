@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { Editor } from "@/components/editor/Editor";
+import { toast } from "sonner";
 import {
   FileText,
   Download,
@@ -55,12 +56,12 @@ export default function ProjectPage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert("Sucesso: " + data.message);
+        toast.success(data.message || "Livro compilado com sucesso!");
       } else {
-        alert("Erro: " + data.error);
+        toast.error(data.error || "Erro ao compilar");
       }
     } catch {
-      alert("Erro ao conectar com o servidor.");
+      toast.error("Erro ao conectar com o servidor.");
     } finally {
       setIsBuilding(false);
     }
