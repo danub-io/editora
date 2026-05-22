@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useProjectStore } from "@/stores/projectStore";
 import { useEffect } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import {
   BookOpen,
   Plus,
@@ -72,10 +73,16 @@ export default function HomePage() {
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <button className="text-on-surface-variant hover:text-on-surface transition-colors">
+          <button
+            onClick={() => toast.info("Notificações em breve!")}
+            className="text-on-surface-variant hover:text-on-surface transition-colors"
+          >
             <Bell className="h-5 w-5" />
           </button>
-          <button className="text-on-surface-variant hover:text-on-surface transition-colors">
+          <button
+            onClick={() => toast.info("Perfil em breve!")}
+            className="text-on-surface-variant hover:text-on-surface transition-colors"
+          >
             <UserCircle className="h-5 w-5" />
           </button>
           <button
