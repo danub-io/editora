@@ -45,7 +45,25 @@ export default function LandingPage() {
 
       {/* ─── Trust / Logos Section ─── */}
       <section className="border-y border-border bg-surface-container-low py-12">
-        {/* Content filled in task-02 */}
+        <div className="mx-auto max-w-7xl px-6 text-center md:px-8">
+          <p className="mb-8 text-ui-label font-medium uppercase tracking-wider text-md-outline">
+            Destaque na mídia
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-8 opacity-50 md:gap-12">
+            <span className="font-serif text-headline-md font-bold text-on-background">
+              The New York Times
+            </span>
+            <span className="font-serif text-headline-md font-bold italic text-on-background">
+              Forbes
+            </span>
+            <span className="font-serif text-headline-md font-bold tracking-tighter text-on-background">
+              WIRED
+            </span>
+            <span className="font-serif text-headline-md font-bold uppercase text-on-background">
+              The Guardian
+            </span>
+          </div>
+        </div>
       </section>
 
       {/* ─── Talent Showcase Section ─── */}
