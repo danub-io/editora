@@ -146,10 +146,16 @@ export function ProjectTopBar() {
           </span>
         </button>
         <div className="flex items-center gap-2 text-on-surface-variant">
-          <button className="p-2 hover:bg-surface-variant rounded-full transition-colors">
+          <button
+            onClick={() => toast.info("Notificações em breve!")}
+            className="p-2 hover:bg-surface-variant rounded-full transition-colors"
+          >
             <Bell className="h-5 w-5" />
           </button>
-          <button className="p-2 hover:bg-surface-variant rounded-full transition-colors">
+          <button
+            onClick={() => toast.info("Perfil e configurações de conta em breve!")}
+            className="p-2 hover:bg-surface-variant rounded-full transition-colors"
+          >
             <UserCircle className="h-5 w-5" />
           </button>
         </div>
