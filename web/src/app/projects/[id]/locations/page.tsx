@@ -40,10 +40,13 @@ export default function LocationsPage() {
     getLocationsByProject,
     createLocation,
     deleteLocation,
+    updateLocation,
     fetchLocations,
   } = useProjectStore();
   const [search, setSearch] = useState("");
   const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editLocationId, setEditLocationId] = useState<string | null>(null);
   const [newLocation, setNewLocation] = useState({
     name: "",
     description: "",
@@ -68,6 +71,33 @@ export default function LocationsPage() {
     });
     setNewLocation({ name: "", description: "", type: "other" });
     setIsAddOpen(false);
+  };
+
+  const handleEdit = async () => {
+    if (!editLocationId || !newLocation.name) return;
+    await updateLocation(editLocationId, {
+      name: newLocation.name,
+      description: newLocation.description,
+      type: newLocation.type as any,
+    });
+    setNewLocation({ name: "", description: "", type: "other" });
+    setEditLocationId(null);
+    setIsEditOpen(false);
+  };
+
+  const openEditDialog = (location: {
+    id: string;
+    name: string;
+    description?: string;
+    type: string;
+  }) => {
+    setEditLocationId(location.id);
+    setNewLocation({
+      name: location.name,
+      description: location.description || "",
+      type: location.type || "other",
+    });
+    setIsEditOpen(true);
   };
 
   return (
@@ -153,6 +183,66 @@ export default function LocationsPage() {
               </DialogFooter>
             </DialogContent>
           </Dialog>
+
+          {/* Edit Dialog */}
+          <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+            <DialogContent className="sm:max-w-[500px]">
+              <DialogHeader>
+                <DialogTitle>Editar Local</DialogTitle>
+                <DialogDescription>
+                  Atualize as informações do cenário.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-name">Nome</Label>
+                  <Input
+                    id="edit-name"
+                    value={newLocation.name}
+                    onChange={(e) =>
+                      setNewLocation({ ...newLocation, name: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-type">Tipo</Label>
+                  <select
+                    id="edit-type"
+                    className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    value={newLocation.type}
+                    onChange={(e) =>
+                      setNewLocation({ ...newLocation, type: e.target.value })
+                    }
+                  >
+                    {LOCATION_TYPES.map((t) => (
+                      <option key={t.value} value={t.value}>
+                        {t.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-description">Descrição</Label>
+                  <Textarea
+                    id="edit-description"
+                    value={newLocation.description}
+                    onChange={(e) =>
+                      setNewLocation({
+                        ...newLocation,
+                        description: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsEditOpen(false)}>
+                  Cancelar
+                </Button>
+                <Button onClick={handleEdit}>Salvar</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
@@ -182,6 +272,12 @@ export default function LocationsPage() {
               className="group relative flex flex-col bg-surface-container-lowest border border-border rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
             >
               <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 z-10">
+                <button
+                  className="p-1.5 rounded-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant transition-colors"
+                  onClick={() => openEditDialog(location)}
+                >
+                  <Edit2 className="h-4 w-4" />
+                </button>
                 <button
                   className="p-1.5 rounded-md bg-error-container/50 hover:bg-error-container text-error transition-colors"
                   onClick={() => deleteLocation(location.id)}
