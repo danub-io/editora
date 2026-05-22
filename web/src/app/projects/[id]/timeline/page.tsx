@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { useParams } from "next/navigation";
-import { Plus, Clock, Users, Calendar, Trash2 } from "lucide-react";
+import { Plus, Clock, Users, Calendar, Trash2, Edit2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -25,9 +25,12 @@ export default function TimelinePage() {
     getTimelineByProject,
     createTimelineEvent,
     deleteTimelineEvent,
+    updateTimelineEvent,
     fetchTimeline,
   } = useProjectStore();
   const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editEventId, setEditEventId] = useState<string | null>(null);
   const [newEvent, setNewEvent] = useState({
     title: "",
     description: "",
@@ -52,6 +55,33 @@ export default function TimelinePage() {
     });
     setNewEvent({ title: "", description: "", date: "" });
     setIsAddOpen(false);
+  };
+
+  const handleEdit = async () => {
+    if (!editEventId || !newEvent.title) return;
+    await updateTimelineEvent(editEventId, {
+      title: newEvent.title,
+      description: newEvent.description,
+      date: newEvent.date,
+    });
+    setNewEvent({ title: "", description: "", date: "" });
+    setEditEventId(null);
+    setIsEditOpen(false);
+  };
+
+  const openEditDialog = (event: {
+    id: string;
+    title: string;
+    description?: string;
+    date?: string;
+  }) => {
+    setEditEventId(event.id);
+    setNewEvent({
+      title: event.title,
+      description: event.description || "",
+      date: event.date || "",
+    });
+    setIsEditOpen(true);
   };
 
   return (
@@ -93,6 +123,34 @@ export default function TimelinePage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Edit Dialog */}
+        <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Editar Evento</DialogTitle>
+              <DialogDescription>Atualize o evento da timeline.</DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="edit-title">Título</Label>
+                <Input id="edit-title" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-date">Data / Período</Label>
+                <Input id="edit-date" placeholder="Ex: Ano 1042, Primavera" value={newEvent.date} onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-description">Descrição</Label>
+                <Textarea id="edit-description" value={newEvent.description} onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })} />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsEditOpen(false)}>Cancelar</Button>
+              <Button onClick={handleEdit}>Salvar</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {events.length === 0 ? (
@@ -114,7 +172,13 @@ export default function TimelinePage() {
                 <div className="flex-1">
                   <div className="group bg-surface-container-lowest border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
                     <button
-                      className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-error-container/50 hover:bg-error-container text-error"
+                      className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant"
+                      onClick={() => openEditDialog(event)}
+                    >
+                      <Edit2 className="h-4 w-4" />
+                    </button>
+                    <button
+                      className="absolute top-3 right-10 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-error-container/50 hover:bg-error-container text-error"
                       onClick={() => deleteTimelineEvent(event.id)}
                     >
                       <Trash2 className="h-4 w-4" />
