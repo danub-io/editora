@@ -32,7 +32,7 @@ export function RightSidebar() {
 
   const handleFind = () => {
     if (!searchQuery.trim()) return;
-    const found = window.find(searchQuery, false, false, true, false, false, false);
+    const found = (window as any).find(searchQuery, false, false, true, false, false, false);
     if (!found) {
       toast.info("Nenhuma ocorrência encontrada.");
     }
