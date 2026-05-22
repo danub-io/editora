@@ -135,7 +135,7 @@ export function Sidebar({
       {/* Overlay backdrop for mobile/small screens */}
       <div
         className={cn(
-          "fixed inset-0 z-20 bg-black/20 transition-opacity duration-200",
+          "fixed inset-0 z-20 bg-background/50 transition-opacity duration-200",
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
         onClick={onClose}
@@ -143,7 +143,7 @@ export function Sidebar({
 
       <nav
         className={cn(
-          "fixed left-0 top-0 flex flex-col h-full z-30 bg-white text-on-surface w-64 flex-shrink-0 select-none transition-transform duration-200 ease-out",
+          "fixed left-0 top-0 flex flex-col h-full z-30 bg-sidebar text-sidebar-fg w-64 flex-shrink-0 select-none transition-transform duration-200 ease-out",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -152,14 +152,14 @@ export function Sidebar({
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="p-1 rounded transition-colors text-slate-700 hover:text-slate-700/50"
+              className="p-1 rounded transition-colors text-sidebar-fg hover:text-foreground"
               title="Fechar painel"
             >
               <X className="h-5 w-5" />
             </button>
             <Link
               href={`/projects/${activeProjectId}`}
-              className="text-[15px] font-semibold text-slate-800"
+              className="text-[15px] font-semibold text-sidebar-fg"
             >
               Manuscrito
             </Link>
@@ -167,7 +167,7 @@ export function Sidebar({
         <div className="relative">
           <button
             onClick={() => setAddMenuOpen(!addMenuOpen)}
-            className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors px-2 py-1 rounded hover:bg-slate-50"
+            className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors px-2 py-1 rounded hover:bg-sidebar-muted"
           >
             Adicionar
             <Plus className="h-3.5 w-3.5" />
@@ -180,28 +180,28 @@ export function Sidebar({
                 className="fixed inset-0 z-40"
                 onClick={() => setAddMenuOpen(false)}
               />
-              <div className="absolute right-0 top-full mt-0 z-50 w-52 bg-white rounded-lg shadow-xl py-1 text-[13px]">
-                <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
+              <div className="absolute right-0 top-full mt-0 z-50 w-52 bg-popover border border-border rounded-lg shadow-lg py-1 text-[13px]">
+                <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-popover-foreground/60 font-semibold">
                   Corpo
                 </div>
                 <button
                   onClick={handleAddChapter}
-                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700 hover:text-slate-900 transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-accent text-popover-foreground hover:text-accent-foreground transition-colors"
                 >
-                  <FileText className="h-4 w-4 text-slate-400" />
+                  <FileText className="h-4 w-4 text-muted-foreground" />
                   Capítulo
                 </button>
                 <button
                   onClick={handleAddPart}
-                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700 hover:text-slate-900 transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-accent text-popover-foreground hover:text-accent-foreground transition-colors"
                 >
-                  <BookOpen className="h-4 w-4 text-slate-400" />
+                  <BookOpen className="h-4 w-4 text-muted-foreground" />
                   Parte / Seção
                 </button>
 
                 <div className="my-1" />
 
-                <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
+                <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-popover-foreground/60 font-semibold">
                   Páginas Especiais
                 </div>
                 {FRONT_MATTER_OPTIONS.map((opt) => {
@@ -218,14 +218,14 @@ export function Sidebar({
                       className={cn(
                         "w-full flex items-center gap-2 px-3 py-2 transition-colors",
                         exists
-                          ? "text-slate-400 cursor-not-allowed"
-                          : "hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                          ? "text-muted-foreground cursor-not-allowed"
+                          : "hover:bg-accent text-popover-foreground hover:text-accent-foreground"
                       )}
                     >
-                      <opt.icon className="h-4 w-4 text-slate-400" />
+                      <opt.icon className="h-4 w-4 text-muted-foreground" />
                       {opt.title}
                       {exists && (
-                        <span className="ml-auto text-[10px] text-slate-400">
+                        <span className="ml-auto text-[10px] text-muted-foreground">
                           ✓
                         </span>
                       )}
@@ -245,7 +245,7 @@ export function Sidebar({
           <div>
             <button
               onClick={() => setFrontMatterExpanded(!frontMatterExpanded)}
-              className="w-full flex items-center justify-between px-5 py-2.5 text-[11px] uppercase tracking-wider font-semibold text-slate-500 hover:text-slate-700 transition-colors"
+              className="w-full flex items-center justify-between px-5 py-2.5 text-[11px] uppercase tracking-wider font-semibold text-sidebar-fg/60 hover:text-sidebar-fg transition-colors"
             >
               <span className="flex items-center gap-1.5">
                 {frontMatterExpanded ? (
@@ -255,7 +255,7 @@ export function Sidebar({
                 )}
                 Páginas Iniciais
               </span>
-              <span className="text-[10px] text-slate-500 font-normal normal-case">
+              <span className="text-[10px] text-sidebar-fg/60 font-normal normal-case">
                 edit
               </span>
             </button>
@@ -275,7 +275,7 @@ export function Sidebar({
         <div>
           <button
             onClick={() => setBodyExpanded(!bodyExpanded)}
-            className="w-full flex items-center justify-between px-5 py-2.5 text-[11px] uppercase tracking-wider font-semibold text-slate-500 hover:text-slate-700 transition-colors"
+            className="w-full flex items-center justify-between px-5 py-2.5 text-[11px] uppercase tracking-wider font-semibold text-sidebar-fg/60 hover:text-sidebar-fg transition-colors"
           >
             <span className="flex items-center gap-1.5">
               {bodyExpanded ? (
@@ -285,7 +285,7 @@ export function Sidebar({
               )}
                Conteúdo Principal
             </span>
-            <span className="text-[10px] text-slate-500 font-normal normal-case">
+            <span className="text-[10px] text-sidebar-fg/60 font-normal normal-case">
               edit
             </span>
           </button>
@@ -304,7 +304,7 @@ export function Sidebar({
       {/* ── Footer: Word Count + Nav ── */}
       <div>
         {/* Word count */}
-        <div className="px-5 py-3 text-[13px] text-slate-500 tabular-nums">
+        <div className="px-5 py-3 text-[13px] text-sidebar-fg/60 tabular-nums">
           {totalWords.toLocaleString("pt-BR")} palavras
         </div>
 
@@ -353,11 +353,11 @@ function FooterNavItem({
       className={cn(
         "flex items-center gap-2.5 px-3 py-1.5 rounded text-[13px] transition-all duration-150",
         active
-          ? "text-slate-900 bg-slate-100"
-          : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+          ? "text-sidebar-fg bg-sidebar-muted"
+          : "text-sidebar-fg/70 hover:text-sidebar-fg hover:bg-sidebar-muted"
       )}
     >
-      <Icon className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+      <Icon className="h-3.5 w-3.5 shrink-0 text-sidebar-fg/40" />
       {label}
     </Link>
   );

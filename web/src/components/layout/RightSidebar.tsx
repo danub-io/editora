@@ -103,7 +103,7 @@ export function RightSidebar({
           onClick={() => onOpenChange(!isOpen)}
           className={cn(
             "pointer-events-auto flex flex-col items-center justify-center w-10 bg-transparent cursor-pointer transition-colors",
-            "text-slate-400 hover:text-slate-600"
+            "text-muted-foreground hover:text-foreground"
           )}
           title={isOpen ? "Fechar painel" : "Abrir painel"}
         >
@@ -122,28 +122,28 @@ export function RightSidebar({
         onOpenChange={onOpenChange}
         className="flex h-full relative z-30 shrink-0"
       >
-        <CollapsibleContent className="flex bg-white">
+        <CollapsibleContent className="flex bg-background border-l border-border">
             {/* Sliding Panel (Find & Replace) */}
             <div
               className={cn(
-                "overflow-hidden transition-all duration-300 ease-in-out bg-white flex flex-col",
+                "overflow-hidden transition-all duration-300 ease-in-out bg-card flex flex-col",
                 activePanel === "search" ? "w-80" : "w-0"
               )}
             >
               <div className="flex flex-col h-full w-80">
                 <div className="px-5 py-4 flex items-center justify-between">
-                  <h2 className="text-[15px] font-semibold text-slate-800">Find & replace</h2>
+                  <h2 className="text-[15px] font-semibold text-foreground">Find & replace</h2>
                 </div>
 
                 <div className="p-5 flex-1 overflow-y-auto">
                   {/* Toggle */}
                   <div className="flex items-center justify-between mb-4 pb-6">
-                    <span className="text-[13px] text-slate-700 font-medium">Search only this chapter</span>
+                    <span className="text-[13px] text-foreground font-medium">Search only this chapter</span>
                     <button
                       onClick={() => setSearchOnlyThisChapter(!searchOnlyThisChapter)}
                       className={cn(
                         "w-9 h-5 rounded-full relative transition-colors duration-200",
-                        searchOnlyThisChapter ? "bg-emerald-500" : "bg-slate-300"
+                        searchOnlyThisChapter ? "bg-primary" : "bg-muted"
                       )}
                     >
                       <div className={cn(
@@ -155,36 +155,36 @@ export function RightSidebar({
 
                   {/* Find */}
                   <div className="mb-4">
-                    <label className="block text-[13px] font-semibold text-slate-800 mb-4">Find</label>
+                    <label className="block text-[13px] font-semibold text-foreground mb-4">Find</label>
                     <input
                       type="text"
                       placeholder="Find..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 mb-4 placeholder:text-slate-400"
+                      className="w-full border-input bg-background rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring/50 mb-4 placeholder:text-muted-foreground"
                     />
                     <div className="flex items-center justify-between">
                       <div className="flex gap-1.5">
-                        <button onClick={() => toast.info("Busca com case-sensitive em breve!")} className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 rounded text-[12px] font-medium text-slate-700 transition-colors">Aa</button>
-                        <button onClick={() => toast.info("Busca por palavra exata em breve!")} className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 rounded text-[12px] font-medium text-slate-700 transition-colors">Match word</button>
+                        <button onClick={() => toast.info("Busca com case-sensitive em breve!")} className="px-2.5 py-1.5 bg-muted hover:bg-accent rounded text-[12px] font-medium text-muted-foreground hover:text-foreground transition-colors">Aa</button>
+                        <button onClick={() => toast.info("Busca por palavra exata em breve!")} className="px-2.5 py-1.5 bg-muted hover:bg-accent rounded text-[12px] font-medium text-muted-foreground hover:text-foreground transition-colors">Match word</button>
                       </div>
-                      <button onClick={handleFind} className="px-4 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded text-[12px] font-medium transition-colors">Find</button>
+                      <button onClick={handleFind} className="px-4 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded text-[12px] font-medium transition-colors">Find</button>
                     </div>
                   </div>
 
                   {/* Replace */}
                   <div>
-                    <label className="block text-[13px] font-semibold text-slate-800 mb-4">Replace</label>
+                    <label className="block text-[13px] font-semibold text-foreground mb-4">Replace</label>
                     <input
                       type="text"
                       placeholder="Replace..."
                       value={replaceQuery}
                       onChange={(e) => setReplaceQuery(e.target.value)}
-                      className="w-full border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 mb-4 placeholder:text-slate-400"
+                      className="w-full border-input bg-background rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring/50 mb-4 placeholder:text-muted-foreground"
                     />
                     <div className="flex items-center justify-end gap-1.5">
-                      <button onClick={handleReplaceAll} className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded text-[12px] font-medium text-slate-700 transition-colors">Replace all</button>
-                      <button onClick={handleReplace} className="px-4 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded text-[12px] font-medium transition-colors">Replace</button>
+                      <button onClick={handleReplaceAll} className="px-3 py-1.5 bg-muted hover:bg-accent rounded text-[12px] font-medium text-foreground transition-colors">Replace all</button>
+                      <button onClick={handleReplace} className="px-4 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded text-[12px] font-medium transition-colors">Replace</button>
                     </div>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export function RightSidebar({
             </div>
 
             {/* Icon Toolbar */}
-            <div className="w-14 bg-white flex flex-col items-center overflow-y-auto overflow-x-hidden relative">
+            <div className="w-14 bg-card border-l border-border flex flex-col items-center overflow-y-auto overflow-x-hidden relative">
               {/* Top Group */}
               <div className="flex flex-col gap-6 items-center pt-4">
                 <ToolbarButton icon={Target} onClick={() => toast.info("Comentários direcionados em breve!")} />
@@ -250,12 +250,12 @@ function ToolbarButton({
       onClick={onClick}
       className={cn(
         "relative p-2 rounded-md transition-colors",
-        isActive ? "bg-slate-100 text-slate-900" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+        isActive ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"
       )}
     >
       <Icon className="h-[18px] w-[18px] stroke-[2.5]" />
       {badge && (
-        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
           {badge}
         </span>
       )}

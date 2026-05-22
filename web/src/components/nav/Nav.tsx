@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 interface NavLink {
@@ -49,7 +50,10 @@ export function Nav({ links = [], children }: NavProps) {
 
         {/* Actions */}
         {children && (
-          <div className="flex items-center gap-3">{children}</div>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            {children}
+          </div>
         )}
       </div>
     </nav>

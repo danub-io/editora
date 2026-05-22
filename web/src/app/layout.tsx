@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Lora } from "next/font/google";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -25,11 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${lora.variable} font-sans antialiased bg-background text-on-background min-h-screen`}
       >
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
         <Toaster position="bottom-right" richColors closeButton />
       </body>
     </html>
