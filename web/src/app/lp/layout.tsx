@@ -23,19 +23,19 @@ function NavBar() {
         {/* Desktop Nav Links */}
         <div className="hidden items-center gap-8 md:flex">
           <Link
-            href="#"
+            href="/"
             className="text-ui-body text-on-surface-variant transition-colors hover:text-primary"
           >
             Editores
           </Link>
           <Link
-            href="#"
+            href="/"
             className="text-ui-body text-on-surface-variant transition-colors hover:text-primary"
           >
             Designers
           </Link>
           <Link
-            href="#"
+            href="/"
             className="text-ui-body text-on-surface-variant transition-colors hover:text-primary"
           >
             Marketing
@@ -45,13 +45,13 @@ function NavBar() {
         {/* Actions */}
         <div className="flex items-center gap-4">
           <Link
-            href="#"
+            href="/"
             className="hidden text-ui-label font-medium text-on-surface-variant transition-colors hover:text-on-background md:block"
           >
-            Login
+            Entrar
           </Link>
           <Link
-            href="#"
+            href="/"
             className="rounded-full bg-primary px-6 py-2.5 text-ui-label font-medium text-on-primary shadow-sm transition-colors hover:bg-primary/90"
           >
             Começar
