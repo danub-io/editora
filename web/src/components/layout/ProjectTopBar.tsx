@@ -72,7 +72,7 @@ export function ProjectTopBar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between px-8 h-16 bg-white/80 backdrop-blur-md border-b border-outline-variant/50 text-sm font-medium">
+    <header className="sticky top-0 z-40 flex items-center justify-between px-8 h-16 bg-white/80 backdrop-blur-md border-b border-border/50 text-sm font-medium">
       {/* Left: Navigation Tabs */}
       <div className="flex items-center gap-6 h-full">
         <nav className="hidden md:flex items-center gap-6 h-full">
@@ -103,10 +103,10 @@ export function ProjectTopBar() {
         >
           <Search className="h-4 w-4" />
           <span className="hidden sm:inline">Pesquisar</span>
-          <kbd className="hidden sm:inline-flex ml-1 px-1.5 py-0.5 text-[10px] bg-surface border border-outline-variant rounded font-mono">⌘K</kbd>
+          <kbd className="hidden sm:inline-flex ml-1 px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded font-mono">⌘K</kbd>
         </button>
 
-        <button className="flex items-center gap-2 px-4 py-2 bg-surface border border-outline-variant rounded-lg text-primary hover:bg-surface-variant transition-colors">
+        <button className="flex items-center gap-2 px-4 py-2 bg-surface border border-border rounded-lg text-primary hover:bg-surface-variant transition-colors">
           <Download className="h-4 w-4" />
           <span className="hidden sm:inline">Compilar PDF</span>
         </button>

@@ -126,7 +126,7 @@ export function Sidebar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="fixed left-0 top-0 flex flex-col h-full z-30 bg-surface-container text-on-surface w-64 flex-shrink-0 select-none border-r border-outline-variant">
+    <nav className="fixed left-0 top-0 flex flex-col h-full z-30 bg-surface-container text-on-surface w-64 flex-shrink-0 select-none border-r border-border">
       {/* ── Header: "Manuscript" + Add ── */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700/50">
         <Link

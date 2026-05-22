@@ -74,11 +74,11 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
     <div className="sticky top-0 z-30 w-full bg-surface-container-lowest/90 backdrop-blur-sm border-b border-surface-variant px-8 py-2 flex justify-center">
       <div className="w-full max-w-[800px] flex items-center gap-2">
         {/* Button Groups */}
-        <div className="flex items-center gap-1 bg-surface-container-low rounded-lg p-1 border border-outline-variant/30">
+        <div className="flex items-center gap-1 bg-surface-container-low rounded-lg p-1 border border-border/30">
           {groups.map((group, gi) => (
             <div key={gi} className="flex items-center">
               {gi > 0 && (
-                <div className="w-px h-4 bg-outline-variant/50 mx-1" />
+                <div className="w-px h-4 bg-md-outline-variant/50 mx-1" />
               )}
               {group.map((btn, bi) => (
                 <button
@@ -100,13 +100,13 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
         </div>
 
         {/* Save Indicator */}
-        <div className="ml-auto text-ui-label text-outline flex items-center gap-4">
+        <div className="ml-auto text-ui-label text-md-outline flex items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary-container" />
             Salvo
           </div>
           
-          <div className="w-px h-4 bg-outline-variant/50" />
+          <div className="w-px h-4 bg-md-outline-variant/50" />
           
           <button
             onClick={toggleFocusMode}

@@ -48,7 +48,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* ── TopAppBar ── */}
-      <header className="sticky top-0 z-40 flex items-center justify-between px-8 h-16 bg-white/80 backdrop-blur-md border-b border-outline-variant/50">
+      <header className="sticky top-0 z-40 flex items-center justify-between px-8 h-16 bg-white/80 backdrop-blur-md border-b border-border/50">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-primary-container" />
@@ -128,10 +128,10 @@ export default function HomePage() {
                 <Link
                   key={project.id}
                   href={`/projects/${project.id}`}
-                  className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer flex flex-col"
+                  className="bg-surface-container-lowest border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer flex flex-col"
                 >
                   <div className="h-40 bg-surface-container-high relative overflow-hidden flex items-center justify-center">
-                    <BookOpen className="h-16 w-16 text-outline-variant/40 group-hover:scale-110 transition-transform duration-500" />
+                    <BookOpen className="h-16 w-16 text-md-outline-variant/40 group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <div className="p-5 flex flex-col flex-1">
                     <h3 className="text-h3 font-semibold text-on-background mb-1">
@@ -157,7 +157,7 @@ export default function HomePage() {
 
               <button
                 onClick={handleCreateProject}
-                className="bg-surface-container-low border border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-6 hover:bg-surface-container transition-colors cursor-pointer min-h-[300px]"
+                className="bg-surface-container-low border border-dashed border-border rounded-xl flex flex-col items-center justify-center p-6 hover:bg-surface-container transition-colors cursor-pointer min-h-[300px]"
               >
                 <div className="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mb-4">
                   <Plus className="h-8 w-8" />
@@ -191,7 +191,7 @@ export default function HomePage() {
                 verificação de consistência narrativa.
               </p>
             </div>
-            <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
+            <div className="bg-surface-container-lowest border border-border rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
               <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
                 <Users className="h-5 w-5" />
               </div>
@@ -203,7 +203,7 @@ export default function HomePage() {
                 relacionamentos cruzados.
               </p>
             </div>
-            <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
+            <div className="bg-surface-container-lowest border border-border rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
               <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
                 <Map className="h-5 w-5" />
               </div>
@@ -215,7 +215,7 @@ export default function HomePage() {
                 cenário.
               </p>
             </div>
-            <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
+            <div className="bg-surface-container-lowest border border-border rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
               <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
                 <Clock className="h-5 w-5" />
               </div>

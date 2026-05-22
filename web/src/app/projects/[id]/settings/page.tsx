@@ -143,7 +143,7 @@ export default function SettingsPage() {
         </div>
 
         {/* ── Book Info ── */}
-        <section className="bg-surface rounded-xl border border-outline-variant p-6 shadow-sm space-y-6">
+        <section className="bg-surface rounded-xl border border-border p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <BookOpen className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-on-background">
@@ -203,7 +203,7 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Page Format ── */}
-        <section className="bg-surface rounded-xl border border-outline-variant p-6 shadow-sm space-y-6">
+        <section className="bg-surface rounded-xl border border-border p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Ruler className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-on-background">
@@ -220,7 +220,7 @@ export default function SettingsPage() {
                   className={`p-3 rounded-lg border text-sm font-medium transition-all ${
                     form.pageFormat === fmt.value
                       ? "border-primary bg-primary-container/20 text-primary"
-                      : "border-outline-variant text-on-surface-variant hover:border-outline"
+                      : "border-border text-on-surface-variant hover:border-md-outline"
                   }`}
                 >
                   {fmt.label}
@@ -273,7 +273,7 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Typography ── */}
-        <section className="bg-surface rounded-xl border border-outline-variant p-6 shadow-sm space-y-6">
+        <section className="bg-surface rounded-xl border border-border p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Type className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-on-background">
@@ -318,7 +318,7 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Theme ── */}
-        <section className="bg-surface rounded-xl border border-outline-variant p-6 shadow-sm space-y-6">
+        <section className="bg-surface rounded-xl border border-border p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Palette className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-on-background">Tema</h3>
@@ -331,11 +331,11 @@ export default function SettingsPage() {
                 className={`p-4 rounded-lg border flex flex-col items-center gap-3 transition-all ${
                   form.theme === t.value
                     ? "border-primary shadow-md"
-                    : "border-outline-variant hover:border-outline"
+                      : "border-border hover:border-md-outline"
                 }`}
               >
                 <div
-                  className={`w-12 h-12 rounded-lg ${t.color} border border-outline-variant`}
+                  className={`w-12 h-12 rounded-lg ${t.color} border border-border`}
                 />
                 <span className="text-sm font-medium">{t.label}</span>
               </button>

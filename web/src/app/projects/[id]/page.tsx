@@ -91,7 +91,7 @@ export default function ProjectPage() {
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-surface rounded-xl border border-outline-variant p-6 shadow-sm flex flex-col justify-between">
+          <div className="bg-surface rounded-xl border border-border p-6 shadow-sm flex flex-col justify-between">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-ui-label text-on-surface-variant uppercase tracking-wider font-medium">
                 Total de Capítulos
@@ -108,7 +108,7 @@ export default function ProjectPage() {
             </div>
           </div>
 
-          <div className="bg-surface rounded-xl border border-outline-variant p-6 shadow-sm md:col-span-2 flex flex-col justify-between">
+          <div className="bg-surface rounded-xl border border-border p-6 shadow-sm md:col-span-2 flex flex-col justify-between">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-ui-label text-on-surface-variant uppercase tracking-wider font-medium">
                 Progresso Total do Manuscrito
@@ -139,7 +139,7 @@ export default function ProjectPage() {
           </h2>
 
           {chapters.length === 0 ? (
-            <div className="border-2 border-dashed border-outline-variant rounded-xl p-12 text-center">
+            <div className="border-2 border-dashed border-border rounded-xl p-12 text-center">
               <FileText className="h-12 w-12 text-on-surface-variant mx-auto mb-4 opacity-30" />
               <h3 className="text-lg font-medium mb-2 text-on-background">
                 Nenhum capítulo ainda
@@ -149,8 +149,8 @@ export default function ProjectPage() {
               </p>
             </div>
           ) : (
-            <div className="bg-surface rounded-xl border border-outline-variant overflow-hidden shadow-sm">
-              <ul className="divide-y divide-outline-variant/50">
+            <div className="bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
+              <ul className="divide-y divide-border/50">
                 {chapters.slice(0, 5).map((chapter) => (
                   <li
                     key={chapter.id}
@@ -186,7 +186,7 @@ export default function ProjectPage() {
                           ? "bg-primary-container/20 text-primary border-primary/20"
                           : chapter.status === "review"
                           ? "bg-secondary-container text-secondary border-secondary/20"
-                          : "bg-surface-variant text-on-surface-variant border-outline-variant/50"
+                          : "bg-surface-variant text-on-surface-variant border-border/50"
                       }`}
                     >
                       <span

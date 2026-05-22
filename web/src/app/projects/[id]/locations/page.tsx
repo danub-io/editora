@@ -86,7 +86,7 @@ export default function LocationsPage() {
             <input
               type="text"
               placeholder="Buscar local..."
-              className="pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg text-ui-body text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full md:w-64"
+              className="pl-10 pr-4 py-2 bg-surface border border-border rounded-lg text-ui-body text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full md:w-64"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -118,7 +118,7 @@ export default function LocationsPage() {
                   <Label htmlFor="type">Tipo</Label>
                   <select
                     id="type"
-                    className="flex h-10 w-full rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                     value={newLocation.type}
                     onChange={(e) =>
                       setNewLocation({ ...newLocation, type: e.target.value })
@@ -158,7 +158,7 @@ export default function LocationsPage() {
 
       {/* Grid */}
       {locations.length === 0 ? (
-        <div className="border-2 border-dashed border-outline-variant rounded-xl p-20 text-center">
+        <div className="border-2 border-dashed border-border rounded-xl p-20 text-center">
           <Map className="h-16 w-16 text-on-surface-variant mx-auto mb-4 opacity-20" />
           <h3 className="text-xl font-medium mb-2 text-on-background">
             Nenhum local encontrado
@@ -179,7 +179,7 @@ export default function LocationsPage() {
           {locations.map((location) => (
             <div
               key={location.id}
-              className="group relative flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
+              className="group relative flex flex-col bg-surface-container-lowest border border-border rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
             >
               <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 z-10">
                 <button
@@ -215,7 +215,7 @@ export default function LocationsPage() {
 
           <button
             onClick={() => setIsAddOpen(true)}
-            className="group flex flex-col items-center justify-center bg-transparent border-2 border-dashed border-outline-variant rounded-xl p-6 min-h-[200px] hover:border-primary hover:bg-surface-container-low transition-colors"
+            className="group flex flex-col items-center justify-center bg-transparent border-2 border-dashed border-border rounded-xl p-6 min-h-[200px] hover:border-primary hover:bg-surface-container-low transition-colors"
           >
             <div className="w-12 h-12 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center mb-4 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
               <Plus className="h-6 w-6" />

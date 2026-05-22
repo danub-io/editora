@@ -75,7 +75,7 @@ export default function CharactersPage() {
             <input
               type="text"
               placeholder="Buscar personagem..."
-              className="pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg text-ui-body text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full md:w-64"
+              className="pl-10 pr-4 py-2 bg-surface border border-border rounded-lg text-ui-body text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full md:w-64"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -114,7 +114,7 @@ export default function CharactersPage() {
       </div>
 
       {characters.length === 0 ? (
-        <div className="border-2 border-dashed border-outline-variant rounded-xl p-20 text-center">
+        <div className="border-2 border-dashed border-border rounded-xl p-20 text-center">
           <User className="h-16 w-16 text-on-surface-variant mx-auto mb-4 opacity-20" />
           <h3 className="text-xl font-medium mb-2 text-on-background">Nenhum personagem encontrado</h3>
           <p className="text-on-surface-variant mb-6">Crie seu primeiro personagem para começar a organizar sua história.</p>
@@ -126,13 +126,13 @@ export default function CharactersPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {characters.map((character) => (
-            <div key={character.id} className="group relative flex flex-col items-center bg-surface-container-lowest border border-outline-variant rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+            <div key={character.id} className="group relative flex flex-col items-center bg-surface-container-lowest border border-border rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
               <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 z-10">
                 <button className="p-1.5 rounded-md bg-error-container/50 hover:bg-error-container text-error transition-colors" onClick={() => deleteCharacter(character.id)}>
                   <Trash2 className="h-4 w-4" />
                 </button>
               </div>
-              <div className="w-20 h-20 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 text-2xl font-semibold shrink-0 border border-outline-variant/30">
+              <div className="w-20 h-20 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 text-2xl font-semibold shrink-0 border border-border/30">
                 {character.name.split(" ").map((n) => n[0]).join("").substring(0, 2).toUpperCase()}
               </div>
               <h3 className="text-[18px] font-semibold text-on-surface mb-1 text-center line-clamp-1">{character.name}</h3>
@@ -146,7 +146,7 @@ export default function CharactersPage() {
               )}
             </div>
           ))}
-          <button onClick={() => setIsAddOpen(true)} className="group flex flex-col items-center justify-center bg-transparent border-2 border-dashed border-outline-variant rounded-xl p-6 h-full min-h-[240px] hover:border-primary hover:bg-surface-container-low transition-colors duration-200">
+          <button onClick={() => setIsAddOpen(true)} className="group flex flex-col items-center justify-center bg-transparent border-2 border-dashed border-border rounded-xl p-6 h-full min-h-[240px] hover:border-primary hover:bg-surface-container-low transition-colors duration-200">
             <div className="w-12 h-12 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center mb-4 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
               <Plus className="h-6 w-6" />
             </div>

@@ -114,7 +114,6 @@
 }
 
 @theme inline {
-  /* === MD3 Color Tokens === */
   --color-background: var(--md-background);
   --color-on-background: var(--md-on-background);
   --color-surface: var(--md-surface);
@@ -163,8 +162,8 @@
   --color-error-container: var(--md-error-container);
   --color-on-error-container: var(--md-on-error-container);
 
-  --color-outline: var(--md-outline);
-  --color-outline-variant: var(--md-outline-variant);
+  --color-md-outline: var(--md-outline);
+  --color-md-outline-variant: var(--md-outline-variant);
 
   /* === shadcn v4 color aliases (for @theme) === */
   --color-foreground: var(--md-on-background);

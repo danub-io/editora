@@ -96,7 +96,7 @@ export default function TimelinePage() {
       </div>
 
       {events.length === 0 ? (
-        <div className="border-2 border-dashed border-outline-variant rounded-xl p-20 text-center">
+        <div className="border-2 border-dashed border-border rounded-xl p-20 text-center">
           <Clock className="h-16 w-16 text-on-surface-variant mx-auto mb-4 opacity-20" />
           <h3 className="text-xl font-medium mb-2 text-on-background">Nenhum evento na timeline</h3>
           <p className="text-on-surface-variant mb-6">Comece a mapear a cronologia da sua história.</p>
@@ -107,12 +107,12 @@ export default function TimelinePage() {
         </div>
       ) : (
         <div className="relative max-w-3xl mx-auto">
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-outline-variant to-transparent" />
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-md-outline-variant to-transparent" />
           <div className="space-y-8">
             {events.map((event, index) => (
               <div key={event.id} className={`flex items-start gap-8 ${index % 2 === 0 ? "" : "flex-row-reverse"}`}>
                 <div className="flex-1">
-                  <div className="group bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
+                  <div className="group bg-surface-container-lowest border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
                     <button
                       className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md bg-error-container/50 hover:bg-error-container text-error"
                       onClick={() => deleteTimelineEvent(event.id)}
