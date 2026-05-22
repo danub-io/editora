@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   BookOpen,
   ArrowRight,
@@ -27,19 +28,19 @@ export default function LandingPage() {
           obra brilhe.
         </p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <a
-            href="#"
+          <Link
+            href="/"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-ui-label font-medium text-on-primary shadow-sm transition-colors hover:bg-primary/90"
           >
             Começar agora
             <ArrowRight className="h-4 w-4" />
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/"
             className="inline-flex items-center justify-center rounded-full border border-border bg-surface-container-lowest px-8 py-3.5 text-ui-label font-medium text-on-background transition-colors hover:bg-surface-container"
           >
             Explorar profissionais
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -99,13 +100,13 @@ export default function LandingPage() {
                 </span>
               </li>
             </ul>
-            <a
-              href="#"
+            <Link
+              href="/"
               className="inline-flex items-center gap-1 text-ui-label font-medium text-primary transition-colors hover:text-primary/80"
             >
               Explorar perfis{" "}
               <ArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
 
           {/* Right: Profile Card Illustration */}
@@ -242,12 +243,12 @@ export default function LandingPage() {
             Junte-se a milhares de autores que encontraram a equipe editorial
             perfeita na Editora.
           </p>
-          <a
-            href="#"
+          <Link
+            href="/"
             className="inline-flex items-center justify-center rounded-full bg-surface-container-lowest px-8 py-4 text-ui-label font-medium text-primary shadow-sm transition-colors hover:bg-surface-container"
           >
             Cadastre-se gratuitamente
-          </a>
+          </Link>
         </div>
       </section>
     </div>
