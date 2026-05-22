@@ -106,7 +106,7 @@ export default function LocationsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
           <h2 className="text-h2 font-semibold text-on-background">Locais</h2>
-          <p className="text-ui-body text-on-surface-variant mt-1">
+          <p className="text-ui-body text-on-surface-variant mt-0">
             Construa o mundo da sua história.
           </p>
         </div>
@@ -253,7 +253,7 @@ export default function LocationsPage() {
           <h3 className="text-xl font-medium mb-2 text-on-background">
             Nenhum local encontrado
           </h3>
-          <p className="text-on-surface-variant mb-6">
+          <p className="text-on-surface-variant mb-4">
             Adicione os cenários onde sua história acontece.
           </p>
           <button
@@ -265,7 +265,7 @@ export default function LocationsPage() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {locations.map((location) => (
             <div
               key={location.id}
@@ -290,11 +290,11 @@ export default function LocationsPage() {
                 <MapPin className="h-6 w-6" />
               </div>
 
-              <h3 className="text-[18px] font-semibold text-on-surface mb-1">
+              <h3 className="text-[18px] font-semibold text-on-surface mb-4">
                 {location.name}
               </h3>
 
-              <div className="px-2 py-0.5 bg-surface-container rounded-full mb-3 self-start">
+              <div className="px-2 py-0.5 bg-surface-container rounded-full mb-4 self-start">
                 <span className="text-ui-label text-on-surface-variant text-[10px] uppercase tracking-wider">
                   {LOCATION_TYPES.find((t) => t.value === location.type)
                     ?.label || "Outro"}

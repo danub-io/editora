@@ -100,7 +100,7 @@ export default function CharactersPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
           <h2 className="text-h2 font-semibold text-on-background">Personagens</h2>
-          <p className="text-ui-body text-on-surface-variant mt-1">Gerencie o elenco da sua história.</p>
+          <p className="text-ui-body text-on-surface-variant mt-0">Gerencie o elenco da sua história.</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="relative">
@@ -185,7 +185,7 @@ export default function CharactersPage() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {characters.map((character) => (
             <div key={character.id} className="group relative flex flex-col items-center bg-surface-container-lowest border border-border rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
               <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 z-10">
@@ -199,9 +199,9 @@ export default function CharactersPage() {
               <div className="w-20 h-20 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 text-2xl font-semibold shrink-0 border border-border/30">
                 {character.name.split(" ").map((n) => n[0]).join("").substring(0, 2).toUpperCase()}
               </div>
-              <h3 className="text-[18px] font-semibold text-on-surface mb-1 text-center line-clamp-1">{character.name}</h3>
+              <h3 className="text-[18px] font-semibold text-on-surface mb-4 text-center line-clamp-1">{character.name}</h3>
               {character.description && (
-                <div className="px-2 py-0.5 bg-surface-container rounded-full mb-3">
+                <div className="px-2 py-0.5 bg-surface-container rounded-full mb-4">
                   <span className="text-ui-label text-on-surface-variant text-[10px] uppercase tracking-wider">{character.description}</span>
                 </div>
               )}

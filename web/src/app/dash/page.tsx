@@ -98,7 +98,7 @@ export default function DashboardPage() {
 
         {/* Projetos Recentes */}
         <section>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-4">
             <h2 className="text-h2 font-semibold text-on-background">
               Projetos Recentes
             </h2>
@@ -114,7 +114,7 @@ export default function DashboardPage() {
               Carregando projetos...
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {projects.map((project) => (
                 <Link
                   key={project.id}
@@ -125,7 +125,7 @@ export default function DashboardPage() {
                     <BookOpen className="h-16 w-16 text-md-outline-variant/40 group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <div className="p-5 flex flex-col flex-1">
-                    <h3 className="text-h3 font-semibold text-on-background mb-1">
+                    <h3 className="text-h3 font-semibold text-on-background mb-4">
                       {project.title}
                     </h3>
                     <p className="text-ui-body text-on-surface-variant mb-4 flex-1">
@@ -153,7 +153,7 @@ export default function DashboardPage() {
                 <div className="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mb-4">
                   <Plus className="h-8 w-8" />
                 </div>
-                <h3 className="text-h3 font-semibold text-on-background mb-2">
+                <h3 className="text-h3 font-semibold text-on-background mb-4">
                   Novo Projeto
                 </h3>
                 <p className="text-ui-body text-on-surface-variant text-center">
@@ -166,7 +166,7 @@ export default function DashboardPage() {
 
         {/* Features */}
         <section className="pb-12">
-          <h2 className="text-h2 font-semibold text-on-background mb-6">
+          <h2 className="text-h2 font-semibold text-on-background mb-4">
             Ferramentas Integradas
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -174,7 +174,7 @@ export default function DashboardPage() {
               <div className="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center mb-4">
                 <Sparkles className="h-5 w-5" />
               </div>
-              <h3 className="text-[18px] font-semibold text-on-background mb-2">
+              <h3 className="text-[18px] font-semibold text-on-background mb-4">
                 Edição IA
               </h3>
               <p className="text-ui-label text-on-surface-variant leading-relaxed">
@@ -186,7 +186,7 @@ export default function DashboardPage() {
               <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
                 <Users className="h-5 w-5" />
               </div>
-              <h3 className="text-[18px] font-semibold text-on-background mb-2">
+              <h3 className="text-[18px] font-semibold text-on-background mb-4">
                 Personagens
               </h3>
               <p className="text-ui-label text-on-surface-variant leading-relaxed">
@@ -198,7 +198,7 @@ export default function DashboardPage() {
               <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
                 <Map className="h-5 w-5" />
               </div>
-              <h3 className="text-[18px] font-semibold text-on-background mb-2">
+              <h3 className="text-[18px] font-semibold text-on-background mb-4">
                 Locais
               </h3>
               <p className="text-ui-label text-on-surface-variant leading-relaxed">
@@ -210,7 +210,7 @@ export default function DashboardPage() {
               <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
                 <Clock className="h-5 w-5" />
               </div>
-              <h3 className="text-[18px] font-semibold text-on-background mb-2">
+              <h3 className="text-[18px] font-semibold text-on-background mb-4">
                 Timeline
               </h3>
               <p className="text-ui-label text-on-surface-variant leading-relaxed">

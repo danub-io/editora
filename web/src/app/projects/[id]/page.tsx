@@ -84,14 +84,14 @@ export default function ProjectPage() {
           <h1 className="text-h1 font-bold text-on-background">
             {activeProject?.title || "Projeto"}
           </h1>
-          <p className="text-ui-body text-on-surface-variant max-w-2xl mt-2">
+          <p className="text-ui-body text-on-surface-variant max-w-2xl mt-0">
             {activeProject?.description ||
               "Sem descrição. Edite as configurações do projeto para adicionar detalhes."}
           </p>
         </div>
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-surface rounded-xl border border-border p-6 shadow-sm flex flex-col justify-between">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-ui-label text-on-surface-variant uppercase tracking-wider font-medium">
@@ -134,8 +134,8 @@ export default function ProjectPage() {
         </div>
 
         {/* Recent Activity */}
-        <div className="mt-12">
-          <h2 className="text-h2 font-semibold text-on-background mb-6">
+        <div className="mt-0">
+          <h2 className="text-h2 font-semibold text-on-background mb-4">
             Atividade Recente
           </h2>
 
@@ -145,7 +145,7 @@ export default function ProjectPage() {
               <h3 className="text-lg font-medium mb-2 text-on-background">
                 Nenhum capítulo ainda
               </h3>
-              <p className="text-on-surface-variant mb-6">
+              <p className="text-on-surface-variant mb-4">
                 Comece criando seu primeiro capítulo na barra lateral.
               </p>
             </div>
@@ -176,7 +176,7 @@ export default function ProjectPage() {
                         <h4 className="text-ui-body font-medium text-on-background">
                           {chapter.title}
                         </h4>
-                        <p className="text-ui-label text-on-surface-variant mt-1">
+                        <p className="text-ui-label text-on-surface-variant mt-0">
                           {chapter.wordCount || 0} palavras
                         </p>
                       </div>

@@ -89,7 +89,7 @@ export default function TimelinePage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
           <h2 className="text-h2 font-semibold text-on-background">Timeline</h2>
-          <p className="text-ui-body text-on-surface-variant mt-1">
+          <p className="text-ui-body text-on-surface-variant mt-0">
             Visualize e gerencie a cronologia da sua narrativa.
           </p>
         </div>
@@ -157,7 +157,7 @@ export default function TimelinePage() {
         <div className="border-2 border-dashed border-border rounded-xl p-20 text-center">
           <Clock className="h-16 w-16 text-on-surface-variant mx-auto mb-4 opacity-20" />
           <h3 className="text-xl font-medium mb-2 text-on-background">Nenhum evento na timeline</h3>
-          <p className="text-on-surface-variant mb-6">Comece a mapear a cronologia da sua história.</p>
+          <p className="text-on-surface-variant mb-4">Comece a mapear a cronologia da sua história.</p>
           <button onClick={() => setIsAddOpen(true)} className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-ui-label mx-auto">
             <Plus className="h-4 w-4" />
             Adicionar Evento
@@ -189,7 +189,7 @@ export default function TimelinePage() {
                         <span className="text-ui-label text-primary font-medium">{event.date}</span>
                       </div>
                     )}
-                    <h3 className="text-[18px] font-semibold text-on-background mb-2">{event.title}</h3>
+                    <h3 className="text-[18px] font-semibold text-on-background mb-4">{event.title}</h3>
                     {event.description && (
                       <p className="text-ui-body text-on-surface-variant">{event.description}</p>
                     )}

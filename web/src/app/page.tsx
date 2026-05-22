@@ -193,7 +193,7 @@ export default function LandingPage() {
                 arquivos, comunique-se diretamente e processe pagamentos com
                 segurança — tudo sem sair da plataforma.
               </p>
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
                     <MessageCircle className="h-5 w-5 text-primary" />

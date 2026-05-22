@@ -137,7 +137,7 @@ export function RightSidebar({
 
                 <div className="p-5 flex-1 overflow-y-auto">
                   {/* Toggle */}
-                  <div className="flex items-center justify-between mb-6 pb-6">
+                  <div className="flex items-center justify-between mb-4 pb-6">
                     <span className="text-[13px] text-slate-700 font-medium">Search only this chapter</span>
                     <button
                       onClick={() => setSearchOnlyThisChapter(!searchOnlyThisChapter)}
@@ -154,14 +154,14 @@ export function RightSidebar({
                   </div>
 
                   {/* Find */}
-                  <div className="mb-6">
-                    <label className="block text-[13px] font-semibold text-slate-800 mb-2">Find</label>
+                  <div className="mb-4">
+                    <label className="block text-[13px] font-semibold text-slate-800 mb-4">Find</label>
                     <input
                       type="text"
                       placeholder="Find..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 mb-2 placeholder:text-slate-400"
+                      className="w-full border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 mb-4 placeholder:text-slate-400"
                     />
                     <div className="flex items-center justify-between">
                       <div className="flex gap-1.5">
@@ -174,13 +174,13 @@ export function RightSidebar({
 
                   {/* Replace */}
                   <div>
-                    <label className="block text-[13px] font-semibold text-slate-800 mb-2">Replace</label>
+                    <label className="block text-[13px] font-semibold text-slate-800 mb-4">Replace</label>
                     <input
                       type="text"
                       placeholder="Replace..."
                       value={replaceQuery}
                       onChange={(e) => setReplaceQuery(e.target.value)}
-                      className="w-full border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 mb-2 placeholder:text-slate-400"
+                      className="w-full border border-slate-300 rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 mb-4 placeholder:text-slate-400"
                     />
                     <div className="flex items-center justify-end gap-1.5">
                       <button onClick={handleReplaceAll} className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded text-[12px] font-medium text-slate-700 transition-colors">Replace all</button>
