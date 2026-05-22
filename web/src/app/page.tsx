@@ -1,248 +1,273 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useProjectStore } from "@/stores/projectStore";
-import { useEffect } from "react";
 import Link from "next/link";
-import { toast } from "sonner";
 import {
   BookOpen,
-  Plus,
-  Sparkles,
-  Users,
-  Map,
-  Clock,
   ArrowRight,
-  Bell,
-  UserCircle,
+  Star,
+  Users,
+  ShieldCheck,
+  CheckCircle,
+  MessageCircle,
+  FolderOpen,
 } from "lucide-react";
+import { Nav } from "@/components/nav/Nav";
+import { Footer } from "@/components/footer/Footer";
 
-export default function HomePage() {
-  const router = useRouter();
-  const { projects, fetchProjects, createProject, isLoading } =
-    useProjectStore();
-
-  useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
-
-  const handleCreateProject = async () => {
-    const project = await createProject({
-      title: "Meu Novo Livro",
-      author: "Autor",
-      description: "",
-      language: "pt-BR",
-      categories: [],
-      keywords: [],
-      settings: {
-        pageFormat: "6x9",
-        fontFamily: "Lora",
-        fontSize: 11,
-        lineHeight: 1.4,
-        margins: { top: "2cm", bottom: "2cm", inner: "2.5cm", outer: "2cm" },
-        theme: "light",
-      },
-    });
-    router.push(`/projects/${project.id}`);
-  };
-
+export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* ── TopAppBar ── */}
-      <header className="sticky top-0 z-40 flex items-center justify-between px-8 h-16 bg-white/80 backdrop-blur-md border-b border-border/50">
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-primary-container" />
-            <span className="text-xl font-bold tracking-tight text-primary">
-              Editora
-            </span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href="/"
-              className="text-primary text-sm font-medium border-b-2 border-primary pb-[18px] pt-[20px]"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/lp"
-              className="text-on-surface-variant text-sm font-medium hover:text-primary pb-[18px] pt-[20px] transition-colors"
-            >
-              Conheça a Editora
-            </Link>
-          </nav>
-        </div>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => toast.info("Notificações em breve!")}
-            className="text-on-surface-variant hover:text-on-surface transition-colors"
-          >
-            <Bell className="h-5 w-5" />
-          </button>
-          <button
-            onClick={() => toast.info("Perfil em breve!")}
-            className="text-on-surface-variant hover:text-on-surface transition-colors"
-          >
-            <UserCircle className="h-5 w-5" />
-          </button>
-          <button
-            onClick={handleCreateProject}
-            className="hidden md:flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-full text-ui-label hover:bg-primary/90 transition-colors shadow-sm"
-          >
-            <Plus className="h-4 w-4" />
-            Novo Livro
-          </button>
-        </div>
-      </header>
+      <Nav
+        links={[
+          { href: "/dash", label: "Dashboard" },
+        ]}
+      >
+        <Link
+          href="/dash"
+          className="hidden text-ui-label font-medium text-on-surface-variant transition-colors hover:text-on-background md:block"
+        >
+          Entrar
+        </Link>
+        <Link
+          href="/dash"
+          className="rounded-full bg-primary px-6 py-2.5 text-ui-label font-medium text-on-primary shadow-sm transition-colors hover:bg-primary/90"
+        >
+          Começar
+        </Link>
+      </Nav>
 
-      {/* ── Main ── */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 md:px-8 py-12 flex flex-col gap-16">
-        {/* Hero Section */}
-        <section className="flex flex-col items-center text-center max-w-3xl mx-auto pt-8">
-          <h1 className="text-h1 font-bold text-primary mb-4">
-            Sua Editora Pessoal
+      <main className="flex-1">
+        {/* ─── Hero Section ─── */}
+        <section className="mx-auto max-w-7xl px-6 py-24 text-center md:px-8">
+          <h1 className="mx-auto mb-6 max-w-4xl font-serif text-h1 font-bold leading-tight tracking-tight text-on-background">
+            Transforme seu manuscrito em uma obra-prima
           </h1>
-          <p className="text-editor-text text-on-surface-variant mb-8 max-w-2xl font-serif">
-            O ambiente focado e profissional para dar vida às suas histórias.
-            Gerencie manuscritos, desenvolva personagens complexos e estruture
-            suas timelines em um ecossistema projetado para a escrita profunda.
+          <p className="mx-auto mb-10 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
+            Conecte-se com os melhores editores, designers e profissionais do
+            mercado editorial. Selecionamos os top 3% para garantir que sua
+            obra brilhe.
           </p>
-          <div className="flex gap-4">
-            <button
-              onClick={handleCreateProject}
-              className="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-full text-sm font-medium hover:bg-primary/90 transition-all shadow-md hover:shadow-lg"
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            <Link
+              href="/dash"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-ui-label font-medium text-on-primary shadow-sm transition-colors hover:bg-primary/90"
             >
-              <BookOpen className="h-4 w-4" />
-              Começar Novo Livro
-            </button>
+              Começar agora
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/dash"
+              className="inline-flex items-center justify-center rounded-full bg-surface-container-lowest px-8 py-3.5 text-ui-label font-medium text-on-background transition-colors hover:bg-surface-container"
+            >
+              Explorar profissionais
+            </Link>
           </div>
         </section>
 
-        {/* Projetos Recentes */}
-        <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-h2 font-semibold text-on-background">
-              Projetos Recentes
-            </h2>
-            {projects.length > 0 && (
-              <span className="text-primary text-sm flex items-center gap-1">
-                {projects.length} projetos
+        {/* ─── Trust / Logos Section ─── */}
+        <section className="bg-surface-container-low py-12">
+          <div className="mx-auto max-w-7xl px-6 text-center md:px-8">
+            <p className="mb-8 text-ui-label font-medium uppercase tracking-wider text-md-outline">
+              Destaque na mídia
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-8 opacity-50 md:gap-12">
+              <span className="font-serif text-headline-md font-bold text-on-background">
+                The New York Times
               </span>
-            )}
+              <span className="font-serif text-headline-md font-bold italic text-on-background">
+                Forbes
+              </span>
+              <span className="font-serif text-headline-md font-bold tracking-tighter text-on-background">
+                WIRED
+              </span>
+              <span className="font-serif text-headline-md font-bold uppercase text-on-background">
+                The Guardian
+              </span>
+            </div>
           </div>
-
-          {isLoading && projects.length === 0 ? (
-            <div className="text-center py-12 text-on-surface-variant">
-              Carregando projetos...
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map((project) => (
-                <Link
-                  key={project.id}
-                  href={`/projects/${project.id}`}
-                  className="bg-surface-container-lowest border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer flex flex-col"
-                >
-                  <div className="h-40 bg-surface-container-high relative overflow-hidden flex items-center justify-center">
-                    <BookOpen className="h-16 w-16 text-md-outline-variant/40 group-hover:scale-110 transition-transform duration-500" />
-                  </div>
-                  <div className="p-5 flex flex-col flex-1">
-                    <h3 className="text-h3 font-semibold text-on-background mb-1">
-                      {project.title}
-                    </h3>
-                    <p className="text-ui-body text-on-surface-variant mb-4 flex-1">
-                      {project.description || "Sem descrição"} •{" "}
-                      {project.author}
-                    </p>
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-surface-variant">
-                      <div className="flex items-center gap-2 text-on-surface-variant">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-ui-label text-xs">
-                          {new Date(project.createdAt).toLocaleDateString(
-                            "pt-BR"
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-
-              <button
-                onClick={handleCreateProject}
-                className="bg-surface-container-low border border-dashed border-border rounded-xl flex flex-col items-center justify-center p-6 hover:bg-surface-container transition-colors cursor-pointer min-h-[300px]"
-              >
-                <div className="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mb-4">
-                  <Plus className="h-8 w-8" />
-                </div>
-                <h3 className="text-h3 font-semibold text-on-background mb-2">
-                  Novo Projeto
-                </h3>
-                <p className="text-ui-body text-on-surface-variant text-center">
-                  Comece uma nova história do zero.
-                </p>
-              </button>
-            </div>
-          )}
         </section>
 
-        {/* Features */}
-        <section className="pb-12">
-          <h2 className="text-h2 font-semibold text-on-background mb-6">
-            Ferramentas Integradas
+        {/* ─── Talent Showcase Section ─── */}
+        <section className="mx-auto max-w-7xl px-6 py-24 md:px-8">
+          <div className="grid items-center gap-16 md:grid-cols-2">
+            <div>
+              <h2 className="mb-4 font-serif text-h2 font-semibold text-on-background">
+                Conheça os profissionais
+              </h2>
+              <p className="mb-8 font-sans text-editor-text leading-relaxed text-on-surface-variant">
+                Nosso marketplace reúne milhares de editores, designers e
+                marketeiros independentes que já trabalharam em livros
+                best-sellers.
+              </p>
+              <ul className="mb-8 space-y-4">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <span className="text-ui-body text-on-surface-variant">
+                    Top 3% de talentos selecionados
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <span className="text-ui-body text-on-surface-variant">
+                    Experiência verificada no mercado editorial
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <span className="text-ui-body text-on-surface-variant">
+                    Ferramentas de colaboração integradas
+                  </span>
+                </li>
+              </ul>
+              <Link
+                href="/dash"
+                className="inline-flex items-center gap-1 text-ui-label font-medium text-primary transition-colors hover:text-primary/80"
+              >
+                Explorar perfis{" "}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="relative">
+              <div className="flex items-center justify-center rounded-xl bg-surface-container-lowest p-8 shadow-sm">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary-container">
+                    <Users className="h-10 w-10 text-primary" />
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star key={i} className="h-5 w-5 fill-tertiary-fixed text-tertiary-fixed" />
+                    ))}
+                  </div>
+                  <p className="text-ui-label font-medium text-on-background">
+                    Editora Profissional
+                  </p>
+                  <p className="text-center text-ui-body text-on-surface-variant">
+                    &ldquo;Excelente trabalho editorial, superou todas as
+                    expectativas.&rdquo;
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Collaboration Section ─── */}
+        <section className="bg-surface-container-low">
+          <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 md:grid-cols-2 md:px-8">
+            <div className="order-2 md:order-1">
+              <div className="flex items-center justify-center rounded-xl bg-surface-container-lowest p-8 shadow-sm">
+                <div className="grid grid-cols-2 gap-6 text-center">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-container">
+                      <MessageCircle className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="text-ui-label font-bold text-on-background">
+                      Mensagens
+                    </h3>
+                    <p className="text-ui-label text-on-surface-variant">
+                      Chat em tempo real com profissionais.
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-container">
+                      <FolderOpen className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="text-ui-label font-bold text-on-background">
+                      Arquivos
+                    </h3>
+                    <p className="text-ui-label text-on-surface-variant">
+                      Compartilhe manuscritos com segurança.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="order-1 md:order-2">
+              <h2 className="mb-4 font-serif text-h2 font-semibold text-on-background">
+                Colaboração perfeita
+              </h2>
+              <p className="mb-8 max-w-lg font-sans text-editor-text leading-relaxed text-on-surface-variant">
+                Gerencie todo o seu projeto em um único painel. Compartilhe
+                arquivos, comunique-se diretamente e processe pagamentos com
+                segurança — tudo sem sair da plataforma.
+              </p>
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+                    <MessageCircle className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mb-1 text-ui-label font-bold text-on-background">
+                    Mensagens diretas
+                  </h3>
+                  <p className="text-ui-label text-on-surface-variant">
+                    Converse com profissionais instantaneamente.
+                  </p>
+                </div>
+                <div>
+                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+                    <FolderOpen className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mb-1 text-ui-label font-bold text-on-background">
+                    Compartilhamento
+                  </h3>
+                  <p className="text-ui-label text-on-surface-variant">
+                    Troque manuscritos com total segurança.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Trust & Protection Section ─── */}
+        <section className="mx-auto max-w-7xl px-6 py-24 text-center md:px-8">
+          <h2 className="mx-auto mb-4 max-w-2xl font-serif text-h2 font-semibold text-on-background">
+            Seu trabalho está seguro
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-gradient-to-br from-primary-container/20 to-surface-container-lowest border border-primary-container/30 rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center mb-4">
-                <Sparkles className="h-5 w-5" />
+          <p className="mx-auto mb-12 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
+            Cuidamos dos contratos e pagamentos para que você possa focar no
+            processo criativo. Cada projeto é respaldado pela nossa garantia
+            Editora.
+          </p>
+          <div className="flex justify-center">
+            <div className="inline-flex max-w-md flex-col items-center gap-4 rounded-xl bg-surface-container-lowest p-8 shadow-sm">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-container">
+                <ShieldCheck className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-[18px] font-semibold text-on-background mb-2">
-                Edição IA
+              <h3 className="font-serif text-headline-md font-semibold text-on-background">
+                Garantia Editora
               </h3>
-              <p className="text-ui-label text-on-surface-variant leading-relaxed">
-                Análise profunda de estilo, sugestões de vocabulário e
-                verificação de consistência narrativa.
+              <p className="text-ui-body text-on-surface-variant">
+                Proteção total do início ao fim. Segurança, transparência e
+                qualidade garantida em cada etapa do seu projeto editorial.
               </p>
             </div>
-            <div className="bg-surface-container-lowest border border-border rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
-                <Users className="h-5 w-5" />
-              </div>
-              <h3 className="text-[18px] font-semibold text-on-background mb-2">
-                Personagens
-              </h3>
-              <p className="text-ui-label text-on-surface-variant leading-relaxed">
-                Fichas detalhadas, arcos dramáticos e rastreamento de
-                relacionamentos cruzados.
-              </p>
-            </div>
-            <div className="bg-surface-container-lowest border border-border rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
-                <Map className="h-5 w-5" />
-              </div>
-              <h3 className="text-[18px] font-semibold text-on-background mb-2">
-                Locais
-              </h3>
-              <p className="text-ui-label text-on-surface-variant leading-relaxed">
-                Worldbuilding com notas de cultura e geografia para cada
-                cenário.
-              </p>
-            </div>
-            <div className="bg-surface-container-lowest border border-border rounded-xl p-6 flex flex-col hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-4">
-                <Clock className="h-5 w-5" />
-              </div>
-              <h3 className="text-[18px] font-semibold text-on-background mb-2">
-                Timeline
-              </h3>
-              <p className="text-ui-label text-on-surface-variant leading-relaxed">
-                Visualize eventos cronologicamente e garanta o ritmo perfeito da
-                narrativa.
-              </p>
-            </div>
+          </div>
+        </section>
+
+        {/* ─── Final CTA Section ─── */}
+        <section className="bg-primary px-6 py-24 text-center text-on-primary">
+          <div className="mx-auto max-w-7xl">
+            <h2 className="mb-6 font-serif text-h1 font-bold leading-tight">
+              Pronto para publicar sua obra-prima?
+            </h2>
+            <p className="mx-auto mb-10 max-w-2xl font-sans text-editor-text leading-relaxed text-on-primary-container/80">
+              Junte-se a milhares de autores que encontraram a equipe editorial
+              perfeita na Editora.
+            </p>
+            <Link
+              href="/dash"
+              className="inline-flex items-center justify-center rounded-full bg-surface-container-lowest px-8 py-4 text-ui-label font-medium text-primary shadow-sm transition-colors hover:bg-surface-container"
+            >
+              Cadastre-se gratuitamente
+            </Link>
           </div>
         </section>
       </main>
+
+      <Footer />
     </div>
   );
 }

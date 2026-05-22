@@ -88,9 +88,9 @@ function SortableItem({
         className={cn(
           "group flex items-center gap-2 px-4 py-2 cursor-pointer transition-colors",
           isActive
-            ? "bg-emerald-600/20 text-emerald-400"
-            : "text-slate-400 hover:bg-slate-700/30 hover:text-slate-300",
-          isDragging && "bg-slate-800 shadow-lg z-10"
+            ? "bg-emerald-50 text-emerald-700"
+            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+          isDragging && "bg-white shadow-lg z-10"
         )}
         onClick={() => setActiveChapter(chapter.id)}
       >
@@ -107,7 +107,7 @@ function SortableItem({
         </span>
         <button
           onClick={handleDelete}
-          className="shrink-0 opacity-0 group-hover:opacity-100 p-0.5 rounded text-slate-500 hover:text-red-400 transition-all"
+          className="shrink-0 opacity-0 group-hover:opacity-100 p-0.5 rounded text-slate-400 hover:text-red-500 transition-all"
         >
           <Trash2 className="h-3 w-3" />
         </button>
@@ -124,9 +124,9 @@ function SortableItem({
         "group flex items-center gap-1.5 pr-2 py-1.5 cursor-pointer transition-all duration-100",
         isPart ? "pl-4" : "pl-4",
         isActive
-          ? "bg-emerald-600/20 text-white"
-          : "text-slate-400 hover:bg-slate-700/30 hover:text-slate-300",
-        isDragging && "bg-slate-800 shadow-lg z-10"
+          ? "bg-emerald-50 text-emerald-700"
+          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+        isDragging && "bg-white shadow-lg z-10"
       )}
       onClick={() => setActiveChapter(chapter.id)}
     >
@@ -134,7 +134,7 @@ function SortableItem({
       <div
         {...attributes}
         {...listeners}
-        className="opacity-0 group-hover:opacity-100 cursor-grab active:cursor-grabbing shrink-0 outline-none text-slate-600"
+        className="opacity-0 group-hover:opacity-100 cursor-grab active:cursor-grabbing shrink-0 outline-none text-slate-400"
       >
         <GripVertical className="h-3 w-3" />
       </div>
@@ -146,7 +146,7 @@ function SortableItem({
         <span
           className={cn(
             "text-[11px] w-5 text-right tabular-nums shrink-0",
-            isActive ? "text-emerald-400 font-semibold" : "text-slate-600"
+            isActive ? "text-emerald-600 font-semibold" : "text-slate-400"
           )}
         >
           {bodyIndex}
@@ -161,7 +161,7 @@ function SortableItem({
       {/* Delete */}
       <button
         onClick={handleDelete}
-        className="shrink-0 opacity-0 group-hover:opacity-100 p-0.5 rounded text-slate-600 hover:text-red-400 transition-all"
+        className="shrink-0 opacity-0 group-hover:opacity-100 p-0.5 rounded text-slate-400 hover:text-red-500 transition-all"
       >
         <Trash2 className="h-3 w-3" />
       </button>
@@ -230,7 +230,7 @@ export function ChapterList({
 
   if (localChapters.length === 0) {
     return (
-      <div className="px-4 py-3 text-[12px] text-slate-600 italic">
+      <div className="px-5 py-3 text-[13px] text-slate-500 italic">
         {section === "front_matter"
           ? "Nenhuma página. Use Add para adicionar."
           : "Nenhum capítulo. Use Add para adicionar."}

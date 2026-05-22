@@ -5,9 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import { useProjectStore } from "@/stores/projectStore";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { cn } from "@/lib/utils";
-import { ProjectTopBar } from "@/components/layout/ProjectTopBar";
 import { RightSidebar } from "@/components/layout/RightSidebar";
-import { Menu } from "lucide-react";
+import { ChevronRight, Menu } from "lucide-react";
 
 /** Minimum width (px) the center column must maintain */
 const MIN_CENTER_WIDTH = 900;
@@ -38,9 +37,10 @@ export default function ProjectLayout({
     fetchTimeline,
     projects,
     focusMode,
+    sidebarOpen,
+    setSidebarOpen,
   } = useProjectStore();
   const router = useRouter();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [rightOpen, setRightOpen] = useState(true); // search panel open by default
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -54,17 +54,15 @@ export default function ProjectLayout({
 
   // Handler for toggling the left sidebar
   const handleToggleLeft = useCallback(() => {
-    setSidebarOpen((prev) => {
-      const next = !prev;
-      // Opening left: if right is already open and both won't fit, close right
-      if (next && rightOpen && !canFitBoth()) {
-        setRightOpen(false);
-      }
-      return next;
-    });
-  }, [rightOpen, canFitBoth]);
+    const next = !sidebarOpen;
+    setSidebarOpen(next);
+    // Opening left: if right is already open and both won't fit, close right
+    if (next && rightOpen && !canFitBoth()) {
+      setRightOpen(false);
+    }
+  }, [sidebarOpen, rightOpen, canFitBoth, setSidebarOpen]);
 
-  // Handler for toggling the right sidebar (from RightSidebar onOpenChange)
+  // Handler for toggling the right search panel (from RightSidebar onOpenChange)
   const handleToggleRight = useCallback(
     (open: boolean) => {
       if (open) {
@@ -123,22 +121,50 @@ export default function ProjectLayout({
 
   return (
     <div ref={containerRef} className={cn("h-screen flex overflow-hidden", focusMode ? "bg-surface-container-lowest text-on-background group relative" : "bg-white")}>
-      {/* Floating hamburger when sidebar is closed */}
+      {/* Hamburger — only when sidebar is closed */}
       {!focusMode && (
         <button
           onClick={() => { setSidebarOpen(true); if (rightOpen && !canFitBoth()) setRightOpen(false); }}
           className={cn(
-            "fixed left-4 top-4 z-50 p-2 rounded-md transition-colors bg-white/80 backdrop-blur-sm border border-border shadow-sm",
+            "fixed left-0 top-0 z-50 px-3 pt-4 pb-2 text-on-surface-variant hover:text-on-surface-variant/50 transition-colors",
             sidebarOpen ? "hidden" : "flex items-center justify-center"
           )}
           title="Abrir painel"
         >
-          <Menu className="h-5 w-5 text-slate-700" />
+          <Menu className="h-5 w-5" />
         </button>
       )}
+
+      {/* Chevron trigger to toggle left sidebar — positioned after the hamburger */}
+      {!focusMode && (
+        <div
+          className={cn(
+            "fixed top-0 h-full z-40 flex items-center transition-[left] duration-200 ease-out pointer-events-none",
+            sidebarOpen ? "left-64" : "left-0"
+          )}
+        >
+          <button
+            onClick={() => {
+              const next = !sidebarOpen;
+              setSidebarOpen(next);
+              if (next && rightOpen && !canFitBoth()) {
+                setRightOpen(false);
+              }
+            }}
+            className="pointer-events-auto flex flex-col items-center justify-center w-10 bg-white cursor-pointer hover:bg-surface-variant/30 transition-colors"
+            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
+          >
+            <ChevronRight
+              className={cn(
+                "h-8 w-8 stroke-[2] transition-transform duration-200 text-slate-400 hover:text-slate-600",
+                sidebarOpen && "rotate-180"
+              )}
+            />
+          </button>
+        </div>
+      )}
       {!focusMode && <Sidebar isOpen={sidebarOpen} onClose={handleToggleLeft} />}
-      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-all duration-300", focusMode ? "pt-14" : (sidebarOpen ? "ml-64" : "ml-0"))}>
-        <ProjectTopBar onToggleSidebar={handleToggleLeft} sidebarOpen={sidebarOpen} />
+      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out", focusMode ? "" : (sidebarOpen ? "ml-64" : "ml-0"))}>
         <main className={cn("flex-1 relative overflow-y-auto", focusMode ? "bg-surface-container-lowest scroll-smooth flex justify-center" : "bg-[#fafafa]")}>{children}</main>
       </div>
       {!focusMode && <RightSidebar isOpen={rightOpen} onOpenChange={handleToggleRight} />}

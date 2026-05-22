@@ -133,32 +133,33 @@ export function Sidebar({
   return (
     <>
       {/* Overlay backdrop for mobile/small screens */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-20 bg-black/20"
-          onClick={onClose}
-        />
-      )}
+      <div
+        className={cn(
+          "fixed inset-0 z-20 bg-black/20 transition-opacity duration-200",
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={onClose}
+      />
 
       <nav
         className={cn(
-          "fixed left-0 top-0 flex flex-col h-full z-30 bg-[#fafafa] text-on-surface w-64 flex-shrink-0 select-none border-r border-border transition-transform duration-300 ease-in-out",
+          "fixed left-0 top-0 flex flex-col h-full z-30 bg-white text-on-surface w-64 flex-shrink-0 select-none transition-transform duration-200 ease-out",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         {/* ── Header: Hamburger + Title + Add ── */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700/50">
+        <div className="flex items-center justify-between px-5 py-4">
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="p-1 rounded hover:bg-slate-200 transition-colors text-slate-600 hover:text-slate-800"
+              className="p-1 rounded transition-colors text-slate-700 hover:text-slate-700/50"
               title="Fechar painel"
             >
               <X className="h-5 w-5" />
             </button>
             <Link
               href={`/projects/${activeProjectId}`}
-              className="text-sm font-bold text-slate-800 tracking-wide uppercase"
+              className="text-[15px] font-semibold text-slate-800"
             >
               Manuscrito
             </Link>
@@ -166,7 +167,7 @@ export function Sidebar({
         <div className="relative">
           <button
             onClick={() => setAddMenuOpen(!addMenuOpen)}
-            className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors px-2 py-1 rounded hover:bg-surface-container-high"
+            className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors px-2 py-1 rounded hover:bg-slate-50"
           >
             Adicionar
             <Plus className="h-3.5 w-3.5" />
@@ -179,26 +180,26 @@ export function Sidebar({
                 className="fixed inset-0 z-40"
                 onClick={() => setAddMenuOpen(false)}
               />
-              <div className="absolute right-0 top-full mt-1 z-50 w-52 bg-[#0f172a] border border-slate-700 rounded-lg shadow-xl py-1 text-[13px]">
+              <div className="absolute right-0 top-full mt-1 z-50 w-52 bg-white rounded-lg shadow-xl py-1 text-[13px]">
                 <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
                   Corpo
                 </div>
                 <button
                   onClick={handleAddChapter}
-                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700 hover:text-slate-900 transition-colors"
                 >
-                  <FileText className="h-4 w-4 text-slate-500" />
+                  <FileText className="h-4 w-4 text-slate-400" />
                   Capítulo
                 </button>
                 <button
                   onClick={handleAddPart}
-                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700 hover:text-slate-900 transition-colors"
                 >
-                  <BookOpen className="h-4 w-4 text-slate-500" />
+                  <BookOpen className="h-4 w-4 text-slate-400" />
                   Parte / Seção
                 </button>
 
-                <div className="border-t border-slate-700 my-1" />
+                <div className="my-1" />
 
                 <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
                   Páginas Especiais
@@ -217,14 +218,14 @@ export function Sidebar({
                       className={cn(
                         "w-full flex items-center gap-2 px-3 py-2 transition-colors",
                         exists
-                          ? "text-slate-600 cursor-not-allowed"
-                          : "hover:bg-slate-800 text-slate-300 hover:text-white"
+                          ? "text-slate-400 cursor-not-allowed"
+                          : "hover:bg-slate-50 text-slate-700 hover:text-slate-900"
                       )}
                     >
-                      <opt.icon className="h-4 w-4 text-slate-500" />
+                      <opt.icon className="h-4 w-4 text-slate-400" />
                       {opt.title}
                       {exists && (
-                        <span className="ml-auto text-[10px] text-slate-600">
+                        <span className="ml-auto text-[10px] text-slate-400">
                           ✓
                         </span>
                       )}
@@ -244,7 +245,7 @@ export function Sidebar({
           <div>
             <button
               onClick={() => setFrontMatterExpanded(!frontMatterExpanded)}
-              className="w-full flex items-center justify-between px-4 py-2 text-[11px] uppercase tracking-wider font-semibold text-slate-500 hover:text-slate-400 transition-colors"
+              className="w-full flex items-center justify-between px-5 py-2.5 text-[11px] uppercase tracking-wider font-semibold text-slate-500 hover:text-slate-700 transition-colors"
             >
               <span className="flex items-center gap-1.5">
                 {frontMatterExpanded ? (
@@ -271,10 +272,10 @@ export function Sidebar({
         )}
 
         {/* Body Section */}
-        <div className="border-t border-slate-700/30">
+        <div>
           <button
             onClick={() => setBodyExpanded(!bodyExpanded)}
-            className="w-full flex items-center justify-between px-4 py-2 text-[11px] uppercase tracking-wider font-semibold text-slate-500 hover:text-slate-400 transition-colors"
+            className="w-full flex items-center justify-between px-5 py-2.5 text-[11px] uppercase tracking-wider font-semibold text-slate-500 hover:text-slate-700 transition-colors"
           >
             <span className="flex items-center gap-1.5">
               {bodyExpanded ? (
@@ -301,14 +302,14 @@ export function Sidebar({
       </div>
 
       {/* ── Footer: Word Count + Nav ── */}
-      <div className="border-t border-slate-700/50">
+      <div>
         {/* Word count */}
-        <div className="px-4 py-2 text-[12px] text-slate-500 tabular-nums">
+        <div className="px-5 py-3 text-[13px] text-slate-500 tabular-nums">
           {totalWords.toLocaleString("pt-BR")} palavras
         </div>
 
         {/* Navigation */}
-        <div className="border-t border-slate-700/50 px-2 py-2 space-y-0.5">
+        <div className="px-3 py-3 space-y-0.5">
           <FooterNavItem
             icon={Users}
             label="Personagens"
@@ -350,13 +351,13 @@ function FooterNavItem({
     <Link
       href={href}
       className={cn(
-        "flex items-center gap-2.5 px-3 py-1.5 rounded text-[12px] transition-all duration-150",
+        "flex items-center gap-2.5 px-3 py-1.5 rounded text-[13px] transition-all duration-150",
         active
-          ? "text-white bg-slate-700/50"
-          : "text-slate-400 hover:text-slate-200 hover:bg-slate-700/30"
+          ? "text-slate-900 bg-slate-100"
+          : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
       )}
     >
-      <Icon className="h-3.5 w-3.5 shrink-0" />
+      <Icon className="h-3.5 w-3.5 shrink-0 text-slate-400" />
       {label}
     </Link>
   );

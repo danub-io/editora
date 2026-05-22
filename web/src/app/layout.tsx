@@ -14,9 +14,9 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Editora - Sua Editora Pessoal",
+  title: "Editora — Dê vida ao seu livro",
   description:
-    "O ambiente focado e profissional para dar vida às suas histórias. Gerencie manuscritos, desenvolva personagens complexos e estruture suas timelines.",
+    "Encontre os melhores profissionais editoriais para transformar seu manuscrito em uma obra-prima. Editores, designers e marketeiros selecionados.",
 };
 
 export default function RootLayout({

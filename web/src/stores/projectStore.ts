@@ -70,6 +70,7 @@ interface ProjectStore {
   setActiveProject: (id: string | null) => void;
   setActiveChapter: (id: string | null) => void;
   toggleSidebar: () => void;
+  setSidebarOpen: (open: boolean) => void;
   toggleFocusMode: () => void;
 }
 
@@ -375,6 +376,7 @@ export const useProjectStore = create<ProjectStore>()(
       setActiveProject: (id) =>
         set({ activeProjectId: id, activeChapterId: null }),
       toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
+      setSidebarOpen: (open) => set({ sidebarOpen: open }),
       toggleFocusMode: () => set((s) => ({ focusMode: !s.focusMode })),
     }),
     {

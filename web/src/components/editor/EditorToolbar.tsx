@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 import { useProjectStore } from "@/stores/projectStore";
 
 export function EditorToolbar({ editor }: { editor: Editor }) {
-  const { focusMode, toggleFocusMode } = useProjectStore();
+  const { focusMode, toggleFocusMode, sidebarOpen } = useProjectStore();
 
   if (!editor) return null;
 
@@ -71,15 +71,12 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
   ];
 
   return (
-    <div className="sticky top-0 z-30 w-full bg-surface-container-lowest/90 backdrop-blur-sm border-b border-surface-variant px-8 py-2 flex justify-center">
+    <div className={cn("sticky top-0 z-30 w-full bg-surface-container-lowest/90 backdrop-blur-sm py-2 flex justify-center", sidebarOpen ? "px-4" : "pl-16 pr-4")}>
       <div className="w-full max-w-[800px] flex items-center gap-2">
         {/* Button Groups */}
-        <div className="flex items-center gap-1 bg-surface-container-low rounded-lg p-1 border border-border/30">
+        <div className="flex items-center gap-1 bg-surface-container-low rounded-lg p-1">
           {groups.map((group, gi) => (
             <div key={gi} className="flex items-center">
-              {gi > 0 && (
-                <div className="w-px h-4 bg-md-outline-variant/50 mx-1" />
-              )}
               {group.map((btn, bi) => (
                 <button
                   key={bi}
@@ -99,19 +96,12 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           ))}
         </div>
 
-        {/* Save Indicator */}
-        <div className="ml-auto text-ui-label text-md-outline flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary-container" />
-            Salvo
-          </div>
-          
-          <div className="w-px h-4 bg-md-outline-variant/50" />
-          
+        {/* Right side: focus mode */}
+        <div className="ml-auto flex items-center gap-2">
           <button
             onClick={toggleFocusMode}
             className="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded transition-colors"
-            title="Focus Mode"
+            title="Modo foco"
           >
             <Maximize2 className="h-5 w-5" />
           </button>

@@ -7,13 +7,36 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { EditorToolbar } from "./EditorToolbar";
 import { cn } from "@/lib/utils";
-import { Check, Loader2, AlertCircle, ArrowLeft } from "lucide-react";
+import { Check, Loader2, AlertCircle } from "lucide-react";
 
 export function Editor({ chapterId }: { chapterId: string }) {
   const { getChapter, updateChapter, focusMode, setActiveChapter } = useProjectStore();
   const chapter = getChapter(chapterId);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [editTitle, setEditTitle] = useState(chapter?.title || "");
+  const titleInputRef = useRef<HTMLInputElement>(null);
+
+  // Sync editTitle when chapter changes
+  useEffect(() => {
+    setEditTitle(chapter?.title || "");
+  }, [chapter?.title]);
+
+  const handleSaveTitle = useCallback(async () => {
+    const trimmed = editTitle.trim();
+    if (trimmed && trimmed !== chapter?.title) {
+      await updateChapter(chapterId, { title: trimmed });
+    }
+    setIsEditingTitle(false);
+  }, [editTitle, chapter?.title, chapterId, updateChapter]);
+
+  const handleTitleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      titleInputRef.current?.blur();
+    }
+  }, []);
 
   // Debounced save to API (800ms after stop typing)
   const debouncedSave = useCallback(
@@ -92,19 +115,34 @@ export function Editor({ chapterId }: { chapterId: string }) {
       )}
       <div className={cn("flex-1 overflow-y-auto px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
         <div className="w-full max-w-[800px]">
-          {!focusMode && (
-            <button
-              onClick={() => setActiveChapter(null)}
-              className="flex items-center gap-1.5 text-sm text-on-surface-variant hover:text-primary transition-colors py-3 -ml-1 group"
-            >
-              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
-              Voltar ao Dashboard
-            </button>
-          )}
+
         <article>
-          <h1 className={cn("font-serif text-editor-chapter text-on-surface outline-none", focusMode ? "mb-12 uppercase text-center tracking-widest" : "mb-12")}>
-            {chapter?.title || "Sem Título"}
-          </h1>
+          {isEditingTitle ? (
+            <input
+              ref={titleInputRef}
+              type="text"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              onBlur={handleSaveTitle}
+              onKeyDown={handleTitleKeyDown}
+              className={cn(
+                "w-full bg-transparent font-serif text-editor-chapter text-on-surface outline-none pb-0.5",
+                focusMode ? "mb-12 uppercase text-center tracking-widest" : "mb-12"
+              )}
+              autoFocus
+            />
+          ) : (
+            <h1
+              onClick={() => setIsEditingTitle(true)}
+              className={cn(
+                "font-serif text-editor-chapter text-on-surface outline-none cursor-pointer hover:text-primary/80 transition-colors",
+                focusMode ? "mb-12 uppercase text-center tracking-widest" : "mb-12"
+              )}
+              title="Clique para editar o título"
+            >
+              {chapter?.title || "Sem Título"}
+            </h1>
+          )}
           <div className={cn("font-serif text-editor-text outline-none", focusMode ? "text-on-surface-variant space-y-8 leading-relaxed" : "text-on-surface")}>
             <EditorContent editor={editor} />
           </div>
