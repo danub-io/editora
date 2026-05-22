@@ -7,10 +7,10 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { EditorToolbar } from "./EditorToolbar";
 import { cn } from "@/lib/utils";
-import { Check, Loader2, AlertCircle } from "lucide-react";
+import { Check, Loader2, AlertCircle, ArrowLeft } from "lucide-react";
 
 export function Editor({ chapterId }: { chapterId: string }) {
-  const { getChapter, updateChapter, focusMode } = useProjectStore();
+  const { getChapter, updateChapter, focusMode, setActiveChapter } = useProjectStore();
   const chapter = getChapter(chapterId);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
@@ -90,7 +90,17 @@ export function Editor({ chapterId }: { chapterId: string }) {
         </div>
       )}
       <div className={cn("flex-1 overflow-y-auto px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
-        <article className="w-full max-w-[800px]">
+        <div className="w-full max-w-[800px]">
+          {!focusMode && (
+            <button
+              onClick={() => setActiveChapter(null)}
+              className="flex items-center gap-1.5 text-sm text-on-surface-variant hover:text-primary transition-colors py-3 -ml-1 group"
+            >
+              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+              Voltar ao Dashboard
+            </button>
+          )}
+        <article>
           <h1 className={cn("font-serif text-editor-chapter text-on-surface outline-none", focusMode ? "mb-12 uppercase text-center tracking-widest" : "mb-12")}>
             {chapter?.title || "Sem Título"}
           </h1>
@@ -98,6 +108,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
             <EditorContent editor={editor} />
           </div>
         </article>
+        </div>
       </div>
     </div>
   );
