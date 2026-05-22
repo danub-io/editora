@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 import {
   Settings,
   Save,
@@ -110,8 +111,9 @@ export default function SettingsPage() {
   };
 
   const handleDelete = async () => {
-    if (confirm("Tem certeza que deseja excluir este projeto? Esta ação é irreversível.")) {
+    if (window.confirm("Tem certeza que deseja excluir este projeto? Esta ação é irreversível.")) {
       await deleteProject(projectId);
+      toast.success("Projeto excluído com sucesso.");
       router.push("/");
     }
   };
