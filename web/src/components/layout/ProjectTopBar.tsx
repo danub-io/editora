@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { GlobalSearch } from "../search/GlobalSearch";
 
 export function ProjectTopBar() {
-  const { activeProjectId, focusMode, toggleFocusMode, getProject, getChapter, activeChapterId, chapters } = useProjectStore();
+  const { activeProjectId, focusMode, toggleFocusMode, getProject, getChapter, activeChapterId, chapters, setActiveChapter } = useProjectStore();
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isBuilding, setIsBuilding] = useState(false);
@@ -110,9 +110,17 @@ export function ProjectTopBar() {
           >
             Dashboard
           </Link>
-          <span className="h-full flex items-center text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
+          <button
+            onClick={() => setActiveChapter(null)}
+            className={cn(
+              "h-full flex items-center transition-colors cursor-pointer border-b-2",
+              activeChapterId
+                ? "text-primary border-primary"
+                : "text-on-surface-variant hover:text-on-surface border-transparent"
+            )}
+          >
             Manuscrito
-          </span>
+          </button>
           <span className="h-full flex items-center text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
             Revisão
           </span>
