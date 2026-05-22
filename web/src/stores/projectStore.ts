@@ -55,6 +55,7 @@ interface ProjectStore {
     data: Omit<Location, "id" | "createdAt" | "updatedAt">
   ) => Promise<Location>;
   deleteLocation: (id: string) => Promise<void>;
+  updateLocation: (id: string, updates: Partial<Location>) => Promise<void>;
   getLocationsByProject: (projectId: string) => Location[];
 
   fetchTimeline: (projectId: string) => Promise<void>;
@@ -300,6 +301,19 @@ export const useProjectStore = create<ProjectStore>()(
       deleteLocation: async (id) => {
         await fetch(`/api/locations/${id}`, { method: "DELETE" });
         set((s) => ({ locations: s.locations.filter((l) => l.id !== id) }));
+      },
+
+      updateLocation: async (id, updates) => {
+        await fetch(`/api/locations/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updates),
+        });
+        set((s) => ({
+          locations: s.locations.map((l) =>
+            l.id === id ? { ...l, ...updates, updatedAt: new Date() } : l
+          ),
+        }));
       },
 
       getLocationsByProject: (projectId) =>
