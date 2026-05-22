@@ -84,19 +84,19 @@ function Footer() {
         <div className="flex flex-col gap-3">
           <h4 className="mb-1 font-bold text-on-background">Empresa</h4>
           <Link
-            href="#"
+            href="/"
             className="text-ui-label text-on-surface-variant transition-colors hover:text-primary"
           >
             Sobre
           </Link>
           <Link
-            href="#"
+            href="/"
             className="text-ui-label text-on-surface-variant transition-colors hover:text-primary"
           >
             Blog
           </Link>
           <Link
-            href="#"
+            href="/"
             className="text-ui-label text-on-surface-variant transition-colors hover:text-primary"
           >
             Carreiras
@@ -107,13 +107,13 @@ function Footer() {
         <div className="flex flex-col gap-3">
           <h4 className="mb-1 font-bold text-on-background">Legal</h4>
           <Link
-            href="#"
+            href="/"
             className="text-ui-label text-on-surface-variant transition-colors hover:text-primary"
           >
             Privacidade
           </Link>
           <Link
-            href="#"
+            href="/"
             className="text-ui-label text-on-surface-variant transition-colors hover:text-primary"
           >
             Termos
@@ -124,13 +124,13 @@ function Footer() {
         <div className="flex flex-col gap-3">
           <h4 className="mb-1 font-bold text-on-background">Suporte</h4>
           <Link
-            href="#"
+            href="/"
             className="text-ui-label text-on-surface-variant transition-colors hover:text-primary"
           >
             Contato
           </Link>
           <Link
-            href="#"
+            href="/"
             className="text-ui-label text-on-surface-variant transition-colors hover:text-primary"
           >
             Central de Ajuda
