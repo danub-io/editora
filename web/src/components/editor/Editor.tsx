@@ -7,10 +7,10 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { EditorToolbar } from "./EditorToolbar";
 import { cn } from "@/lib/utils";
-import { Check, Loader2, AlertCircle } from "lucide-react";
+import { Check, Loader2, AlertCircle, Minimize2 } from "lucide-react";
 
 export function Editor({ chapterId }: { chapterId: string }) {
-  const { getChapter, updateChapter, focusMode, setActiveChapter } = useProjectStore();
+  const { getChapter, updateChapter, focusMode, toggleFocusMode, setActiveChapter } = useProjectStore();
   const chapter = getChapter(chapterId);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
@@ -98,10 +98,20 @@ export function Editor({ chapterId }: { chapterId: string }) {
   return (
     <div className="flex flex-col h-full bg-surface-container-lowest">
       {!focusMode && <EditorToolbar editor={editor} />}
+
+      {/* Exit focus mode button */}
+      {focusMode && (
+        <button
+          onClick={toggleFocusMode}
+          className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-surface-container-low/80 backdrop-blur-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"
+          title="Sair do modo foco"
+        >
+          <Minimize2 className="h-5 w-5" />
+        </button>
+      )}
       
       {/* Status de Salvamento */}
-      {!focusMode && (
-        <div className="absolute right-6 top-[5.5rem] flex items-center gap-1.5 text-xs text-on-surface-variant">
+      <div className="absolute right-6 top-20 flex items-center gap-1.5 text-xs text-on-surface-variant">
           {saveStatus === 'saving' && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
           {saveStatus === 'saved' && <Check className="h-3.5 w-3.5 text-green-600" />}
           {saveStatus === 'error' && <AlertCircle className="h-3.5 w-3.5 text-red-600" />}
@@ -112,7 +122,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
             {saveStatus === 'error' && 'Erro ao salvar'}
           </span>
         </div>
-      )}
+
       <div className={cn("flex-1 overflow-y-auto px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
         <div className="w-full max-w-[800px]">
 

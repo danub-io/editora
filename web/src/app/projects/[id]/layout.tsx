@@ -120,7 +120,7 @@ export default function ProjectLayout({
   }, [id, fetchChapters, fetchCharacters, fetchLocations, fetchTimeline]);
 
   return (
-    <div ref={containerRef} className={cn("h-screen flex overflow-hidden", focusMode ? "bg-surface-container-lowest text-on-background group relative" : "bg-white")}>
+    <div ref={containerRef} className={cn("h-screen flex overflow-hidden", focusMode ? "bg-surface-container-lowest text-on-background group relative" : "bg-surface-container-lowest")}>
       {/* Hamburger — only when sidebar is closed */}
       {!focusMode && (
         <button
@@ -151,7 +151,7 @@ export default function ProjectLayout({
                 setRightOpen(false);
               }
             }}
-            className="pointer-events-auto flex flex-col items-center justify-center w-10 bg-white cursor-pointer hover:bg-surface-variant/30 transition-colors"
+            className="pointer-events-auto flex flex-col items-center justify-center w-10 bg-transparent cursor-pointer transition-colors"
             title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
           >
             <ChevronRight
@@ -164,8 +164,8 @@ export default function ProjectLayout({
         </div>
       )}
       {!focusMode && <Sidebar isOpen={sidebarOpen} onClose={handleToggleLeft} />}
-      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out", focusMode ? "" : (sidebarOpen ? "ml-64" : "ml-0"))}>
-        <main className={cn("flex-1 relative overflow-y-auto", focusMode ? "bg-surface-container-lowest scroll-smooth flex justify-center" : "bg-[#fafafa]")}>{children}</main>
+      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out bg-surface-container-lowest", focusMode ? "bg-transparent" : (sidebarOpen ? "ml-[296px]" : "ml-10 mr-10"))}>
+        <main className={cn("flex-1 relative overflow-y-auto", focusMode ? "bg-surface-container-lowest scroll-smooth flex justify-center" : "")}>{children}</main>
       </div>
       {!focusMode && <RightSidebar isOpen={rightOpen} onOpenChange={handleToggleRight} />}
     </div>

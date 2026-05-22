@@ -100,7 +100,7 @@ export function RightSidebar({
       defaultOpen
       className="flex h-full relative z-40 shrink-0"
     >
-      <CollapsibleTrigger className="flex flex-col items-center justify-center w-10 bg-white cursor-pointer data-[open]:[&_svg]:rotate-180">
+      <CollapsibleTrigger className="flex flex-col items-center justify-center w-10 bg-transparent cursor-pointer aria-expanded:[&_svg]:rotate-180">
         <ChevronLeft className="h-8 w-8 stroke-[2] transition-transform duration-200 text-slate-400 hover:text-slate-600" />
       </CollapsibleTrigger>
 
