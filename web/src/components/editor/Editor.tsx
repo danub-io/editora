@@ -112,14 +112,14 @@ export function Editor({ chapterId }: { chapterId: string }) {
   if (!editor) return null;
 
   return (
-    <div className="flex flex-col h-full bg-surface-container-lowest">
+    <div className="flex flex-col h-full bg-background">
       <SelectionToolbar editor={editor} focusMode={focusMode} />
 
       {/* Exit focus mode button */}
       {focusMode && (
         <button
           onClick={toggleFocusMode}
-          className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-surface-container-low/80 backdrop-blur-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"
+          className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-primary hover:bg-accent transition-colors"
           title="Sair do modo foco"
         >
           <Minimize2 className="h-5 w-5" />
@@ -127,7 +127,8 @@ export function Editor({ chapterId }: { chapterId: string }) {
       )}
       
       {/* Status de Salvamento */}
-      <div className="absolute right-6 top-20 flex items-center gap-1.5 text-xs text-on-surface-variant">
+      {!focusMode && (
+      <div className="absolute right-6 top-20 flex items-center gap-1.5 text-xs text-muted-foreground">
           {saveStatus === 'saving' && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
           {saveStatus === 'saved' && <Check className="h-3.5 w-3.5 text-green-600" />}
           {saveStatus === 'error' && <AlertCircle className="h-3.5 w-3.5 text-red-600" />}
@@ -138,9 +139,10 @@ export function Editor({ chapterId }: { chapterId: string }) {
             {saveStatus === 'error' && 'Erro ao salvar'}
           </span>
         </div>
+      )}
 
       <div className={cn("flex-1 overflow-y-auto px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
-        <div className="w-full max-w-[800px]">
+        <div className={cn("w-full", focusMode ? "max-w-2xl" : "max-w-3xl")}>
 
         <article>
           {isEditingTitle ? (
@@ -152,8 +154,8 @@ export function Editor({ chapterId }: { chapterId: string }) {
               onBlur={handleSaveTitle}
               onKeyDown={handleTitleKeyDown}
               className={cn(
-                "w-full bg-transparent font-serif text-editor-chapter text-on-surface outline-none pb-0.5",
-                focusMode ? "mb-4 uppercase text-center tracking-widest" : "mb-4"
+                "w-full bg-transparent font-serif text-3xl outline-none pb-0.5",
+                focusMode ? "mb-8 text-center" : "mb-4"
               )}
               autoFocus
             />
@@ -161,15 +163,15 @@ export function Editor({ chapterId }: { chapterId: string }) {
             <h1
               onClick={() => setIsEditingTitle(true)}
               className={cn(
-                "font-serif text-editor-chapter text-on-surface outline-none cursor-pointer hover:text-primary/80 transition-colors",
-                focusMode ? "mb-4 uppercase text-center tracking-widest" : "mb-4"
+                "font-serif text-3xl outline-none cursor-pointer hover:text-primary/80 transition-colors",
+                focusMode ? "mb-8 text-center" : "mb-4"
               )}
               title="Clique para editar o título"
             >
               {chapter?.title || "Sem Título"}
             </h1>
           )}
-          <div className={cn("font-serif text-editor-text outline-none", focusMode ? "text-on-surface-variant space-y-4 leading-relaxed" : "text-on-surface")}>
+          <div className={cn("outline-none", focusMode ? "text-foreground/85 space-y-4 leading-relaxed" : "text-foreground")}>
             <EditorContent editor={editor} />
           </div>
         </article>

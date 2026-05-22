@@ -24,13 +24,13 @@ export default function LandingPage() {
       >
         <Link
           href="/dash"
-          className="hidden text-ui-label font-medium text-on-surface-variant transition-colors hover:text-on-background md:block"
+          className="hidden text-xs font-medium text-muted-foreground transition-colors hover:text-foreground md:block"
         >
           Entrar
         </Link>
         <Link
           href="/dash"
-          className="rounded-full bg-primary px-6 py-2.5 text-ui-label font-medium text-on-primary shadow-sm transition-colors hover:bg-primary/90"
+          className="rounded-full bg-primary px-6 py-2.5 text-xs font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
         >
           Começar
         </Link>
@@ -39,10 +39,10 @@ export default function LandingPage() {
       <main className="flex-1">
         {/* ─── Hero Section ─── */}
         <section className="mx-auto max-w-7xl px-6 py-24 text-center md:px-8">
-          <h1 className="mx-auto mb-4 max-w-4xl font-serif text-h1 font-bold leading-tight tracking-tight text-on-background">
+          <h1 className="mx-auto mb-4 max-w-4xl font-serif text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-foreground">
             Transforme seu manuscrito em uma obra-prima
           </h1>
-          <p className="mx-auto mb-4 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
+          <p className="mx-auto mb-4 max-w-2xl font-sans text-base lg:text-lg leading-relaxed text-muted-foreground">
             Conecte-se com os melhores editores, designers e profissionais do
             mercado editorial. Selecionamos os top 3% para garantir que sua
             obra brilhe.
@@ -50,14 +50,14 @@ export default function LandingPage() {
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Link
               href="/dash"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-ui-label font-medium text-on-primary shadow-sm transition-colors hover:bg-primary/90"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-xs font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
             >
               Começar agora
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/dash"
-              className="inline-flex items-center justify-center rounded-full bg-surface-container-lowest px-8 py-3.5 text-ui-label font-medium text-on-background transition-colors hover:bg-surface-container"
+              className="inline-flex items-center justify-center rounded-full bg-card px-8 py-3.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
             >
               Explorar profissionais
             </Link>
@@ -65,22 +65,22 @@ export default function LandingPage() {
         </section>
 
         {/* ─── Trust / Logos Section ─── */}
-        <section className="bg-surface-container-low py-12">
+        <section className="bg-muted py-12">
           <div className="mx-auto max-w-7xl px-6 text-center md:px-8">
-            <p className="mb-4 text-ui-label font-medium uppercase tracking-wider text-md-outline">
+            <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
               Destaque na mídia
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 opacity-50 md:gap-4">
-              <span className="font-serif text-headline-md font-bold text-on-background">
+              <span className="font-serif text-lg font-bold text-foreground">
                 The New York Times
               </span>
-              <span className="font-serif text-headline-md font-bold italic text-on-background">
+              <span className="font-serif text-lg font-bold italic text-foreground">
                 Forbes
               </span>
-              <span className="font-serif text-headline-md font-bold tracking-tighter text-on-background">
+              <span className="font-serif text-lg font-bold tracking-tighter text-foreground">
                 WIRED
               </span>
-              <span className="font-serif text-headline-md font-bold uppercase text-on-background">
+              <span className="font-serif text-lg font-bold uppercase text-foreground">
                 The Guardian
               </span>
             </div>
@@ -91,10 +91,10 @@ export default function LandingPage() {
         <section className="mx-auto max-w-7xl px-6 py-24 md:px-8">
           <div className="grid items-center gap-4 md:grid-cols-2">
             <div>
-              <h2 className="mb-4 font-serif text-h2 font-semibold text-on-background">
+              <h2 className="mb-4 font-serif text-3xl lg:text-4xl font-semibold text-foreground">
                 Conheça os profissionais
               </h2>
-              <p className="mb-4 font-sans text-editor-text leading-relaxed text-on-surface-variant">
+              <p className="mb-4 font-sans text-base lg:text-lg leading-relaxed text-muted-foreground">
                 Nosso marketplace reúne milhares de editores, designers e
                 marketeiros independentes que já trabalharam em livros
                 best-sellers.
@@ -102,26 +102,26 @@ export default function LandingPage() {
               <ul className="mb-4 space-y-4">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="mt-0 h-5 w-5 shrink-0 text-primary" />
-                  <span className="text-ui-body text-on-surface-variant">
+                  <span className="text-sm text-muted-foreground">
                     Top 3% de talentos selecionados
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="mt-0 h-5 w-5 shrink-0 text-primary" />
-                  <span className="text-ui-body text-on-surface-variant">
+                  <span className="text-sm text-muted-foreground">
                     Experiência verificada no mercado editorial
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="mt-0 h-5 w-5 shrink-0 text-primary" />
-                  <span className="text-ui-body text-on-surface-variant">
+                  <span className="text-sm text-muted-foreground">
                     Ferramentas de colaboração integradas
                   </span>
                 </li>
               </ul>
               <Link
                 href="/dash"
-                className="inline-flex items-center gap-1 text-ui-label font-medium text-primary transition-colors hover:text-primary/80"
+                className="inline-flex items-center gap-1 text-xs font-medium text-primary transition-colors hover:text-primary/80"
               >
                 Explorar perfis{" "}
                 <ArrowRight className="h-4 w-4" />
@@ -129,20 +129,20 @@ export default function LandingPage() {
             </div>
 
             <div className="relative">
-              <div className="flex items-center justify-center rounded-xl bg-surface-container-lowest p-8 shadow-sm">
+              <div className="flex items-center justify-center rounded-xl bg-card p-8 shadow-sm">
                 <div className="flex flex-col items-center gap-4">
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary-container">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
                     <Users className="h-10 w-10 text-primary" />
                   </div>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="h-5 w-5 fill-tertiary-fixed text-tertiary-fixed" />
+                      <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <p className="text-ui-label font-medium text-on-background">
+                  <p className="text-xs font-medium text-foreground">
                     Editora Profissional
                   </p>
-                  <p className="text-center text-ui-body text-on-surface-variant">
+                  <p className="text-center text-sm text-muted-foreground">
                     &ldquo;Excelente trabalho editorial, superou todas as
                     expectativas.&rdquo;
                   </p>
@@ -153,30 +153,30 @@ export default function LandingPage() {
         </section>
 
         {/* ─── Collaboration Section ─── */}
-        <section className="bg-surface-container-low">
+        <section className="bg-muted">
           <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 md:grid-cols-2 md:px-8">
             <div className="order-2 md:order-1">
-              <div className="flex items-center justify-center rounded-xl bg-surface-container-lowest p-8 shadow-sm">
+              <div className="flex items-center justify-center rounded-xl bg-card p-8 shadow-sm">
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div className="flex flex-col items-center gap-2">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-container">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                       <MessageCircle className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="text-ui-label font-bold text-on-background">
+                    <h3 className="text-xs font-bold text-foreground">
                       Mensagens
                     </h3>
-                    <p className="text-ui-label text-on-surface-variant">
+                    <p className="text-xs text-muted-foreground">
                       Chat em tempo real com profissionais.
                     </p>
                   </div>
                   <div className="flex flex-col items-center gap-2">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-container">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                       <FolderOpen className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="text-ui-label font-bold text-on-background">
+                    <h3 className="text-xs font-bold text-foreground">
                       Arquivos
                     </h3>
-                    <p className="text-ui-label text-on-surface-variant">
+                    <p className="text-xs text-muted-foreground">
                       Compartilhe manuscritos com segurança.
                     </p>
                   </div>
@@ -185,34 +185,34 @@ export default function LandingPage() {
             </div>
 
             <div className="order-1 md:order-2">
-              <h2 className="mb-4 font-serif text-h2 font-semibold text-on-background">
+              <h2 className="mb-4 font-serif text-3xl lg:text-4xl font-semibold text-foreground">
                 Colaboração perfeita
               </h2>
-              <p className="mb-4 max-w-lg font-sans text-editor-text leading-relaxed text-on-surface-variant">
+              <p className="mb-4 max-w-lg font-sans text-base lg:text-lg leading-relaxed text-muted-foreground">
                 Gerencie todo o seu projeto em um único painel. Compartilhe
                 arquivos, comunique-se diretamente e processe pagamentos com
                 segurança — tudo sem sair da plataforma.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                     <MessageCircle className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="mb-4 text-ui-label font-bold text-on-background">
+                  <h3 className="mb-4 text-xs font-bold text-foreground">
                     Mensagens diretas
                   </h3>
-                  <p className="text-ui-label text-on-surface-variant">
+                  <p className="text-xs text-muted-foreground">
                     Converse com profissionais instantaneamente.
                   </p>
                 </div>
                 <div>
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                     <FolderOpen className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="mb-4 text-ui-label font-bold text-on-background">
+                  <h3 className="mb-4 text-xs font-bold text-foreground">
                     Compartilhamento
                   </h3>
-                  <p className="text-ui-label text-on-surface-variant">
+                  <p className="text-xs text-muted-foreground">
                     Troque manuscritos com total segurança.
                   </p>
                 </div>
@@ -223,23 +223,23 @@ export default function LandingPage() {
 
         {/* ─── Trust & Protection Section ─── */}
         <section className="mx-auto max-w-7xl px-6 py-24 text-center md:px-8">
-          <h2 className="mx-auto mb-4 max-w-2xl font-serif text-h2 font-semibold text-on-background">
+          <h2 className="mx-auto mb-4 max-w-2xl font-serif text-3xl lg:text-4xl font-semibold text-foreground">
             Seu trabalho está seguro
           </h2>
-          <p className="mx-auto mb-4 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
+          <p className="mx-auto mb-4 max-w-2xl font-sans text-base lg:text-lg leading-relaxed text-muted-foreground">
             Cuidamos dos contratos e pagamentos para que você possa focar no
             processo criativo. Cada projeto é respaldado pela nossa garantia
             Editora.
           </p>
           <div className="flex justify-center">
-            <div className="inline-flex max-w-md flex-col items-center gap-4 rounded-xl bg-surface-container-lowest p-8 shadow-sm">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-container">
+            <div className="inline-flex max-w-md flex-col items-center gap-4 rounded-xl bg-card p-8 shadow-sm">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
                 <ShieldCheck className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-serif text-headline-md font-semibold text-on-background">
+              <h3 className="font-serif text-lg font-semibold text-foreground">
                 Garantia Editora
               </h3>
-              <p className="text-ui-body text-on-surface-variant">
+              <p className="text-sm text-muted-foreground">
                 Proteção total do início ao fim. Segurança, transparência e
                 qualidade garantida em cada etapa do seu projeto editorial.
               </p>
@@ -248,18 +248,18 @@ export default function LandingPage() {
         </section>
 
         {/* ─── Final CTA Section ─── */}
-        <section className="bg-primary px-6 py-24 text-center text-on-primary">
+        <section className="bg-primary px-6 py-24 text-center text-primary-foreground">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 font-serif text-h1 font-bold leading-tight">
+            <h2 className="mb-4 font-serif text-4xl lg:text-5xl font-bold leading-tight">
               Pronto para publicar sua obra-prima?
             </h2>
-            <p className="mx-auto mb-4 max-w-2xl font-sans text-editor-text leading-relaxed text-on-primary-container/80">
+            <p className="mx-auto mb-4 max-w-2xl font-sans text-base lg:text-lg leading-relaxed text-primary-foreground/80">
               Junte-se a milhares de autores que encontraram a equipe editorial
               perfeita na Editora.
             </p>
             <Link
               href="/dash"
-              className="inline-flex items-center justify-center rounded-full bg-surface-container-lowest px-8 py-4 text-ui-label font-medium text-primary shadow-sm transition-colors hover:bg-surface-container"
+              className="inline-flex items-center justify-center rounded-full bg-card px-8 py-4 text-xs font-medium text-primary shadow-sm transition-colors hover:bg-muted"
             >
               Cadastre-se gratuitamente
             </Link>

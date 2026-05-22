@@ -107,25 +107,25 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[10vh]">
       <div 
-        className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       
       <div className="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Search Header */}
-        <div className="flex items-center px-4 py-3 border-b border-slate-200 bg-slate-50/50">
-          <Search className="h-5 w-5 text-slate-400 shrink-0" />
+        <div className="flex items-center px-4 py-3 border-b border-border bg-muted/50">
+          <Search className="h-5 w-5 text-muted-foreground shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Pesquisar em todo o manuscrito..."
-            className="flex-1 bg-transparent border-none focus:ring-0 text-base placeholder:text-slate-400 px-3 py-2 outline-none"
+            className="flex-1 bg-transparent border-none focus:ring-0 text-base placeholder:text-muted-foreground px-3 py-2 outline-none"
           />
           <button
             onClick={onClose}
-            className="p-1 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-200 transition-colors"
+            className="p-1 text-muted-foreground hover:text-foreground/70 rounded-md hover:bg-accent transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
@@ -134,7 +134,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
         {/* Search Results */}
         <div className="max-h-[60vh] overflow-y-auto">
           {query.trim() && results.length === 0 ? (
-            <div className="py-12 text-center text-slate-500">
+            <div className="py-12 text-center text-muted-foreground">
               Nenhum resultado encontrado para "{query}"
             </div>
           ) : results.length > 0 ? (
@@ -143,20 +143,20 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                 <button
                   key={`${result.chapterId}-${result.type}-${i}`}
                   onClick={() => handleSelectResult(result.chapterId)}
-                  className="w-full flex items-start gap-3 px-4 py-3 hover:bg-slate-50 text-left transition-colors border-b border-slate-100 last:border-0"
+                  className="w-full flex items-start gap-3 px-4 py-3 hover:bg-accent text-left transition-colors border-b border-border last:border-0"
                 >
                   <div className="mt-0.5 p-1.5 rounded-md bg-primary/10 text-primary shrink-0">
                     <FileText className="h-4 w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 text-sm font-medium text-slate-900 mb-1">
+                    <div className="flex items-center gap-1.5 text-sm font-medium text-foreground mb-1">
                       {result.chapterTitle}
-                      <ChevronRight className="h-3 w-3 text-slate-400" />
-                      <span className="text-xs font-normal text-slate-500">
+                      <ChevronRight className="h-3 w-3 text-muted-foreground" />
+                      <span className="text-xs font-normal text-muted-foreground">
                         {result.type === "title" ? "No Título" : "No Conteúdo"}
                       </span>
                     </div>
-                    <div className="text-sm text-slate-600 truncate">
+                    <div className="text-sm text-foreground/70 truncate">
                       {result.type === "content" ? (
                         <>
                           {result.snippet.split(new RegExp(`(${query})`, "gi")).map((part, index) => 
@@ -170,7 +170,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                           )}
                         </>
                       ) : (
-                        <span className="text-slate-400 italic">Corresponde ao título do capítulo</span>
+                        <span className="text-muted-foreground italic">Corresponde ao título do capítulo</span>
                       )}
                     </div>
                   </div>
@@ -179,13 +179,13 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             </div>
           ) : (
             <div className="py-12 text-center">
-              <Search className="h-8 w-8 text-slate-300 mx-auto mb-3" />
-              <p className="text-sm text-slate-500">
+              <Search className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+              <p className="text-sm text-muted-foreground">
                 Digite para buscar em títulos e conteúdos de capítulos.
               </p>
-              <div className="mt-4 flex items-center justify-center gap-2 text-xs text-slate-400">
+              <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <span>Dica: Pressione</span>
-                <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded font-mono">Esc</kbd>
+                <kbd className="px-1.5 py-0.5 bg-muted border border-border rounded font-mono">Esc</kbd>
                 <span>para fechar</span>
               </div>
             </div>

@@ -71,10 +71,10 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
   ];
 
   return (
-    <div className={cn("sticky top-0 z-30 w-full bg-surface-container-lowest/90 backdrop-blur-sm py-2 flex justify-center", sidebarOpen ? "px-4" : "pl-16 pr-4")}>
+    <div className={cn("sticky top-0 z-30 w-full bg-background/80 backdrop-blur-sm border-b border-border py-2 flex justify-center", sidebarOpen ? "px-4" : "pl-16 pr-4")}>
       <div className="w-full max-w-[800px] flex items-center gap-2">
         {/* Button Groups */}
-        <div className="flex items-center gap-1 bg-surface-container-low rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
           {groups.map((group, gi) => (
             <div key={gi} className="flex items-center">
               {group.map((btn, bi) => (
@@ -84,8 +84,8 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
                   className={cn(
                     "p-1.5 rounded transition-colors flex items-center justify-center",
                     btn.isActive
-                      ? "bg-surface-container-highest text-primary"
-                      : "text-on-surface-variant hover:bg-surface-container-highest"
+                      ? "bg-accent text-accent-foreground"
+                      : "text-muted-foreground hover:bg-accent"
                   )}
                   title={btn.label}
                 >
@@ -100,7 +100,7 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
         <div className="ml-auto flex items-center gap-2">
           <button
             onClick={toggleFocusMode}
-            className="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded transition-colors"
+            className="p-1.5 text-muted-foreground hover:text-primary hover:bg-accent rounded transition-colors"
             title="Modo foco"
           >
             <Maximize2 className="h-5 w-5" />

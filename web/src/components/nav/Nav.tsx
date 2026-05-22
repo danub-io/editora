@@ -17,7 +17,7 @@ interface NavProps {
 
 export function Nav({ links = [], children }: NavProps) {
   return (
-    <nav className="sticky top-0 z-50 w-full bg-surface-container-lowest/90 backdrop-blur-sm">
+    <nav className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-sm border-b border-border">
       <div className="mx-auto flex h-16 items-center justify-between px-6 md:px-8">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
@@ -36,7 +36,7 @@ export function Nav({ links = [], children }: NavProps) {
                 href={link.href}
                 className={cn(
                   "text-sm font-medium transition-colors",
-                  "text-on-surface-variant hover:text-primary"
+                  "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {link.label}
