@@ -85,7 +85,7 @@ export const useProjectStore = create<ProjectStore>()(
       timelineEvents: [],
       activeProjectId: null,
       activeChapterId: null,
-      sidebarOpen: true,
+      sidebarOpen: false,
       focusMode: false,
       isLoading: false,
 
@@ -381,9 +381,9 @@ export const useProjectStore = create<ProjectStore>()(
     }),
     {
       name: "editora-storage",
+      version: 1,
       partialize: (state) => ({
         activeProjectId: state.activeProjectId,
-        sidebarOpen: state.sidebarOpen,
         focusMode: state.focusMode,
       }),
     }

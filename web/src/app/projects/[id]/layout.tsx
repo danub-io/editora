@@ -41,7 +41,7 @@ export default function ProjectLayout({
     setSidebarOpen,
   } = useProjectStore();
   const router = useRouter();
-  const [rightOpen, setRightOpen] = useState(true); // search panel open by default
+  const [rightOpen, setRightOpen] = useState(false); // search panel closed by default
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Check if both sidebars can be open simultaneously given the current viewport

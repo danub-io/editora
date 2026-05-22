@@ -97,7 +97,7 @@ export default function CharactersPage() {
 
   return (
     <div className="p-8 md:p-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
           <h2 className="text-h2 font-semibold text-on-background">Personagens</h2>
           <p className="text-ui-body text-on-surface-variant mt-1">Gerencie o elenco da sua história.</p>

@@ -180,7 +180,7 @@ export function Sidebar({
                 className="fixed inset-0 z-40"
                 onClick={() => setAddMenuOpen(false)}
               />
-              <div className="absolute right-0 top-full mt-1 z-50 w-52 bg-white rounded-lg shadow-xl py-1 text-[13px]">
+              <div className="absolute right-0 top-full mt-0 z-50 w-52 bg-white rounded-lg shadow-xl py-1 text-[13px]">
                 <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
                   Corpo
                 </div>
@@ -309,7 +309,7 @@ export function Sidebar({
         </div>
 
         {/* Navigation */}
-        <div className="px-3 py-3 space-y-0.5">
+        <div className="px-3 py-3 space-y-4">
           <FooterNavItem
             icon={Users}
             label="Personagens"

@@ -80,7 +80,7 @@ export default function DashboardPage() {
           <h1 className="text-h1 font-bold text-primary mb-4">
             Sua Editora Pessoal
           </h1>
-          <p className="text-editor-text text-on-surface-variant mb-8 max-w-2xl font-serif">
+          <p className="text-editor-text text-on-surface-variant mb-4 max-w-2xl font-serif">
             O ambiente focado e profissional para dar vida às suas histórias.
             Gerencie manuscritos, desenvolva personagens complexos e estruture
             suas timelines em um ecossistema projetado para a escrita profunda.

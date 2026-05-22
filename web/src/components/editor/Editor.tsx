@@ -3,9 +3,14 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
+import Underline from "@tiptap/extension-underline";
+import Superscript from "@tiptap/extension-superscript";
+import Subscript from "@tiptap/extension-subscript";
+import TextAlign from "@tiptap/extension-text-align";
+import Link from "@tiptap/extension-link";
 import { useEffect, useRef, useCallback, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
-import { EditorToolbar } from "./EditorToolbar";
+import { SelectionToolbar } from "./SelectionToolbar";
 import { cn } from "@/lib/utils";
 import { Check, Loader2, AlertCircle, Minimize2 } from "lucide-react";
 
@@ -61,9 +66,20 @@ export function Editor({ chapterId }: { chapterId: string }) {
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: { levels: [1, 2, 3] },
+      }),
       Placeholder.configure({
         placeholder: "Comece a escrever seu capítulo...",
+      }),
+      Underline,
+      Superscript,
+      Subscript,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      Link.configure({
+        openOnClick: true,
       }),
     ],
     content: chapter?.content || "",
@@ -97,7 +113,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
 
   return (
     <div className="flex flex-col h-full bg-surface-container-lowest">
-      {!focusMode && <EditorToolbar editor={editor} />}
+      <SelectionToolbar editor={editor} focusMode={focusMode} />
 
       {/* Exit focus mode button */}
       {focusMode && (
@@ -137,7 +153,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
               onKeyDown={handleTitleKeyDown}
               className={cn(
                 "w-full bg-transparent font-serif text-editor-chapter text-on-surface outline-none pb-0.5",
-                focusMode ? "mb-12 uppercase text-center tracking-widest" : "mb-12"
+                focusMode ? "mb-4 uppercase text-center tracking-widest" : "mb-4"
               )}
               autoFocus
             />
@@ -146,14 +162,14 @@ export function Editor({ chapterId }: { chapterId: string }) {
               onClick={() => setIsEditingTitle(true)}
               className={cn(
                 "font-serif text-editor-chapter text-on-surface outline-none cursor-pointer hover:text-primary/80 transition-colors",
-                focusMode ? "mb-12 uppercase text-center tracking-widest" : "mb-12"
+                focusMode ? "mb-4 uppercase text-center tracking-widest" : "mb-4"
               )}
               title="Clique para editar o título"
             >
               {chapter?.title || "Sem Título"}
             </h1>
           )}
-          <div className={cn("font-serif text-editor-text outline-none", focusMode ? "text-on-surface-variant space-y-8 leading-relaxed" : "text-on-surface")}>
+          <div className={cn("font-serif text-editor-text outline-none", focusMode ? "text-on-surface-variant space-y-4 leading-relaxed" : "text-on-surface")}>
             <EditorContent editor={editor} />
           </div>
         </article>

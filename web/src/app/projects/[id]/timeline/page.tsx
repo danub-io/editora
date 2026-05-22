@@ -86,7 +86,7 @@ export default function TimelinePage() {
 
   return (
     <div className="p-8 md:p-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
           <h2 className="text-h2 font-semibold text-on-background">Timeline</h2>
           <p className="text-ui-body text-on-surface-variant mt-1">
@@ -166,9 +166,9 @@ export default function TimelinePage() {
       ) : (
         <div className="relative max-w-3xl mx-auto">
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-md-outline-variant to-transparent" />
-          <div className="space-y-8">
+          <div className="space-y-4">
             {events.map((event, index) => (
-              <div key={event.id} className={`flex items-start gap-8 ${index % 2 === 0 ? "" : "flex-row-reverse"}`}>
+              <div key={event.id} className={`flex items-start gap-4 ${index % 2 === 0 ? "" : "flex-row-reverse"}`}>
                 <div className="flex-1">
                   <div className="group bg-surface-container-lowest border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
                     <button

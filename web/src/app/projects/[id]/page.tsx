@@ -74,10 +74,10 @@ export default function ProjectPage() {
 
   // Dashboard view
   return (
-    <div className="p-8 md:p-12 overflow-y-auto">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="p-4 overflow-y-auto">
+      <div className="max-w-6xl mx-auto space-y-4">
         {/* Project Header */}
-        <div className="flex flex-col gap-2 mb-8">
+        <div className="flex flex-col gap-2 mb-4">
           <span className="text-ui-label text-primary uppercase tracking-wider font-medium">
             Projeto Atual
           </span>

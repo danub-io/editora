@@ -39,10 +39,10 @@ export default function LandingPage() {
       <main className="flex-1">
         {/* ─── Hero Section ─── */}
         <section className="mx-auto max-w-7xl px-6 py-24 text-center md:px-8">
-          <h1 className="mx-auto mb-6 max-w-4xl font-serif text-h1 font-bold leading-tight tracking-tight text-on-background">
+          <h1 className="mx-auto mb-4 max-w-4xl font-serif text-h1 font-bold leading-tight tracking-tight text-on-background">
             Transforme seu manuscrito em uma obra-prima
           </h1>
-          <p className="mx-auto mb-10 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
+          <p className="mx-auto mb-4 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
             Conecte-se com os melhores editores, designers e profissionais do
             mercado editorial. Selecionamos os top 3% para garantir que sua
             obra brilhe.
@@ -67,10 +67,10 @@ export default function LandingPage() {
         {/* ─── Trust / Logos Section ─── */}
         <section className="bg-surface-container-low py-12">
           <div className="mx-auto max-w-7xl px-6 text-center md:px-8">
-            <p className="mb-8 text-ui-label font-medium uppercase tracking-wider text-md-outline">
+            <p className="mb-4 text-ui-label font-medium uppercase tracking-wider text-md-outline">
               Destaque na mídia
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-8 opacity-50 md:gap-12">
+            <div className="flex flex-wrap items-center justify-center gap-4 opacity-50 md:gap-4">
               <span className="font-serif text-headline-md font-bold text-on-background">
                 The New York Times
               </span>
@@ -89,31 +89,31 @@ export default function LandingPage() {
 
         {/* ─── Talent Showcase Section ─── */}
         <section className="mx-auto max-w-7xl px-6 py-24 md:px-8">
-          <div className="grid items-center gap-16 md:grid-cols-2">
+          <div className="grid items-center gap-4 md:grid-cols-2">
             <div>
               <h2 className="mb-4 font-serif text-h2 font-semibold text-on-background">
                 Conheça os profissionais
               </h2>
-              <p className="mb-8 font-sans text-editor-text leading-relaxed text-on-surface-variant">
+              <p className="mb-4 font-sans text-editor-text leading-relaxed text-on-surface-variant">
                 Nosso marketplace reúne milhares de editores, designers e
                 marketeiros independentes que já trabalharam em livros
                 best-sellers.
               </p>
-              <ul className="mb-8 space-y-4">
+              <ul className="mb-4 space-y-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <CheckCircle className="mt-0 h-5 w-5 shrink-0 text-primary" />
                   <span className="text-ui-body text-on-surface-variant">
                     Top 3% de talentos selecionados
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <CheckCircle className="mt-0 h-5 w-5 shrink-0 text-primary" />
                   <span className="text-ui-body text-on-surface-variant">
                     Experiência verificada no mercado editorial
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <CheckCircle className="mt-0 h-5 w-5 shrink-0 text-primary" />
                   <span className="text-ui-body text-on-surface-variant">
                     Ferramentas de colaboração integradas
                   </span>
@@ -157,7 +157,7 @@ export default function LandingPage() {
           <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 md:grid-cols-2 md:px-8">
             <div className="order-2 md:order-1">
               <div className="flex items-center justify-center rounded-xl bg-surface-container-lowest p-8 shadow-sm">
-                <div className="grid grid-cols-2 gap-6 text-center">
+                <div className="grid grid-cols-2 gap-4 text-center">
                   <div className="flex flex-col items-center gap-2">
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-container">
                       <MessageCircle className="h-6 w-6 text-primary" />
@@ -188,17 +188,17 @@ export default function LandingPage() {
               <h2 className="mb-4 font-serif text-h2 font-semibold text-on-background">
                 Colaboração perfeita
               </h2>
-              <p className="mb-8 max-w-lg font-sans text-editor-text leading-relaxed text-on-surface-variant">
+              <p className="mb-4 max-w-lg font-sans text-editor-text leading-relaxed text-on-surface-variant">
                 Gerencie todo o seu projeto em um único painel. Compartilhe
                 arquivos, comunique-se diretamente e processe pagamentos com
                 segurança — tudo sem sair da plataforma.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
                     <MessageCircle className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="mb-1 text-ui-label font-bold text-on-background">
+                  <h3 className="mb-4 text-ui-label font-bold text-on-background">
                     Mensagens diretas
                   </h3>
                   <p className="text-ui-label text-on-surface-variant">
@@ -206,10 +206,10 @@ export default function LandingPage() {
                   </p>
                 </div>
                 <div>
-                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
                     <FolderOpen className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="mb-1 text-ui-label font-bold text-on-background">
+                  <h3 className="mb-4 text-ui-label font-bold text-on-background">
                     Compartilhamento
                   </h3>
                   <p className="text-ui-label text-on-surface-variant">
@@ -226,7 +226,7 @@ export default function LandingPage() {
           <h2 className="mx-auto mb-4 max-w-2xl font-serif text-h2 font-semibold text-on-background">
             Seu trabalho está seguro
           </h2>
-          <p className="mx-auto mb-12 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
+          <p className="mx-auto mb-4 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
             Cuidamos dos contratos e pagamentos para que você possa focar no
             processo criativo. Cada projeto é respaldado pela nossa garantia
             Editora.
@@ -250,10 +250,10 @@ export default function LandingPage() {
         {/* ─── Final CTA Section ─── */}
         <section className="bg-primary px-6 py-24 text-center text-on-primary">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-6 font-serif text-h1 font-bold leading-tight">
+            <h2 className="mb-4 font-serif text-h1 font-bold leading-tight">
               Pronto para publicar sua obra-prima?
             </h2>
-            <p className="mx-auto mb-10 max-w-2xl font-sans text-editor-text leading-relaxed text-on-primary-container/80">
+            <p className="mx-auto mb-4 max-w-2xl font-sans text-editor-text leading-relaxed text-on-primary-container/80">
               Junte-se a milhares de autores que encontraram a equipe editorial
               perfeita na Editora.
             </p>
