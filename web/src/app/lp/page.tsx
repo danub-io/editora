@@ -68,7 +68,71 @@ export default function LandingPage() {
 
       {/* ─── Talent Showcase Section ─── */}
       <section className="mx-auto max-w-7xl px-6 py-24 md:px-8">
-        {/* Content filled in task-02 */}
+        <div className="grid items-center gap-16 md:grid-cols-2">
+          {/* Left: Text + Checklist */}
+          <div>
+            <h2 className="mb-4 font-serif text-h2 font-semibold text-on-background">
+              Conheça os profissionais
+            </h2>
+            <p className="mb-8 font-sans text-editor-text leading-relaxed text-on-surface-variant">
+              Nosso marketplace reúne milhares de editores, designers e
+              marketeiros independentes que já trabalharam em livros
+              best-sellers.
+            </p>
+            <ul className="mb-8 space-y-4">
+              <li className="flex items-start gap-3">
+                <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <span className="text-ui-body text-on-surface-variant">
+                  Top 3% de talentos selecionados
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <span className="text-ui-body text-on-surface-variant">
+                  Experiência verificada no mercado editorial
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <span className="text-ui-body text-on-surface-variant">
+                  Ferramentas de colaboração integradas
+                </span>
+              </li>
+            </ul>
+            <a
+              href="#"
+              className="inline-flex items-center gap-1 text-ui-label font-medium text-primary transition-colors hover:text-primary/80"
+            >
+              Explorar perfis{" "}
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+
+          {/* Right: Profile Card Illustration */}
+          <div className="relative">
+            <div className="flex items-center justify-center rounded-xl border border-border bg-surface-container-lowest p-8 shadow-sm">
+              <div className="flex flex-col items-center gap-4">
+                {/* Avatar placeholder */}
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary-container">
+                  <Users className="h-10 w-10 text-primary" />
+                </div>
+                {/* Rating stars */}
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star key={i} className="h-5 w-5 fill-tertiary-fixed text-tertiary-fixed" />
+                  ))}
+                </div>
+                <p className="text-ui-label font-medium text-on-background">
+                  Editora Profissional
+                </p>
+                <p className="text-center text-ui-body text-on-surface-variant">
+                  &ldquo;Excelente trabalho editorial, superou todas as
+                  expectativas.&rdquo;
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ─── Collaboration Section ─── */}
