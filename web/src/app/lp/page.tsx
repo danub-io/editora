@@ -137,7 +137,73 @@ export default function LandingPage() {
 
       {/* ─── Collaboration Section ─── */}
       <section className="border-y border-border bg-surface-container-low">
-        {/* Content filled in task-03 */}
+        <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 md:grid-cols-2 md:px-8">
+          {/* Left: Illustration */}
+          <div className="order-2 md:order-1">
+            <div className="flex items-center justify-center rounded-xl border border-border bg-surface-container-lowest p-8 shadow-sm">
+              <div className="grid grid-cols-2 gap-6 text-center">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-container">
+                    <MessageCircle className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-ui-label font-bold text-on-background">
+                    Mensagens
+                  </h3>
+                  <p className="text-ui-label text-on-surface-variant">
+                    Chat em tempo real com profissionais.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-container">
+                    <FolderOpen className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-ui-label font-bold text-on-background">
+                    Arquivos
+                  </h3>
+                  <p className="text-ui-label text-on-surface-variant">
+                    Compartilhe manuscritos com segurança.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Text */}
+          <div className="order-1 md:order-2">
+            <h2 className="mb-4 font-serif text-h2 font-semibold text-on-background">
+              Colaboração perfeita
+            </h2>
+            <p className="mb-8 max-w-lg font-sans text-editor-text leading-relaxed text-on-surface-variant">
+              Gerencie todo o seu projeto em um único painel. Compartilhe
+              arquivos, comunique-se diretamente e processe pagamentos com
+              segurança — tudo sem sair da plataforma.
+            </p>
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+                  <MessageCircle className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="mb-1 text-ui-label font-bold text-on-background">
+                  Mensagens diretas
+                </h3>
+                <p className="text-ui-label text-on-surface-variant">
+                  Converse com profissionais instantaneamente.
+                </p>
+              </div>
+              <div>
+                <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+                  <FolderOpen className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="mb-1 text-ui-label font-bold text-on-background">
+                  Compartilhamento
+                </h3>
+                <p className="text-ui-label text-on-surface-variant">
+                  Troque manuscritos com total segurança.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ─── Trust & Protection Section ─── */}
