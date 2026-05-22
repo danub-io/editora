@@ -121,9 +121,12 @@ export function ProjectTopBar() {
           >
             Manuscrito
           </button>
-          <span className="h-full flex items-center text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
+          <button
+            onClick={() => toast.info("Modo de revisão em breve!")}
+            className="h-full flex items-center text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer border-b-2 border-transparent"
+          >
             Revisão
-          </span>
+          </button>
         </nav>
       </div>
 
