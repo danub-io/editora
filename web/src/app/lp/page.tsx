@@ -208,7 +208,28 @@ export default function LandingPage() {
 
       {/* ─── Trust & Protection Section ─── */}
       <section className="mx-auto max-w-7xl px-6 py-24 text-center md:px-8">
-        {/* Content filled in task-03 */}
+        <h2 className="mx-auto mb-4 max-w-2xl font-serif text-h2 font-semibold text-on-background">
+          Seu trabalho está seguro
+        </h2>
+        <p className="mx-auto mb-12 max-w-2xl font-sans text-editor-text leading-relaxed text-on-surface-variant">
+          Cuidamos dos contratos e pagamentos para que você possa focar no
+          processo criativo. Cada projeto é respaldado pela nossa garantia
+          Editora.
+        </p>
+        <div className="flex justify-center">
+          <div className="inline-flex max-w-md flex-col items-center gap-4 rounded-xl border border-border bg-surface-container-lowest p-8 shadow-sm">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-container">
+              <ShieldCheck className="h-8 w-8 text-primary" />
+            </div>
+            <h3 className="font-serif text-headline-md font-semibold text-on-background">
+              Garantia Editora
+            </h3>
+            <p className="text-ui-body text-on-surface-variant">
+              Proteção total do início ao fim. Segurança, transparência e
+              qualidade garantida em cada etapa do seu projeto editorial.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* ─── Final CTA Section ─── */}
