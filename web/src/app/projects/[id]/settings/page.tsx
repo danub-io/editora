@@ -107,6 +107,7 @@ export default function SettingsPage() {
     });
     setIsSaving(false);
     setSaved(true);
+    toast.success("Configurações salvas!");
     setTimeout(() => setSaved(false), 2000);
   };
 
