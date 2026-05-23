@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 import { 
   Target, 
   Pin, 
@@ -16,6 +17,8 @@ import {
   Users, 
   Settings,
   ChevronLeft,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -37,9 +40,14 @@ export function RightSidebar({
   const pathname = usePathname();
   const [activePanel, setActivePanel] = useState<string | null>("search");
   const { activeProjectId, activeChapterId, getChapter, updateChapter } = useProjectStore();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [replaceQuery, setReplaceQuery] = useState("");
   const [searchOnlyThisChapter, setSearchOnlyThisChapter] = useState(true);
+
+  // Hydration guard for theme toggle
+  useEffect(() => setMounted(true), []);
 
   // Sync internal panel state when isOpen is forced from outside
   useEffect(() => {
@@ -96,46 +104,38 @@ export function RightSidebar({
   };
 
   return (
-    <>
-      {/* Fixed trigger — same fixed pattern as left chevron */}
-      <div className="fixed right-0 top-0 h-screen z-40 flex items-center pointer-events-none">
-        <button
-          onClick={() => onOpenChange(!isOpen)}
-          className={cn(
-            "pointer-events-auto flex flex-col items-center justify-center w-10 bg-transparent cursor-pointer transition-colors",
-            "text-muted-foreground hover:text-foreground"
-          )}
-          title={isOpen ? "Fechar painel" : "Abrir painel"}
-        >
-          <ChevronLeft
-            className={cn(
-              "h-8 w-8 stroke-[2] transition-transform duration-200",
-              isOpen && "rotate-180"
-            )}
-          />
-        </button>
-      </div>
-
-      {/* Collapsible content panel — in the document flow */}
-      <Collapsible
-        open={isOpen}
-        onOpenChange={onOpenChange}
-        className="flex h-full relative z-30 shrink-0"
+    <Collapsible
+      open={isOpen}
+      onOpenChange={onOpenChange}
+      className="flex z-30 shrink-0"
+    >
+      {/* Chevron trigger — to the left of the panel */}
+      <CollapsibleTrigger
+        className="flex flex-col items-center justify-center w-10 bg-transparent cursor-pointer transition-colors text-muted-foreground hover:text-foreground"
+        title={isOpen ? "Fechar painel" : "Abrir painel"}
       >
-        <CollapsibleContent className="flex bg-background border-l border-border">
+        <ChevronLeft
+          className={cn(
+            "h-8 w-8 stroke-[2] transition-transform duration-200",
+            isOpen && "rotate-180"
+          )}
+        />
+      </CollapsibleTrigger>
+
+      <CollapsibleContent className="flex">
             {/* Sliding Panel (Find & Replace) */}
             <div
               className={cn(
-                "overflow-hidden transition-all duration-300 ease-in-out bg-card flex flex-col",
+                "overflow-hidden transition-all duration-300 ease-in-out flex flex-col",
                 activePanel === "search" ? "w-80" : "w-0"
               )}
             >
               <div className="flex flex-col h-full w-80">
-                <div className="px-5 py-4 flex items-center justify-between">
+                <div className="px-5 pb-4 flex items-center justify-between">
                   <h2 className="text-[15px] font-semibold text-foreground">Find & replace</h2>
                 </div>
 
-                <div className="p-5 flex-1 overflow-y-auto">
+                <div className="px-5 pb-5 flex-1 overflow-y-auto">
                   {/* Toggle */}
                   <div className="flex items-center justify-between mb-4 pb-6">
                     <span className="text-[13px] text-foreground font-medium">Search only this chapter</span>
@@ -161,7 +161,7 @@ export function RightSidebar({
                       placeholder="Find..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full border-input bg-background rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring/50 mb-4 placeholder:text-muted-foreground"
+                      className="w-full rounded-md px-3 py-2 text-[13px] focus:outline-none focus:ring-1 focus:ring-ring/50 mb-4 placeholder:text-muted-foreground"
                     />
                     <div className="flex items-center justify-between">
                       <div className="flex gap-1.5">
@@ -180,7 +180,7 @@ export function RightSidebar({
                       placeholder="Replace..."
                       value={replaceQuery}
                       onChange={(e) => setReplaceQuery(e.target.value)}
-                      className="w-full border-input bg-background rounded-md px-3 py-2 text-[13px] focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring/50 mb-4 placeholder:text-muted-foreground"
+                      className="w-full rounded-md px-3 py-2 text-[13px] focus:outline-none focus:ring-1 focus:ring-ring/50 mb-4 placeholder:text-muted-foreground"
                     />
                     <div className="flex items-center justify-end gap-1.5">
                       <button onClick={handleReplaceAll} className="px-3 py-1.5 bg-muted hover:bg-accent rounded text-[12px] font-medium text-foreground transition-colors">Replace all</button>
@@ -192,9 +192,9 @@ export function RightSidebar({
             </div>
 
             {/* Icon Toolbar */}
-            <div className="w-14 bg-card border-l border-border flex flex-col items-center overflow-y-auto overflow-x-hidden relative">
+            <div className="w-14 flex flex-col items-center overflow-y-auto overflow-x-hidden pt-[14px] relative" style={{ marginTop: 0 }}>
               {/* Top Group */}
-              <div className="flex flex-col gap-6 items-center pt-4">
+              <div className="flex flex-col gap-6 items-center">
                 <ToolbarButton icon={Target} onClick={() => toast.info("Comentários direcionados em breve!")} />
                 <ToolbarButton icon={Pin} badge="2" onClick={() => toast.info("Notas fixadas em breve!")} />
                 <ToolbarButton icon={MessageSquare} onClick={() => toast.info("Comentários em breve!")} />
@@ -226,11 +226,20 @@ export function RightSidebar({
                 <ToolbarButton icon={Download} onClick={() => toast.info("Exportar em breve!")} />
                 <ToolbarButton icon={Users} onClick={() => toast.info("Colaboradores em breve!")} />
                 <ToolbarButton icon={Settings} onClick={() => pathname === `/projects/${activeProjectId}/settings` ? router.back() : router.push(`/projects/${activeProjectId}/settings`)} />
+                {mounted ? (
+                  <ToolbarButton
+                    icon={theme === "dark" ? Sun : Moon}
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  />
+                ) : (
+                  <div className="p-2">
+                    <div className="h-[18px] w-[18px]" />
+                  </div>
+                )}
               </div>
             </div>
         </CollapsibleContent>
       </Collapsible>
-    </>
   );
 }
 
@@ -249,7 +258,7 @@ function ToolbarButton({
     <button 
       onClick={onClick}
       className={cn(
-        "relative p-2 rounded-md transition-colors",
+        "relative p-1.5 rounded-md transition-colors",
         isActive ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"
       )}
     >

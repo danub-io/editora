@@ -6,7 +6,7 @@ import { useProjectStore } from "@/stores/projectStore";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { cn } from "@/lib/utils";
 import { RightSidebar } from "@/components/layout/RightSidebar";
-import { ChevronRight, Menu } from "lucide-react";
+import { ChevronRight, ChevronLeft, Menu } from "lucide-react";
 
 /** Minimum width (px) the center column must maintain */
 const MIN_CENTER_WIDTH = 900;
@@ -121,25 +121,23 @@ export default function ProjectLayout({
 
   return (
     <div ref={containerRef} className={cn("h-screen flex overflow-hidden", focusMode ? "bg-background text-foreground group relative" : "bg-background")}>
-      {/* Hamburger — only when sidebar is closed */}
+      {/* Hamburger — always visible on mobile, toggles sidebar */}
       {!focusMode && (
         <button
-          onClick={() => { setSidebarOpen(true); if (rightOpen && !canFitBoth()) setRightOpen(false); }}
-          className={cn(
-            "fixed left-0 top-0 z-50 px-3 pt-4 pb-2 text-muted-foreground hover:text-foreground/50 transition-colors",
-            sidebarOpen ? "hidden" : "flex items-center justify-center"
-          )}
-          title="Abrir painel"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="fixed left-0 top-0 z-50 px-3 pt-4 pb-2 text-muted-foreground hover:text-foreground/50 transition-colors max-md:flex items-center justify-center md:hidden bg-background"
+          title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
         >
-          <Menu className="h-5 w-5" />
+          {sidebarOpen ? <ChevronLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       )}
 
-      {/* Chevron trigger to toggle left sidebar — positioned after the hamburger */}
+      {/* Chevron trigger to toggle left sidebar — positioned after the hamburger, hidden on mobile */}
       {!focusMode && (
         <div
           className={cn(
-            "fixed top-0 h-full z-40 flex items-center transition-[left] duration-200 ease-out pointer-events-none",
+            "fixed top-0 h-full z-40 items-center transition-[left] duration-200 ease-out pointer-events-none",
+            "hidden md:flex",
             sidebarOpen ? "left-64" : "left-0"
           )}
         >
@@ -164,10 +162,14 @@ export default function ProjectLayout({
         </div>
       )}
       {!focusMode && <Sidebar isOpen={sidebarOpen} onClose={handleToggleLeft} />}
-      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out bg-background", focusMode ? "bg-transparent" : (sidebarOpen ? "ml-[296px]" : "ml-10 mr-10"))}>
+      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out bg-background", focusMode ? "bg-transparent" : (sidebarOpen ? "max-md:ml-0 md:ml-[296px]" : "max-md:ml-0 md:ml-10 mr-10"))}>
         <main className={cn("flex-1 relative overflow-y-auto", focusMode ? "bg-background scroll-smooth flex justify-center" : "")}>{children}</main>
       </div>
-      {!focusMode && <RightSidebar isOpen={rightOpen} onOpenChange={handleToggleRight} />}
+      {!focusMode && (
+        <div className="hidden md:flex">
+          <RightSidebar isOpen={rightOpen} onOpenChange={handleToggleRight} />
+        </div>
+      )}
     </div>
   );
 }

@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Editora — Dê vida ao seu livro",
   description:
     "Encontre os melhores profissionais editoriais para transformar seu manuscrito em uma obra-prima. Editores, designers e marketeiros selecionados.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

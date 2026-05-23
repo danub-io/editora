@@ -18,7 +18,21 @@ import {
   ScrollText,
   Bookmark,
   X,
+  Target,
+  Pin,
+  MessageSquare,
+  History,
+  Search,
+  Type,
+  Scissors,
+  Trash2,
+  Download,
+  Settings,
+  Sun,
+  Moon,
 } from "lucide-react";
+import { useTheme } from "next-themes";
+import { toast } from "sonner";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -47,6 +61,9 @@ export function Sidebar({
     chapters,
   } = useProjectStore();
 
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
   const pathname = usePathname();
   const [frontMatterExpanded, setFrontMatterExpanded] = useState(true);
   const [bodyExpanded, setBodyExpanded] = useState(true);
@@ -55,6 +72,9 @@ export function Sidebar({
   useEffect(() => {
     if (activeProjectId) fetchChapters(activeProjectId);
   }, [activeProjectId, fetchChapters]);
+
+  // Hydration guard for theme toggle
+  useEffect(() => setMounted(true), []);
 
   const allChapters = activeProjectId
     ? getChaptersByProject(activeProjectId)
@@ -143,13 +163,50 @@ export function Sidebar({
 
       <nav
         className={cn(
-          "fixed left-0 top-0 flex flex-col h-full z-30 bg-sidebar text-sidebar-fg w-64 flex-shrink-0 select-none transition-transform duration-200 ease-out",
+          "fixed left-0 top-0 flex h-full z-30 bg-sidebar text-sidebar-fg select-none transition-transform duration-200 ease-out max-md:flex-row md:flex-col max-md:w-[312px] md:w-64",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        {/* ── Header: Hamburger + Title + Add ── */}
+        {/* Mobile: right toolbar icons on the left side — only on mobile */}
+        <div className="md:hidden w-12 flex flex-col items-center overflow-y-auto overflow-x-hidden mt-18 shrink-0 bg-sidebar">
+          <div className="flex flex-col gap-6 items-center">
+            <MobileToolbarButton icon={Target} onClick={() => toast.info("Comentários direcionados em breve!")} />
+            <MobileToolbarButton icon={Pin} badge="2" onClick={() => toast.info("Notas fixadas em breve!")} />
+            <MobileToolbarButton icon={MessageSquare} onClick={() => toast.info("Comentários em breve!")} />
+            <MobileToolbarButton icon={History} onClick={() => toast.info("Histórico de versões em breve!")} />
+          </div>
+          <div className="my-3" />
+          <div className="flex flex-col gap-6 items-center">
+            <MobileToolbarButton icon={Search} onClick={() => toast.info("Busca em breve!")} />
+            <MobileToolbarButton icon={Type} onClick={() => toast.info("Estilos de texto em breve!")} />
+            <MobileToolbarButton icon={Plus} onClick={() => toast.info("Inserir elementos em breve!")} />
+            <MobileToolbarButton icon={Scissors} onClick={() => toast.info("Recortar em breve!")} />
+            <MobileToolbarButton icon={Trash2} onClick={() => toast.info("Excluir seleção em breve!")} />
+          </div>
+          <div className="flex-1" />
+          <div className="my-3" />
+          <div className="flex flex-col gap-6 items-center pb-4">
+            <MobileToolbarButton icon={Download} onClick={() => toast.info("Exportar em breve!")} />
+            <MobileToolbarButton icon={Users} onClick={() => toast.info("Colaboradores em breve!")} />
+            <MobileToolbarButton icon={Settings} onClick={() => { if (activeProjectId) window.location.href = `/projects/${activeProjectId}/settings`; }} />
+            {mounted ? (
+              <MobileToolbarButton
+                icon={theme === "dark" ? Sun : Moon}
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              />
+            ) : (
+              <div className="p-2">
+                <div className="h-[18px] w-[18px]" />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Sidebar content — wraps the existing content */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* ── Header: Hamburger + Title + Add ── */}
         <div className="flex items-center justify-between px-5 py-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 max-md:hidden">
             <button
               onClick={onClose}
               className="p-1 rounded transition-colors text-sidebar-fg hover:text-foreground"
@@ -167,10 +224,10 @@ export function Sidebar({
         <div className="relative">
           <button
             onClick={() => setAddMenuOpen(!addMenuOpen)}
-            className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors px-2 py-1 rounded hover:bg-sidebar-muted"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors px-2 py-1 rounded hover:bg-sidebar-muted"
           >
             Adicionar
-            <Plus className="h-3.5 w-3.5" />
+            <Plus className="h-4 w-4" />
           </button>
 
           {/* Add Dropdown */}
@@ -255,7 +312,7 @@ export function Sidebar({
                 )}
                 Páginas Iniciais
               </span>
-              <span className="text-[10px] text-sidebar-fg/60 font-normal normal-case">
+              <span className="text-[10px] text-sidebar-fg/60 font-normal normal-case max-md:hidden">
                 edit
               </span>
             </button>
@@ -285,7 +342,7 @@ export function Sidebar({
               )}
                Conteúdo Principal
             </span>
-            <span className="text-[10px] text-sidebar-fg/60 font-normal normal-case">
+            <span className="text-[10px] text-sidebar-fg/60 font-normal normal-case max-md:hidden">
               edit
             </span>
           </button>
@@ -330,6 +387,7 @@ export function Sidebar({
           />
 
         </div>
+        </div>
       </div>
     </nav>
     </>
@@ -360,5 +418,30 @@ function FooterNavItem({
       <Icon className="h-3.5 w-3.5 shrink-0 text-sidebar-fg/40" />
       {label}
     </Link>
+  );
+}
+
+/* ── Mobile Toolbar Button (mirrors the desktop ToolbarButton) ── */
+function MobileToolbarButton({
+  icon: Icon,
+  badge,
+  onClick,
+}: {
+  icon: React.ElementType;
+  badge?: string;
+  onClick?: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="relative p-1.5 rounded-md transition-colors text-sidebar-fg/70 hover:bg-sidebar-muted hover:text-sidebar-fg"
+    >
+      <Icon className="h-[18px] w-[18px] stroke-[2.5]" />
+      {badge && (
+        <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+          {badge}
+        </span>
+      )}
+    </button>
   );
 }
