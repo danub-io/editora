@@ -3,7 +3,12 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useProjectStore } from "@/stores/projectStore";
-import { Sidebar } from "@/components/sidebar/Sidebar";
+import { Sidebar, MobileSidebar } from "@/components/sidebar/Sidebar";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { RightSidebar } from "@/components/layout/RightSidebar";
 import { ChevronRight, ChevronLeft, Menu } from "lucide-react";
@@ -121,18 +126,33 @@ export default function ProjectLayout({
 
   return (
     <div ref={containerRef} className={cn("h-screen flex overflow-hidden", focusMode ? "bg-background text-foreground group relative" : "bg-background")}>
-      {/* Hamburger — always visible on mobile, toggles sidebar */}
+      {/* Mobile: shadcn Sheet sidebar */}
       {!focusMode && (
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="fixed left-0 top-0 z-50 px-3 pt-4 pb-2 text-muted-foreground hover:text-foreground/50 transition-colors max-md:flex items-center justify-center md:hidden bg-background"
-          title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
-        >
-          {sidebarOpen ? <ChevronLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="md:hidden">
+          <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+            {/*
+              z-[60] must be > Sheet overlay z-50 (sheet.tsx) so the trigger
+              remains clickable when the Sheet is open.
+            */}
+            <SheetTrigger className="fixed left-0 top-0 z-[60] px-3 pt-4 pb-2 flex items-center justify-center transition-colors outline-none">
+              {sidebarOpen ? (
+                <ChevronLeft className="h-5 w-5 text-sidebar-fg" />
+              ) : (
+                <Menu className="h-5 w-5 text-muted-foreground transition-colors hover:text-foreground/50" />
+              )}
+            </SheetTrigger>
+            <SheetContent
+              side="left"
+              showCloseButton={false}
+              className="p-0 w-[312px] max-w-[312px] bg-sidebar"
+            >
+              <MobileSidebar onClose={() => setSidebarOpen(false)} />
+            </SheetContent>
+          </Sheet>
+        </div>
       )}
 
-      {/* Chevron trigger to toggle left sidebar — positioned after the hamburger, hidden on mobile */}
+      {/* Desktop: chevron trigger to toggle left sidebar */}
       {!focusMode && (
         <div
           className={cn(
@@ -161,8 +181,14 @@ export default function ProjectLayout({
           </button>
         </div>
       )}
-      {!focusMode && <Sidebar isOpen={sidebarOpen} onClose={handleToggleLeft} />}
-      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out bg-background", focusMode ? "bg-transparent" : (sidebarOpen ? "max-md:ml-0 md:ml-[296px]" : "max-md:ml-0 md:ml-10 mr-10"))}>
+
+      {/* Desktop: inline sidebar */}
+      {!focusMode && (
+        <div className="hidden md:block">
+          <Sidebar isOpen={sidebarOpen} onClose={handleToggleLeft} />
+        </div>
+      )}
+      <div className={cn("flex-1 flex flex-col h-screen min-w-0 transition-[margin-left] duration-200 ease-out bg-background", focusMode ? "bg-transparent" : (sidebarOpen ? "max-md:ml-0 md:ml-[296px]" : "max-md:ml-0 md:ml-10 md:mr-10"))}>
         <main className={cn("flex-1 relative overflow-y-auto", focusMode ? "bg-background scroll-smooth flex justify-center" : "")}>{children}</main>
       </div>
       {!focusMode && (

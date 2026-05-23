@@ -47,11 +47,13 @@ function SortableItem({
   showNumbers,
   isActive,
   bodyIndex,
+  onSelect,
 }: {
   chapter: Chapter;
   showNumbers: boolean;
   isActive: boolean;
   bodyIndex?: number;
+  onSelect?: () => void;
 }) {
   const { setActiveChapter, deleteChapter } = useProjectStore();
   const {
@@ -92,7 +94,7 @@ function SortableItem({
             : "text-sidebar-fg/60 hover:bg-sidebar-muted hover:text-sidebar-fg",
           isDragging && "bg-card shadow-lg z-10"
         )}
-        onClick={() => setActiveChapter(chapter.id)}
+        onClick={() => { setActiveChapter(chapter.id); onSelect?.(); }}
       >
         <div
           {...attributes}
@@ -128,7 +130,7 @@ function SortableItem({
           : "text-sidebar-fg/70 hover:bg-sidebar-muted hover:text-sidebar-fg",
         isDragging && "bg-card shadow-lg z-10"
       )}
-      onClick={() => setActiveChapter(chapter.id)}
+      onClick={() => { setActiveChapter(chapter.id); onSelect?.(); }}
     >
       {/* Drag Handle */}
       <div
@@ -187,10 +189,12 @@ export function ChapterList({
   chapters: inputChapters,
   showNumbers,
   section,
+  onSelect,
 }: {
   chapters: Chapter[];
   showNumbers: boolean;
   section: "front_matter" | "body";
+  onSelect?: () => void;
 }) {
   const {
     activeProjectId,
@@ -265,6 +269,7 @@ export function ChapterList({
                 showNumbers={showNumbers}
                 isActive={activeChapterId === chapter.id}
                 bodyIndex={bodyIndex}
+                onSelect={onSelect}
               />
             );
           })}

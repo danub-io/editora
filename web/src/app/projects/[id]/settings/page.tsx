@@ -16,14 +16,52 @@ import {
   Palette,
   Type,
   Ruler,
+  AlertTriangle,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const PAGE_FORMATS = [
-  { value: "A5", label: "A5 (148 × 210 mm)" },
-  { value: "6x9", label: '6" × 9" (KDP)' },
-  { value: "5x8", label: '5" × 8"' },
-  { value: "5.5x8.5", label: '5.5" × 8.5"' },
+  { value: "12x19", label: "12 × 19 cm — bolso" },
+  { value: "14x21", label: "14 × 21 cm — brochura" },
+  { value: "A5", label: "A5 (148 × 210 mm) — literatura" },
+  { value: "15x23", label: "15 × 23 cm — KDP" },
+  { value: "16x23", label: "16 × 23 cm — padrão" },
+  { value: "A4", label: "A4 (210 × 297 mm) — impressão" },
+  { value: "29x36", label: "29 × 36 cm — revista" },
 ];
+
+const MARGIN_PRESETS: Record<string, { top: string; bottom: string; inner: string; outer: string }> = {
+  "12x19": { top: "1.2cm", bottom: "1.2cm", inner: "1.5cm", outer: "1.2cm" },
+  "14x21": { top: "1.5cm", bottom: "1.5cm", inner: "2cm", outer: "1.5cm" },
+  A5: { top: "1.5cm", bottom: "1.5cm", inner: "2cm", outer: "1.5cm" },
+  "15x23": { top: "1.9cm", bottom: "1.9cm", inner: "2.2cm", outer: "1.9cm" },
+  "16x23": { top: "1.9cm", bottom: "1.9cm", inner: "2.2cm", outer: "1.9cm" },
+  A4: { top: "2cm", bottom: "2cm", inner: "2.5cm", outer: "2cm" },
+  "29x36": { top: "1.5cm", bottom: "1.5cm", inner: "2cm", outer: "1.5cm" },
+};
+
+const FONT_FAMILIES = [
+  "Lora", "Merriweather", "PT Serif", "Georgia",
+  "Source Serif", "Literata", "Bookerly",
+];
+
+const FONT_SIZES = [9, 10, 11, 12, 13, 14];
+
+const LINE_HEIGHTS = [1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0];
 
 const THEMES = [
   { value: "light", label: "Claro", color: "bg-white" },
@@ -46,7 +84,7 @@ export default function SettingsPage() {
     description: "",
     language: "pt-BR",
     isbn: "",
-    pageFormat: "6x9",
+    pageFormat: "16x23",
     fontFamily: "Lora",
     fontSize: 11,
     lineHeight: 1.4,
@@ -59,6 +97,7 @@ export default function SettingsPage() {
 
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   useEffect(() => {
     if (!project) {
@@ -71,7 +110,7 @@ export default function SettingsPage() {
       description: project.description || "",
       language: project.language || "pt-BR",
       isbn: project.isbn || "",
-      pageFormat: project.settings?.pageFormat || "6x9",
+      pageFormat: project.settings?.pageFormat || "16x23",
       fontFamily: project.settings?.fontFamily || "Lora",
       fontSize: project.settings?.fontSize || 11,
       lineHeight: project.settings?.lineHeight || 1.4,
@@ -112,18 +151,16 @@ export default function SettingsPage() {
   };
 
   const handleDelete = async () => {
-    if (window.confirm("Tem certeza que deseja excluir este projeto? Esta ação é irreversível.")) {
-      await deleteProject(projectId);
-      toast.success("Projeto excluído com sucesso.");
-      router.push("/");
-    }
+    await deleteProject(projectId);
+    toast.success("Projeto excluído com sucesso.");
+    router.push("/");
   };
 
   if (!project) return null;
 
   return (
-    <div className="p-8 md:p-12 overflow-y-auto">
-      <div className="max-w-3xl mx-auto space-y-10">
+    <div className="p-4 md:p-12 overflow-y-auto">
+      <div className="max-w-3xl mx-auto space-y-4 md:space-y-10">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -146,7 +183,7 @@ export default function SettingsPage() {
         </div>
 
         {/* ── Book Info ── */}
-        <section className="bg-card rounded-xl border border-border p-6 shadow-sm space-y-6">
+        <section className="bg-card rounded-xl border border-border p-4 md:p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <BookOpen className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-foreground">
@@ -206,7 +243,7 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Page Format ── */}
-        <section className="bg-card rounded-xl border border-border p-6 shadow-sm space-y-6">
+        <section className="bg-card rounded-xl border border-border p-4 md:p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Ruler className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-foreground">
@@ -214,114 +251,78 @@ export default function SettingsPage() {
             </h3>
           </div>
           <div className="grid gap-2">
-            <Label>Formato</Label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {PAGE_FORMATS.map((fmt) => (
-                <button
-                  key={fmt.value}
-                  onClick={() => setForm({ ...form, pageFormat: fmt.value })}
-                  className={`p-3 rounded-lg border text-sm font-medium transition-all ${
-                    form.pageFormat === fmt.value
-                      ? "border-primary bg-primary/20 text-primary"
-                      : "border-border text-muted-foreground hover:border-muted-foreground"
-                  }`}
-                >
-                  {fmt.label}
-                </button>
-              ))}
-            </div>
+            <Select value={form.pageFormat} onValueChange={(v) => {
+              const preset = MARGIN_PRESETS[v];
+              setForm({ ...form, pageFormat: v, marginTop: preset.top, marginBottom: preset.bottom, marginInner: preset.inner, marginOuter: preset.outer });
+            }}>
+              <SelectTrigger className="w-full">
+                <SelectValue>
+                  {PAGE_FORMATS.find((f) => f.value === form.pageFormat)?.label}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {PAGE_FORMATS.map((fmt) => (
+                  <SelectItem key={fmt.value} value={fmt.value}>{fmt.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="mt">Margem Superior</Label>
-              <Input
-                id="mt"
-                value={form.marginTop}
-                onChange={(e) =>
-                  setForm({ ...form, marginTop: e.target.value })
-                }
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="mb">Margem Inferior</Label>
-              <Input
-                id="mb"
-                value={form.marginBottom}
-                onChange={(e) =>
-                  setForm({ ...form, marginBottom: e.target.value })
-                }
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="mi">Margem Interna</Label>
-              <Input
-                id="mi"
-                value={form.marginInner}
-                onChange={(e) =>
-                  setForm({ ...form, marginInner: e.target.value })
-                }
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="mo">Margem Externa</Label>
-              <Input
-                id="mo"
-                value={form.marginOuter}
-                onChange={(e) =>
-                  setForm({ ...form, marginOuter: e.target.value })
-                }
-              />
-            </div>
-          </div>
+
         </section>
 
         {/* ── Typography ── */}
-        <section className="bg-card rounded-xl border border-border p-6 shadow-sm space-y-6">
+        <section className="bg-card rounded-xl border border-border p-4 md:p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Type className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-foreground">
               Tipografia
             </h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="fontFamily">Família da Fonte</Label>
-              <Input
-                id="fontFamily"
-                value={form.fontFamily}
-                onChange={(e) =>
-                  setForm({ ...form, fontFamily: e.target.value })
-                }
-              />
+              <Label>Família da Fonte</Label>
+              <Select value={form.fontFamily} onValueChange={(v) => setForm({ ...form, fontFamily: v })}>
+                <SelectTrigger className="w-full">
+                  <SelectValue>{form.fontFamily}</SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {FONT_FAMILIES.map((f) => (
+                    <SelectItem key={f} value={f}>{f}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="fontSize">Tamanho (pt)</Label>
-              <Input
-                id="fontSize"
-                type="number"
-                value={form.fontSize}
-                onChange={(e) =>
-                  setForm({ ...form, fontSize: Number(e.target.value) })
-                }
-              />
+              <Label>Tamanho (pt)</Label>
+              <Select value={String(form.fontSize)} onValueChange={(v) => setForm({ ...form, fontSize: Number(v) })}>
+                <SelectTrigger className="w-full">
+                  <SelectValue>{form.fontSize}pt</SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {FONT_SIZES.map((s) => (
+                    <SelectItem key={s} value={String(s)}>{s}pt</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="lineHeight">Entrelinhas</Label>
-              <Input
-                id="lineHeight"
-                type="number"
-                step="0.1"
-                value={form.lineHeight}
-                onChange={(e) =>
-                  setForm({ ...form, lineHeight: Number(e.target.value) })
-                }
-              />
+              <Label>Entrelinhas</Label>
+              <Select value={String(form.lineHeight)} onValueChange={(v) => setForm({ ...form, lineHeight: Number(v) })}>
+                <SelectTrigger className="w-full">
+                  <SelectValue>{form.lineHeight}</SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {LINE_HEIGHTS.map((h) => (
+                    <SelectItem key={h} value={String(h)}>{h}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </section>
 
         {/* ── Theme ── */}
-        <section className="bg-card rounded-xl border border-border p-6 shadow-sm space-y-6">
+        <section className="bg-card rounded-xl border border-border p-4 md:p-6 shadow-sm space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Palette className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-foreground">Tema</h3>
@@ -347,7 +348,7 @@ export default function SettingsPage() {
         </section>
 
         {/* ── Danger Zone ── */}
-        <section className="bg-destructive/10 rounded-xl border border-destructive/20 p-6 space-y-4">
+        <section className="bg-destructive/10 rounded-xl border border-destructive/20 p-4 md:p-6 space-y-4">
           <h3 className="text-lg font-semibold text-destructive flex items-center gap-3">
             <Trash2 className="h-5 w-5" />
             Zona de Perigo
@@ -358,12 +359,35 @@ export default function SettingsPage() {
           </p>
           <Button
             variant="destructive"
-            onClick={handleDelete}
+            onClick={() => setIsDeleteOpen(true)}
           >
             <Trash2 className="h-4 w-4 mr-2" />
             Excluir Projeto
           </Button>
         </section>
+
+        <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+          <DialogContent className="sm:max-w-[400px]">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-destructive">
+                <AlertTriangle className="h-5 w-5" />
+                Excluir Projeto
+              </DialogTitle>
+              <DialogDescription>
+                Tem certeza que deseja excluir este projeto? Esta ação é irreversível e removerá permanentemente todos os capítulos, personagens, locais e eventos associados.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>
+                Cancelar
+              </Button>
+              <Button variant="destructive" onClick={handleDelete}>
+                <Trash2 className="h-4 w-4 mr-2" />
+                Excluir
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

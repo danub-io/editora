@@ -101,7 +101,7 @@ export default function LocationsPage() {
   };
 
   return (
-    <div className="p-8 md:p-12">
+    <div className="p-4 md:p-12">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>

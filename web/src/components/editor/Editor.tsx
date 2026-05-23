@@ -141,7 +141,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
         </div>
       )}
 
-      <div className={cn("flex-1 overflow-y-auto px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
+      <div className={cn("flex-1 overflow-y-auto px-6 md:px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
         <div className={cn("w-full", focusMode ? "max-w-2xl" : "max-w-3xl")}>
 
         <article>
