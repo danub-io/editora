@@ -4,14 +4,7 @@ import { useEffect, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { Editor } from "@/components/editor/Editor";
 import { toast } from "sonner";
-import {
-  FileText,
-  Download,
-  Loader2,
-  ListOrdered,
-  CheckCircle,
-  Edit3,
-} from "lucide-react";
+import { FileText, ListOrdered, CheckCircle, Edit3 } from "lucide-react";
 
 export default function ProjectPage() {
   const {
