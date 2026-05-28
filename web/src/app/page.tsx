@@ -40,26 +40,26 @@ export default function LandingPage() {
         {/* ─── Hero Section ─── */}
         <section className="mx-auto max-w-7xl px-6 py-24 text-center md:px-8">
           <h1 className="mx-auto mb-4 max-w-4xl font-serif text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-foreground">
-            Transforme seu manuscrito em uma obra-prima
+            O ambiente mais focado para escrever seu livro
           </h1>
           <p className="mx-auto mb-4 max-w-2xl font-sans text-base lg:text-lg leading-relaxed text-muted-foreground">
-            Conecte-se com os melhores editores, designers e profissionais do
-            mercado editorial. Selecionamos os top 3% para garantir que sua
-            obra brilhe.
+            Editor de manuscrito pessoal com ferramentas profissionais para criação de
+            personagens, worldbuilding, timeline e compilação em PDF e EPUB. Tudo o
+            que você precisa para dar vida às suas histórias, em um só lugar.
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Link
               href="/dash"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-xs font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
             >
-              Começar agora
+              Começar a escrever
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/dash"
               className="inline-flex items-center justify-center rounded-full bg-card px-8 py-3.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
             >
-              Explorar profissionais
+              Ver dashboard
             </Link>
           </div>
         </section>
