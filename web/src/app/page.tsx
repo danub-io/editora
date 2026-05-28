@@ -215,27 +215,27 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ─── Trust & Protection Section ─── */}
+        {/* ─── AI Analysis Section ─── */}
         <section className="mx-auto max-w-7xl px-6 py-24 text-center md:px-8">
           <h2 className="mx-auto mb-4 max-w-2xl font-serif text-3xl lg:text-4xl font-semibold text-foreground">
-            Seu trabalho está seguro
+            Seu revisor de estilo pessoal
           </h2>
           <p className="mx-auto mb-4 max-w-2xl font-sans text-base lg:text-lg leading-relaxed text-muted-foreground">
-            Cuidamos dos contratos e pagamentos para que você possa focar no
-            processo criativo. Cada projeto é respaldado pela nossa garantia
-            Editora.
+            Análise profunda de estilo narrativo, sugestões de vocabulário e
+            verificação de consistência — tudo com inteligência artificial treinada
+            para entender sua voz como autor.
           </p>
           <div className="flex justify-center">
             <div className="inline-flex max-w-md flex-col items-center gap-4 rounded-xl bg-card p-8 shadow-sm">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                <ShieldCheck className="h-8 w-8 text-primary" />
+                <Sparkles className="h-8 w-8 text-primary" />
               </div>
               <h3 className="font-serif text-lg font-semibold text-foreground">
-                Garantia Editora
+                Análise por IA
               </h3>
               <p className="text-sm text-muted-foreground">
-                Proteção total do início ao fim. Segurança, transparência e
-                qualidade garantida em cada etapa do seu projeto editorial.
+                Receba sugestões contextuais de estilo, tom e consistência narrativa
+                enquanto escreve — sem sair do editor.
               </p>
             </div>
           </div>
