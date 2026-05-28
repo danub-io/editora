@@ -64,25 +64,32 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ─── Trust / Logos Section ─── */}
+        {/* ─── Stats Section ─── */}
         <section className="bg-muted py-12">
           <div className="mx-auto max-w-7xl px-6 text-center md:px-8">
-            <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Destaque na mídia
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 opacity-50 md:gap-4">
-              <span className="font-serif text-lg font-bold text-foreground">
-                The New York Times
-              </span>
-              <span className="font-serif text-lg font-bold italic text-foreground">
-                Forbes
-              </span>
-              <span className="font-serif text-lg font-bold tracking-tighter text-foreground">
-                WIRED
-              </span>
-              <span className="font-serif text-lg font-bold uppercase text-foreground">
-                The Guardian
-              </span>
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
+              <div className="flex flex-col items-center gap-1">
+                <span className="font-serif text-3xl font-bold text-foreground">
+                  100%
+                </span>
+                <span className="text-xs text-muted-foreground">Foco na escrita</span>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <span className="font-serif text-3xl font-bold text-foreground">
+                  PDF + EPUB
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  Compilação profissional
+                </span>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <span className="font-serif text-3xl font-bold text-foreground">
+                  IA
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  Análise de estilo integrada
+                </span>
+              </div>
             </div>
           </div>
         </section>
