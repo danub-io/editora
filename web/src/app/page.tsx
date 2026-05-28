@@ -4,12 +4,13 @@ import Link from "next/link";
 import {
   BookOpen,
   ArrowRight,
-  Star,
   Users,
-  ShieldCheck,
-  CheckCircle,
-  MessageCircle,
-  FolderOpen,
+  Map,
+  Clock,
+  FileText,
+  Download,
+  Edit3,
+  Sparkles,
 } from "lucide-react";
 import { Nav } from "@/components/nav/Nav";
 import { Footer } from "@/components/footer/Footer";

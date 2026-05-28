@@ -16,7 +16,6 @@ export default function ProjectPage() {
     fetchProjects,
     setActiveChapter,
   } = useProjectStore();
-  const [isBuilding, setIsBuilding] = useState(false);
 
   useEffect(() => {
     if (activeProjectId) {
