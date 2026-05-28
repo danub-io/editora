@@ -37,27 +37,6 @@ export default function ProjectPage() {
       ? Math.round((completedCount / chapters.length) * 100)
       : 0;
 
-  const handleBuild = async () => {
-    if (!activeProject) return;
-    setIsBuilding(true);
-    try {
-      const response = await fetch("/api/build", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ project: activeProject, chapters }),
-      });
-      const data = await response.json();
-      if (data.success) {
-        toast.success(data.message || "Livro compilado com sucesso!");
-      } else {
-        toast.error(data.error || "Erro ao compilar");
-      }
-    } catch {
-      toast.error("Erro ao conectar com o servidor.");
-    } finally {
-      setIsBuilding(false);
-    }
-  };
 
   // Show editor when a chapter is selected
   if (activeChapterId) {
