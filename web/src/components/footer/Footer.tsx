@@ -14,8 +14,8 @@ export function Footer() {
             </span>
           </Link>
           <p className="max-w-xs text-sm text-muted-foreground">
-            Construindo o futuro da publicação, conectando autores com os
-            melhores profissionais do mercado editorial.
+            O ambiente mais focado para escrever, organizar e compilar seu manuscrito —
+            do primeiro rascunho ao EPUB.
           </p>
         </div>
 
