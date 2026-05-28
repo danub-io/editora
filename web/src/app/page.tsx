@@ -151,69 +151,64 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ─── Collaboration Section ─── */}
+        {/* ─── Writing Workflow Section ─── */}
         <section className="bg-muted">
           <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 md:grid-cols-2 md:px-8">
+            <div className="order-1 md:order-2">
+              <h2 className="mb-4 font-serif text-3xl lg:text-4xl font-semibold text-foreground">
+                Escreva do começo ao fim
+              </h2>
+              <p className="mb-4 max-w-lg font-sans text-base lg:text-lg leading-relaxed text-muted-foreground">
+                Gerencie todo o seu manuscrito em um só lugar. Do primeiro rascunho à
+                compilação final em PDF ou EPUB, cada etapa do processo criativo está
+                ao seu alcance.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <FileText className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mb-2 text-xs font-bold text-foreground">
+                    Rascunho a rascunho
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Escreva e reescreva com versionamento automático.
+                  </p>
+                </div>
+                <div>
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <Download className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mb-2 text-xs font-bold text-foreground">
+                    Compile com um clique
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Gere PDF e EPUB prontos para publicação.
+                  </p>
+                </div>
+              </div>
+            </div>
             <div className="order-2 md:order-1">
               <div className="flex items-center justify-center rounded-xl bg-card p-8 shadow-sm">
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div className="flex flex-col items-center gap-2">
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                      <MessageCircle className="h-6 w-6 text-primary" />
+                      <Edit3 className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="text-xs font-bold text-foreground">
-                      Mensagens
-                    </h3>
+                    <h3 className="text-xs font-bold text-foreground">Editor Rico</h3>
                     <p className="text-xs text-muted-foreground">
-                      Chat em tempo real com profissionais.
+                      Formatação profissional de texto.
                     </p>
                   </div>
                   <div className="flex flex-col items-center gap-2">
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                      <FolderOpen className="h-6 w-6 text-primary" />
+                      <Sparkles className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="text-xs font-bold text-foreground">
-                      Arquivos
-                    </h3>
+                    <h3 className="text-xs font-bold text-foreground">IA</h3>
                     <p className="text-xs text-muted-foreground">
-                      Compartilhe manuscritos com segurança.
+                      Sugestões de estilo e consistência.
                     </p>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="order-1 md:order-2">
-              <h2 className="mb-4 font-serif text-3xl lg:text-4xl font-semibold text-foreground">
-                Colaboração perfeita
-              </h2>
-              <p className="mb-4 max-w-lg font-sans text-base lg:text-lg leading-relaxed text-muted-foreground">
-                Gerencie todo o seu projeto em um único painel. Compartilhe
-                arquivos, comunique-se diretamente e processe pagamentos com
-                segurança — tudo sem sair da plataforma.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <MessageCircle className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="mb-4 text-xs font-bold text-foreground">
-                    Mensagens diretas
-                  </h3>
-                  <p className="text-xs text-muted-foreground">
-                    Converse com profissionais instantaneamente.
-                  </p>
-                </div>
-                <div>
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <FolderOpen className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="mb-4 text-xs font-bold text-foreground">
-                    Compartilhamento
-                  </h3>
-                  <p className="text-xs text-muted-foreground">
-                    Troque manuscritos com total segurança.
-                  </p>
                 </div>
               </div>
             </div>
