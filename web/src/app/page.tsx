@@ -245,17 +245,17 @@ export default function LandingPage() {
         <section className="bg-primary px-6 py-24 text-center text-primary-foreground">
           <div className="mx-auto max-w-7xl">
             <h2 className="mb-4 font-serif text-4xl lg:text-5xl font-bold leading-tight">
-              Pronto para publicar sua obra-prima?
+              Comece a escrever agora
             </h2>
             <p className="mx-auto mb-4 max-w-2xl font-sans text-base lg:text-lg leading-relaxed text-primary-foreground/80">
-              Junte-se a milhares de autores que encontraram a equipe editorial
-              perfeita na Editora.
+              Abra o editor e dê vida à sua história. Sua obra-prima começa com o
+              primeiro parágrafo.
             </p>
             <Link
               href="/dash"
               className="inline-flex items-center justify-center rounded-full bg-card px-8 py-4 text-xs font-medium text-primary shadow-sm transition-colors hover:bg-muted"
             >
-              Cadastre-se gratuitamente
+              Entrar no Editor
             </Link>
           </div>
         </section>
