@@ -282,7 +282,7 @@ export default function SettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="grid gap-2">
               <Label>Família da Fonte</Label>
-              <Select value={form.fontFamily} onValueChange={(v) => setForm({ ...form, fontFamily: v })}>
+              <Select value={form.fontFamily} onValueChange={(v) => v != null && setForm({ ...form, fontFamily: v })}>
                 <SelectTrigger className="w-full">
                   <SelectValue>{form.fontFamily}</SelectValue>
                 </SelectTrigger>
