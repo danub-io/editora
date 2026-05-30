@@ -252,6 +252,7 @@ export default function SettingsPage() {
           </div>
           <div className="grid gap-2">
             <Select value={form.pageFormat} onValueChange={(v) => {
+              if (v == null) return;
               const preset = MARGIN_PRESETS[v];
               setForm({ ...form, pageFormat: v, marginTop: preset.top, marginBottom: preset.bottom, marginInner: preset.inner, marginOuter: preset.outer });
             }}>
