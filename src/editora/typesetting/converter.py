@@ -152,7 +152,7 @@ class Typesetter:
             # Header font size
             args.extend([
                 "--variable",
-                f"secnumdepth=2",
+                "secnumdepth=2",
             ])
 
         # Configurações específicas para EPUB

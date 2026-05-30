@@ -3,8 +3,7 @@
 import json
 import os
 from abc import ABC, abstractmethod
-from pathlib import Path
-from typing import Any, Literal
+from typing import Any
 
 from ...config import LLMConfig
 
@@ -84,7 +83,7 @@ class OpenAILLM(BaseLLM):
         # Tenta usar structured output se disponível
         try:
             from langchain_core.output_parsers import PydanticOutputParser
-            from pydantic import BaseModel, create_model
+            from pydantic import create_model
 
             if schema:
                 # Cria um modelo Pydantic dinâmico

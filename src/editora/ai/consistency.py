@@ -1,11 +1,10 @@
 """Módulo de Revisão de Consistência Global - IA para análise de consistência narrativa."""
 
 import json
-from pathlib import Path
 from typing import Any
 
 from ...config import ConsistencyConfig, LLMConfig
-from ..core.manuscript import Chapter, Manuscript
+from ..core.manuscript import Manuscript
 from .llm import CONSISTENCY_SYSTEM_PROMPT, LLMClient
 
 
@@ -389,11 +388,11 @@ Apenas JSON."""
     ) -> str:
         """Formata relatório em Markdown."""
         lines = [
-            f"# Relatório de Consistência",
+            "# Relatório de Consistência",
             f"\n**Livro:** {manuscript.title}",
             f"**Autor:** {manuscript.author}",
             f"**Capítulos:** {len(manuscript.chapters)}",
-            f"",
+            "",
         ]
 
         # Resumo

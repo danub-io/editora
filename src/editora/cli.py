@@ -1,7 +1,5 @@
 """CLI principal da Editora - Interface de linha de comando."""
 
-import json
-import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -13,7 +11,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 
 from . import __version__
-from .config import EditorConfig, LLMConfig, TypesettingConfig
+from .config import EditorConfig
 from .core.manuscript import Chapter, Manuscript
 from .typesetting.converter import Typesetter
 

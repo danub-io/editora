@@ -2,11 +2,10 @@
 
 import json
 import re
-from pathlib import Path
 from typing import Any
 
 from ...config import LLMConfig, ProofreadingConfig
-from .llm import LLMClient, PROOFREADING_SYSTEM_PROMPT
+from .llm import PROOFREADING_SYSTEM_PROMPT, LLMClient
 
 
 class Proofreader:
@@ -113,7 +112,7 @@ Importante: Retorne APENAS o JSON, sem markdown ou explicações adicionais."""
                 "method": "llm",
             }
 
-        except (json.JSONDecodeError, ValueError) as e:
+        except (json.JSONDecodeError, ValueError):
             # Fallback para LanguageTool
             return self._proofread_with_languagetool(text)
 
@@ -164,7 +163,7 @@ Importante: Retorne APENAS o JSON, sem markdown ou explicações adicionais."""
                 "method": "languagetool",
             }
 
-        except Exception as e:
+        except Exception:
             # Fallback final: usa LLM
             return self._proofread_with_llm(text)
 
@@ -286,7 +285,7 @@ Importante: Retorne APENAS o JSON, sem markdown ou explicações adicionais."""
 
         report_lines = [
             f"{'='*60}",
-            f"RELATÓRIO DE PROOFREADING",
+            "RELATÓRIO DE PROOFREADING",
             f"{'='*60}",
         ]
 

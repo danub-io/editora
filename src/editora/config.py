@@ -1,9 +1,9 @@
 """Configurações da editora usando Pydantic."""
 
+import re
 from pathlib import Path
 from typing import Literal
 
-import re
 from pydantic import BaseModel, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 

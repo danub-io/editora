@@ -3,7 +3,6 @@
 import json
 import re
 from difflib import SequenceMatcher
-from pathlib import Path
 from typing import Any, Literal
 
 from ...config import EditingConfig, LLMConfig
