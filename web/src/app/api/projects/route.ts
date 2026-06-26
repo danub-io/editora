@@ -1,11 +1,14 @@
+export const runtime = "edge";
+
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { projects } from "@/lib/schema";
+import { getDb } from "@/lib/db";
+import { chapters, projects } from "@/lib/schema";
 import { generateId } from "@/lib/utils";
 
 // GET /api/projects — List all projects
 export async function GET() {
   try {
+    const db = getDb(process.env as Record<string, unknown>);
     const rows = await db.select().from(projects).all();
     const result = rows.map((r) => ({
       ...r,
@@ -34,7 +37,8 @@ export async function GET() {
 // POST /api/projects — Create project
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const db = getDb(process.env as Record<string, unknown>);
+    const body = (await req.json()) as Record<string, any>;
     const now = new Date().toISOString();
     const id = generateId();
 
@@ -57,6 +61,22 @@ export async function POST(req: NextRequest) {
       settingsMarginInner: body.settings?.margins?.inner || "2.5cm",
       settingsMarginOuter: body.settings?.margins?.outer || "2cm",
       settingsTheme: body.settings?.theme || "light",
+      createdAt: now,
+      updatedAt: now,
+    });
+
+    // Create default first chapter
+    const chapterId = generateId();
+    await db.insert(chapters).values({
+      id: chapterId,
+      projectId: id,
+      type: "chapter",
+      number: 1,
+      title: "Capítulo 1",
+      content: "Comece a escrever seu primeiro capítulo aqui...\n",
+      wordCount: 7,
+      tags: "[]",
+      status: "draft",
       createdAt: now,
       updatedAt: now,
     });

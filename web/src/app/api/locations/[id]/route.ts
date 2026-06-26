@@ -1,5 +1,7 @@
+export const runtime = "edge";
+
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { locations } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 
@@ -9,7 +11,8 @@ export async function PUT(
 ) {
   const { id } = await params;
   try {
-    const body = await req.json();
+    const db = getDb(process.env as Record<string, unknown>);
+    const body = (await req.json()) as Record<string, any>;
     const now = new Date().toISOString();
     const updates: Record<string, any> = { updatedAt: now };
     if (body.name !== undefined) updates.name = body.name;
@@ -28,6 +31,7 @@ export async function DELETE(
 ) {
   const { id } = await params;
   try {
+    const db = getDb(process.env as Record<string, unknown>);
     await db.delete(locations).where(eq(locations.id, id));
     return NextResponse.json({ success: true });
   } catch (error: any) {

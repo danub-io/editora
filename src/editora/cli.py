@@ -15,28 +15,10 @@ from .config import EditorConfig
 from .core.manuscript import Chapter, Manuscript
 from .typesetting.converter import Typesetter
 
-# Importações condicionais dos módulos de IA
-try:
-    from .ai.editing import TextEditor
-    AI_AVAILABLE = True
-except ImportError:
-    AI_AVAILABLE = False
-
-try:
-    from .ai.proofreading import Proofreader
-    PROOFREADER_AVAILABLE = True
-except ImportError:
-    PROOFREADER_AVAILABLE = False
-
-try:
-    from .ai.consistency import ConsistencyChecker
-    CONSISTENCY_AVAILABLE = True
-except ImportError:
-    CONSISTENCY_AVAILABLE = False
 
 app = typer.Typer(
     name="editora",
-    help="Editora pessoal automatizada com IA para produção de livros profissionais.",
+    help="Editora pessoal automatizada para produção de livros profissionais.",
     add_completion=False,
 )
 console = Console()
@@ -142,11 +124,6 @@ editora info
 # Compilar livro
 editora build
 
-# Revisar consistência
-editora consistency
-
-# Editar capítulos
-editora edit --all
 ```
 
 ## Estrutura dos Capítulos
@@ -355,187 +332,9 @@ def show_info(
         console.print(f"   Esperado em: {chapters_dir}")
 
 
-@app.command("edit")
-def edit_chapters(
-    input_dir: Path = typer.Option(
-        Path("."), "--input", "-i", help="Diretório do projeto."
-    ),
-    chapter: Optional[int] = typer.Option(
-        None, "--chapter", "-c", help="Número do capítulo (padrão: todos)."
-    ),
-    mode: str = typer.Option(
-        "light", "--mode", "-m",
-        help="Modo de edição: light, medium, aggressive."
-    ),
-    preview: bool = typer.Option(
-        False, "--preview", "-p", help="Apenas mostra preview das mudanças."
-    ),
-):
-    """Edita capítulos usando IA."""
-    if not AI_AVAILABLE:
-        console.print("[red]❌ Módulos de IA não disponíveis. Instale as dependências.[/red]")
-        raise typer.Exit(1)
-
-    config = EditorConfig.load(input_dir / "editora.yaml")
-    chapters_dir = input_dir / config.chapters_dir
-
-    # Carrega capítulos
-    if chapter is not None:
-        chapter_file = chapters_dir / f"{chapter:02d}-*.md"
-        files = sorted(chapters_dir.glob(f"{chapter:02d}-*.md"))
-        if not files:
-            console.print(f"[red]❌ Capítulo {chapter} não encontrado.[/red]")
-            raise typer.Exit(1)
-    else:
-        files = sorted(chapters_dir.glob("*.md"))
-
-    editor = TextEditor(
-        llm_config=config.llm,
-        editing_config=config.editing,
-    )
-
-    for filepath in files:
-        console.print(f"\n[blue]📝 Editando: {filepath.name}[/blue]")
-
-        chapter = Chapter.from_file(filepath)
-        result = editor.edit_chapter(
-            chapter.content,
-            chapter.title,
-            mode=mode,  # type: ignore
-        )
-
-        change_pct = result.get("change_percent", 0)
-        console.print(f"   Mudanças: {change_pct:.1f}%")
-
-        if result.get("summary"):
-            console.print(f"   Resumo: {result['summary'][:100]}...")
-
-        if preview:
-            # Mostra diff
-            if result.get("changes"):
-                console.print("\n   [yellow]Mudanças sugeridas:[/yellow]")
-                for change in result["changes"][:5]:
-                    console.print(
-                        f"   • {change.get('original', '')} → {change.get('edited', '')}"
-                    )
-                    if change.get("reason"):
-                        console.print(f"     ({change['reason']})")
-        else:
-            # Aplica mudanças
-            if change_pct > 0:
-                chapter.content = result["edited_text"]
-                chapter.save(filepath)
-                console.print("   [green]✅ Capítulo atualizado.[/green]")
 
 
-@app.command("proofread")
-def proofread_chapters(
-    input_dir: Path = typer.Option(
-        Path("."), "--input", "-i", help="Diretório do projeto."
-    ),
-    chapter: Optional[int] = typer.Option(
-        None, "--chapter", "-c", help="Número do capítulo (padrão: todos)."
-    ),
-    output_report: bool = typer.Option(
-        False, "--report", "-r", help="Gera relatório em arquivo."
-    ),
-):
-    """Revisa gramática e ortografia."""
-    if not PROOFREADER_AVAILABLE:
-        console.print("[red]❌ Módulo de proofreading não disponível.[/red]")
-        raise typer.Exit(1)
 
-    config = EditorConfig.load(input_dir / "editora.yaml")
-    chapters_dir = input_dir / config.chapters_dir
-
-    proofreader = Proofreader(llm_config=config.llm)
-
-    if chapter is not None:
-        files = sorted(chapters_dir.glob(f"{chapter:02d}-*.md"))
-    else:
-        files = sorted(chapters_dir.glob("*.md"))
-
-    total_errors = 0
-
-    for filepath in files:
-        chapter = Chapter.from_file(filepath)
-        result = proofreader.proofread_chapter(chapter.content, chapter.title)
-
-        errors = result.get("error_count", 0)
-        total_errors += errors
-
-        if errors > 0:
-            console.print(f"[yellow]⚠️  {filepath.name}: {errors} erros[/yellow]")
-        else:
-            console.print(f"[green]✅ {filepath.name}: sem erros[/green]")
-
-    console.print(f"\n[bold]Total de erros: {total_errors}[/bold]")
-
-    if output_report:
-        report_path = input_dir / "output" / "proofreading_report.txt"
-        report_path.parent.mkdir(exist_ok=True)
-        with open(report_path, "w", encoding="utf-8") as f:
-            for filepath in files:
-                chapter = Chapter.from_file(filepath)
-                result = proofreader.proofread_chapter(chapter.content, chapter.title)
-                f.write(proofreader.generate_proofreading_report(
-                    chapter.content, chapter.title
-                ))
-                f.write("\n\n")
-        console.print(f"[green]📄 Relatório salvo em: {report_path}[/green]")
-
-
-@app.command("consistency")
-def check_consistency(
-    input_dir: Path = typer.Option(
-        Path("."), "--input", "-i", help="Diretório do projeto."
-    ),
-    output_report: bool = typer.Option(
-        True, "--report", "-r", help="Gera relatório em arquivo."
-    ),
-    format: str = typer.Option(
-        "markdown", "--format", "-f", help="Formato do relatório: markdown, json."
-    ),
-):
-    """Verifica consistência global do manuscrito."""
-    if not CONSISTENCY_AVAILABLE:
-        console.print("[red]❌ Módulo de consistência não disponível.[/red]")
-        raise typer.Exit(1)
-
-    config = EditorConfig.load(input_dir / "editora.yaml")
-    chapters_dir = input_dir / config.chapters_dir
-
-    manuscript = Manuscript.from_directory(
-        chapters_dir,
-        title=config.book.title,
-        author=config.book.author,
-    )
-
-    console.print(f"[blue]🔍 Analisando consistência de '{manuscript.title}'...[/blue]")
-
-    checker = ConsistencyChecker(
-        llm_config=config.llm,
-        consistency_config=config.consistency,
-    )
-
-    with Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}"),
-        console=console,
-    ) as progress:
-        task = progress.add_task("Analisando...", total=None)
-
-        report = checker.generate_report(manuscript, format)
-        progress.update(task, completed=True)
-
-    console.print(report)
-
-    if output_report:
-        report_path = input_dir / "output" / f"consistency_report.{format}"
-        report_path.parent.mkdir(exist_ok=True)
-        with open(report_path, "w", encoding="utf-8") as f:
-            f.write(report)
-        console.print(f"\n[green]📄 Relatório salvo em: {report_path}[/green]")
 
 
 @app.command("template")

@@ -1,0 +1,12 @@
+name = "editora-web"
+compatibility_date = "2025-06-26"
+pages_build_output_dir = ".vercel/output/static"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "editora-db"
+database_id = "create-via-wrangler"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "editora-assets"

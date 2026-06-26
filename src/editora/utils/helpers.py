@@ -144,21 +144,6 @@ def split_into_paragraphs(text: str) -> list[str]:
     return [p.strip() for p in paragraphs if p.strip()]
 
 
-def merge_diff(original: str, edited: str, edited_text: str) -> str:
-    """Aplica edições de um diff ao texto original.
-
-    Usa o módulo diff_match_patch para aplicar mudanças.
-    """
-    try:
-        import diff_match_patch as dmp
-
-        d = dmp.diff_match_patch()
-        diffs = d.diff_main(original, edited)
-        d.diff_cleanupSemantic(diffs)
-        return d.diff_text2(diffs)
-    except ImportError:
-        # Fallback simples
-        return edited_text
 
 
 def create_version_backup(

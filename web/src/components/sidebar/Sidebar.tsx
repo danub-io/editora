@@ -4,6 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { ChapterList } from "./ChapterList";
 import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
+import {
   BookOpen,
   Users,
   Map,
@@ -11,32 +16,25 @@ import {
   Plus,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
   FileText,
   BookMarked,
   ListOrdered,
   Quote,
   ScrollText,
   Bookmark,
-  Target,
-  Pin,
-  MessageSquare,
-  History,
-  Search,
-  Type,
-  Scissors,
-  Trash2,
-  Download,
   Settings,
   Sun,
   Moon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { toast } from "sonner";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const FRONT_MATTER_OPTIONS = [
+type FrontMatterSubType = "copyright" | "dedication" | "toc" | "epigraph" | "preface" | "introduction";
+
+const FRONT_MATTER_OPTIONS: { subType: FrontMatterSubType; title: string; icon: React.ElementType }[] = [
   { subType: "copyright", title: "Copyright", icon: ScrollText },
   { subType: "dedication", title: "Dedicatória", icon: BookMarked },
   { subType: "toc", title: "Sumário", icon: ListOrdered },
@@ -54,7 +52,6 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
     createChapter,
     fetchChapters,
     getChaptersByProject,
-    chapters,
   } = useProjectStore();
 
   const { theme, setTheme } = useTheme();
@@ -123,7 +120,7 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
   };
 
   const handleAddFrontMatter = async (
-    subType: string,
+    subType: FrontMatterSubType,
     title: string
   ) => {
     if (!activeProjectId) return;
@@ -136,7 +133,7 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
     await createChapter({
       projectId: activeProjectId,
       type: "front_matter",
-      subType: subType as any,
+      subType,
       title,
       content: "",
       number: frontMatterPages.length + 1,
@@ -151,62 +148,20 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
 
   const isActive = (path: string) => pathname === path;
 
+  const ThemeIcon = mounted ? (theme === "dark" ? Sun : Moon) : null;
+
   return (
     <>
-      {/* ── Mobile toolbar icons ── */}
-      <div className="md:hidden w-12 flex flex-col items-center overflow-y-auto overflow-x-hidden shrink-0 bg-sidebar pt-18">
-        <div className="flex flex-col gap-6 items-center">
-          <MobileToolbarButton icon={Target} onClick={() => toast.info("Comentários direcionados em breve!")} />
-          <MobileToolbarButton icon={Pin} badge="2" onClick={() => toast.info("Notas fixadas em breve!")} />
-          <MobileToolbarButton icon={MessageSquare} onClick={() => toast.info("Comentários em breve!")} />
-          <MobileToolbarButton icon={History} onClick={() => toast.info("Histórico de versões em breve!")} />
-        </div>
-        <div className="my-3" />
-        <div className="flex flex-col gap-6 items-center">
-          <MobileToolbarButton icon={Search} onClick={() => toast.info("Busca em breve!")} />
-          <MobileToolbarButton icon={Type} onClick={() => toast.info("Estilos de texto em breve!")} />
-          <MobileToolbarButton icon={Plus} onClick={() => toast.info("Inserir elementos em breve!")} />
-          <MobileToolbarButton icon={Scissors} onClick={() => toast.info("Recortar em breve!")} />
-          <MobileToolbarButton icon={Trash2} onClick={() => toast.info("Excluir seleção em breve!")} />
-        </div>
-        <div className="flex-1" />
-        <div className="my-3" />
-        <div className="flex flex-col gap-6 items-center pb-4">
-          <MobileToolbarButton icon={Download} onClick={() => toast.info("Exportar em breve!")} />
-          <MobileToolbarButton icon={Users} onClick={() => toast.info("Colaboradores em breve!")} />
-          <MobileToolbarButton icon={Settings} onClick={() => { if (activeProjectId) window.location.href = `/projects/${activeProjectId}/settings`; }} />
-          {mounted ? (
-            <MobileToolbarButton
-              icon={theme === "dark" ? Sun : Moon}
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            />
-          ) : (
-            <div className="p-2">
-              <div className="h-[18px] w-[18px]" />
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* ── Sidebar main content ── */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* ── Header ── */}
         <div className="flex items-center justify-between px-5 py-4">
-          <div className="flex items-center gap-2 max-md:hidden">
-            <button
-              onClick={onClose}
-              className="p-1 rounded transition-colors text-sidebar-fg hover:text-foreground"
-              title="Fechar painel"
-            >
-              <ChevronRight className="h-5 w-5 rotate-180" />
-            </button>
-            <Link
-              href={`/projects/${activeProjectId}`}
-              className="text-[15px] font-semibold text-sidebar-fg"
-            >
-              Manuscrito
-            </Link>
-          </div>
+          <Link
+            href={`/projects/${activeProjectId}`}
+            className="text-[15px] font-semibold text-sidebar-fg"
+          >
+            Manuscrito
+          </Link>
           <div className="relative">
             <button
               onClick={() => setAddMenuOpen(!addMenuOpen)}
@@ -223,28 +178,28 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
                   className="fixed inset-0 z-40"
                   onClick={() => setAddMenuOpen(false)}
                 />
-                <div className="absolute right-0 top-full mt-0 z-50 w-52 bg-popover border border-border rounded-lg shadow-lg py-1 text-[13px]">
-                  <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-popover-foreground/60 font-semibold">
+                <div className="absolute right-0 top-full mt-0 z-50 w-52 bg-surface-container-lowest border border-outline-variant py-1 text-[13px]">
+                  <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-on-surface-variant/60 font-semibold">
                     Corpo
                   </div>
                   <button
                     onClick={handleAddChapter}
-                    className="w-full flex items-center gap-2 px-3 py-2 hover:bg-accent text-popover-foreground hover:text-accent-foreground transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-2 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   >
-                    <FileText className="h-4 w-4 text-muted-foreground" />
+                    <FileText className="h-4 w-4 text-on-surface-variant" />
                     Capítulo
                   </button>
                   <button
                     onClick={handleAddPart}
-                    className="w-full flex items-center gap-2 px-3 py-2 hover:bg-accent text-popover-foreground hover:text-accent-foreground transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-2 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   >
-                    <BookOpen className="h-4 w-4 text-muted-foreground" />
+                    <BookOpen className="h-4 w-4 text-on-surface-variant" />
                     Parte / Seção
                   </button>
 
                   <div className="my-1" />
 
-                  <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-popover-foreground/60 font-semibold">
+                  <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-on-surface-variant/60 font-semibold">
                     Páginas Especiais
                   </div>
                   {FRONT_MATTER_OPTIONS.map((opt) => {
@@ -259,16 +214,16 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
                         }
                         disabled={exists}
                         className={cn(
-                          "w-full flex items-center gap-2 px-3 py-2 transition-colors",
+                          "w-full flex items-center gap-2 px-3 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
                           exists
-                            ? "text-muted-foreground cursor-not-allowed"
-                            : "hover:bg-accent text-popover-foreground hover:text-accent-foreground"
+                            ? "text-on-surface-variant cursor-not-allowed"
+                            : "hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface"
                         )}
                       >
-                        <opt.icon className="h-4 w-4 text-muted-foreground" />
+                        <opt.icon className="h-4 w-4 text-on-surface-variant" />
                         {opt.title}
                         {exists && (
-                          <span className="ml-auto text-[10px] text-muted-foreground">
+                          <span className="ml-auto text-[10px] text-on-surface-variant">
                             ✓
                           </span>
                         )}
@@ -350,14 +305,14 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
             <FooterNavItem
               icon={Users}
               label="Personagens"
-              href={`/projects/${activeProjectId}/characters`}
-              active={isActive(`/projects/${activeProjectId}/characters`)}
+              href={`/projects/${activeProjectId}/personagens`}
+              active={isActive(`/projects/${activeProjectId}/personagens`)}
             />
             <FooterNavItem
               icon={Map}
               label="Locais"
-              href={`/projects/${activeProjectId}/locations`}
-              active={isActive(`/projects/${activeProjectId}/locations`)}
+              href={`/projects/${activeProjectId}/locais`}
+              active={isActive(`/projects/${activeProjectId}/locais`)}
             />
             <FooterNavItem
               icon={Clock}
@@ -365,6 +320,20 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
               href={`/projects/${activeProjectId}/timeline`}
               active={isActive(`/projects/${activeProjectId}/timeline`)}
             />
+            <FooterNavItem
+              icon={Settings}
+              label="Configurações"
+              href={`/projects/${activeProjectId}/settings`}
+              active={isActive(`/projects/${activeProjectId}/settings`)}
+            />
+            {/* Theme toggle */}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded text-[13px] text-sidebar-fg/70 hover:text-sidebar-fg hover:bg-sidebar-muted transition-colors w-full"
+            >
+              {ThemeIcon ? <ThemeIcon className="h-3.5 w-3.5 shrink-0 text-sidebar-fg/40" /> : <span className="h-3.5 w-3.5 shrink-0" />}
+              {mounted ? (theme === "dark" ? "Tema Claro" : "Tema Escuro") : "Tema"}
+            </button>
           </div>
         </div>
       </div>
@@ -373,7 +342,7 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
 }
 
 /* ──────────────────────────────────────────────────────────────
- * Desktop Sidebar — fixed positioning, overlay, CSS transform
+ * Desktop Sidebar — fixed positioning, CSS transform (no overlay)
  * ────────────────────────────────────────────────────────────── */
 export function Sidebar({
   isOpen,
@@ -386,24 +355,14 @@ export function Sidebar({
   if (!activeProjectId) return null;
 
   return (
-    <>
-      {/* Overlay backdrop — visible on all sizes when sidebar is open */}
-      <div
-        className={cn(
-          "fixed inset-0 z-20 bg-background/50 transition-opacity duration-200",
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        )}
-        onClick={onClose}
-      />
-      <nav
-        className={cn(
-          "fixed left-0 top-0 flex h-full z-30 bg-sidebar text-sidebar-fg select-none transition-transform duration-200 ease-out flex-col w-64",
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        )}
-      >
-        <SidebarContent onClose={onClose} />
-      </nav>
-    </>
+    <nav
+      className={cn(
+        "fixed left-0 top-0 flex h-full z-30 bg-sidebar text-sidebar-fg select-none transition-transform duration-200 ease-out flex-col w-64",
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      )}
+    >
+      <SidebarContent onClose={onClose} />
+    </nav>
   );
 }
 
@@ -419,7 +378,15 @@ export function MobileSidebar({
   if (!activeProjectId) return null;
 
   return (
-    <div className="flex h-full flex-row bg-sidebar text-sidebar-fg select-none">
+    <div className="flex h-full flex-row bg-sidebar text-sidebar-fg select-none relative">
+      {/* Close chevron — always visible above sidebar content */}
+      <button
+        onClick={onClose}
+        className="absolute left-3 top-4 z-50 flex items-center justify-center w-8 h-8 transition-colors text-on-surface-variant hover:text-on-surface hover:bg-sidebar-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        aria-label="Fechar painel"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
       <SidebarContent onClose={onClose} />
     </div>
   );
@@ -441,41 +408,24 @@ function FooterNavItem({
   active: boolean;
 }) {
   return (
-    <Link
-      href={href}
-      className={cn(
-        "flex items-center gap-2.5 px-3 py-1.5 rounded text-[13px] transition-all duration-150",
-        active
-          ? "text-sidebar-fg bg-sidebar-muted"
-          : "text-sidebar-fg/70 hover:text-sidebar-fg hover:bg-sidebar-muted"
-      )}
-    >
-      <Icon className="h-3.5 w-3.5 shrink-0 text-sidebar-fg/40" />
-      {label}
-    </Link>
-  );
-}
-
-function MobileToolbarButton({
-  icon: Icon,
-  badge,
-  onClick,
-}: {
-  icon: React.ElementType;
-  badge?: string;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="relative p-1.5 rounded-md transition-colors text-sidebar-fg/70 hover:bg-sidebar-muted hover:text-sidebar-fg"
-    >
-      <Icon className="h-[18px] w-[18px]" />
-      {badge && (
-        <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
-          {badge}
-        </span>
-      )}
-    </button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Link
+          href={href}
+          className={cn(
+            "flex items-center gap-2.5 px-3 py-1.5 rounded text-[13px] transition-all duration-150",
+            active
+              ? "text-sidebar-fg bg-sidebar-muted"
+              : "text-sidebar-fg/70 hover:text-sidebar-fg hover:bg-sidebar-muted"
+          )}
+        >
+          <Icon className="h-3.5 w-3.5 shrink-0 text-sidebar-fg/40" />
+          {label}
+        </Link>
+      </TooltipTrigger>
+      <TooltipContent side="right" className="text-xs">
+        {label}
+      </TooltipContent>
+    </Tooltip>
   );
 }

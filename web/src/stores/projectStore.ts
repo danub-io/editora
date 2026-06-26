@@ -94,7 +94,7 @@ export const useProjectStore = create<ProjectStore>()(
         set({ isLoading: true });
         try {
           const res = await fetch("/api/projects");
-          const data = await res.json();
+          const data = (await res.json()) as any;
           set({ projects: data, isLoading: false });
         } catch {
           set({ isLoading: false });
@@ -107,7 +107,7 @@ export const useProjectStore = create<ProjectStore>()(
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(projectData),
         });
-        const project = await res.json();
+        const project = (await res.json()) as any;
         set((s) => ({
           projects: [...s.projects, project],
           activeProjectId: project.id,
@@ -147,7 +147,7 @@ export const useProjectStore = create<ProjectStore>()(
       // ── Chapters ──
       fetchChapters: async (projectId) => {
         const res = await fetch(`/api/projects/${projectId}/chapters`);
-        const data = await res.json();
+        const data = (await res.json()) as any;
         set((s) => ({
           chapters: [
             ...s.chapters.filter((c) => c.projectId !== projectId),
@@ -165,7 +165,7 @@ export const useProjectStore = create<ProjectStore>()(
             body: JSON.stringify(chapterData),
           }
         );
-        const chapter = await res.json();
+        const chapter = (await res.json()) as any;
         set((s) => ({
           chapters: [...s.chapters, chapter],
           activeChapterId: chapter.id,
@@ -228,7 +228,7 @@ export const useProjectStore = create<ProjectStore>()(
       // ── Characters ──
       fetchCharacters: async (projectId) => {
         const res = await fetch(`/api/projects/${projectId}/characters`);
-        const data = await res.json();
+        const data = (await res.json()) as any;
         set((s) => ({
           characters: [
             ...s.characters.filter((c) => c.projectId !== projectId),
@@ -246,7 +246,7 @@ export const useProjectStore = create<ProjectStore>()(
             body: JSON.stringify(charData),
           }
         );
-        const character = await res.json();
+        const character = (await res.json()) as any;
         set((s) => ({ characters: [...s.characters, character] }));
         return character;
       },
@@ -277,7 +277,7 @@ export const useProjectStore = create<ProjectStore>()(
       // ── Locations ──
       fetchLocations: async (projectId) => {
         const res = await fetch(`/api/projects/${projectId}/locations`);
-        const data = await res.json();
+        const data = (await res.json()) as any;
         set((s) => ({
           locations: [
             ...s.locations.filter((l) => l.projectId !== projectId),
@@ -295,7 +295,7 @@ export const useProjectStore = create<ProjectStore>()(
             body: JSON.stringify(locData),
           }
         );
-        const location = await res.json();
+        const location = (await res.json()) as any;
         set((s) => ({ locations: [...s.locations, location] }));
         return location;
       },
@@ -324,7 +324,7 @@ export const useProjectStore = create<ProjectStore>()(
       // ── Timeline ──
       fetchTimeline: async (projectId) => {
         const res = await fetch(`/api/projects/${projectId}/timeline`);
-        const data = await res.json();
+        const data = (await res.json()) as any;
         set((s) => ({
           timelineEvents: [
             ...s.timelineEvents.filter((e) => e.projectId !== projectId),
@@ -342,7 +342,7 @@ export const useProjectStore = create<ProjectStore>()(
             body: JSON.stringify(eventData),
           }
         );
-        const event = await res.json();
+        const event = (await res.json()) as any;
         set((s) => ({ timelineEvents: [...s.timelineEvents, event] }));
         return event;
       },
