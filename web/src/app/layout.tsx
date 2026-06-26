@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Aura Editorial",
+  title: "GospelReads.",
   description:
     "Do manuscrito ao livro. Escreva, organize e publique com as melhores ferramentas editoriais — tudo em um só lugar.",
   icons: {

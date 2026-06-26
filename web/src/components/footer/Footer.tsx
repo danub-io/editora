@@ -9,7 +9,7 @@ export function Footer() {
           href="/"
           className="font-headline-md text-headline-md font-bold text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
-          AURA
+          GospelReads.
         </Link>
 
         {/* Links */}
@@ -42,7 +42,7 @@ export function Footer() {
 
         {/* Copyright */}
         <span className="text-caption text-on-surface-variant">
-          © {new Date().getFullYear()} Aura Editorial
+          © {new Date().getFullYear()} GospelReads.
         </span>
       </div>
     </footer>

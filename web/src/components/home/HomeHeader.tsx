@@ -54,7 +54,7 @@ export function HomeHeader() {
             href="/"
             className="font-display-lg text-display-lg font-bold tracking-tighter text-primary flex-shrink-0 px-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            AURA
+            GospelReads.
           </Link>
 
           {/* Right nav */}
@@ -86,7 +86,7 @@ export function HomeHeader() {
             href="/"
             className="font-headline-md text-headline-md font-bold tracking-tighter text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            AURA
+            GospelReads.
           </Link>
           <button
             onClick={() => setMobileOpen(true)}
@@ -107,7 +107,7 @@ export function HomeHeader() {
               className="font-headline-md text-headline-md font-bold tracking-tighter text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               onClick={() => setMobileOpen(false)}
             >
-              AURA
+              GospelReads.
             </Link>
             <button
               onClick={() => setMobileOpen(false)}

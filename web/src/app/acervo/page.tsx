@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Acervo — Aura Editorial",
+  title: "Acervo — GospelReads.",
 };
 
 import { HomeHeader } from "@/components/home/HomeHeader";
@@ -12,49 +12,49 @@ const trendingBooks = [
     title: "Concrete Horizons",
     author: "Marcus Chen",
     price: "$18.00",
-    image: "https://books.google.com/books/content?id=abc123&printsec=frontcover&img=1&zoom=1",
+    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "Ink & Water",
     author: "Sarah Jenkins",
     price: "Free",
-    image: "https://books.google.com/books/content?id=def456&printsec=frontcover&img=1&zoom=1",
+    image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "The Noise",
     author: "David Alarie",
     price: "$21.50",
-    image: "https://books.google.com/books/content?id=ghi789&printsec=frontcover&img=1&zoom=1",
+    image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "Botanical Thoughts",
     author: "Elena Rostova",
     price: "$19.00",
-    image: "https://books.google.com/books/content?id=jkl012&printsec=frontcover&img=1&zoom=1",
+    image: "https://images.unsplash.com/photo-1495640388908-05fa85288e61?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "The Glass Atrium",
     author: "Marcus Chen",
     price: "$16.50",
-    image: "https://books.google.com/books/content?id=mno345&printsec=frontcover&img=1&zoom=1",
+    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "Quiet Rooms",
     author: "Isabel Farrow",
     price: "$22.00",
-    image: "https://books.google.com/books/content?id=pqr678&printsec=frontcover&img=1&zoom=1",
+    image: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "After Midnight",
     author: "Thomas Hart",
     price: "$14.00",
-    image: "https://books.google.com/books/content?id=stu901&printsec=frontcover&img=1&zoom=1",
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "The Last Review",
     author: "Nina Okonkwo",
     price: "Free",
-    image: "https://books.google.com/books/content?id=vwx234&printsec=frontcover&img=1&zoom=1",
+    image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=600&auto=format&fit=crop",
   },
 ];
 
@@ -65,6 +65,7 @@ const newVoices = [
     book: "Whispers in the Glass",
     description:
       "A haunting exploration of memory and identity set in a crumbling coastal town.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop",
   },
   {
     name: "Maya Lin",
@@ -72,6 +73,7 @@ const newVoices = [
     book: "Fragments of a Season",
     description:
       "Twelve interlinked stories tracing the quiet devastations of a single autumn.",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop",
   },
   {
     name: "Arthur Pendelton",
@@ -79,6 +81,7 @@ const newVoices = [
     book: "The Observer's Dilemma",
     description:
       "Essays on art, distance, and the ethics of looking from one of our sharpest cultural critics.",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=300&auto=format&fit=crop",
   },
 ];
 
@@ -119,7 +122,7 @@ export default function AcervoPage() {
                 <div className="md:w-5/12 relative">
                   <div className="aspect-[2/3] border border-outline-variant bg-surface-container-low overflow-hidden">
                     <SafeImage
-                      src="https://books.google.com/books/content?id=edChoice1&printsec=frontcover&img=1&zoom=1"
+                      src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=600&auto=format&fit=crop"
                       alt="The Architecture of Silence"
                       className="w-full h-full object-cover"
                     />
@@ -233,7 +236,11 @@ export default function AcervoPage() {
                     >
                       <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 rounded-full overflow-hidden grayscale bg-surface-container-low shrink-0">
-                          <div className="w-full h-full bg-surface-container-high" />
+                          <img
+                            src={author.image}
+                            alt={author.name}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <div>
                           <h4 className="font-label-lg text-label-lg text-primary">

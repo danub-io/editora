@@ -47,11 +47,8 @@ export default function EditableSidebar({ projectId }: EditableSidebarProps) {
         </div>
         <div>
           <h1 className="font-headline-md text-headline-md text-on-background tracking-tight">
-            Aura
+            GospelReads.
           </h1>
-          <p className="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mt-1">
-            Editorial
-          </p>
         </div>
       </div>
 

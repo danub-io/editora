@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Aura Editorial — Do manuscrito ao livro",
+  title: "GospelReads. — Do manuscrito ao livro",
 };
 
 import Link from "next/link";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { Footer } from "@/components/footer/Footer";
+import { SafeImage } from "@/components/marketplace/SafeImage";
 
 export default function LandingPage() {
   return (
@@ -61,13 +62,12 @@ export default function LandingPage() {
                   </div>
                 </div>
                 {/* Book cover block */}
-                <div className="absolute bottom-0 right-0 w-40 h-52 bg-primary text-primary-foreground flex flex-col items-center justify-center p-6 rotate-[2deg] border border-outline-variant">
-                  <span className="font-label-lg text-label-md uppercase tracking-widest opacity-60">
-                    Aura
-                  </span>
-                  <span className="font-headline-md text-headline-md font-bold italic mt-2 text-center">
-                    Obra
-                  </span>
+                <div className="absolute bottom-0 right-0 w-40 h-52 bg-surface-container-low overflow-hidden rotate-[2deg] border border-outline-variant">
+                  <SafeImage
+                    src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=400&auto=format&fit=crop"
+                    alt="GospelReads. Obra"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>
@@ -93,18 +93,12 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               {/* Book cover mockup */}
               <div className="flex justify-center">
-                <div className="w-48 h-64 bg-primary text-primary-foreground flex flex-col items-center justify-center p-6 border border-outline-variant">
-                  <span className="font-label-md text-label-md uppercase tracking-widest opacity-60">
-                    Romance
-                  </span>
-                  <span className="font-headline-md text-headline-md font-bold italic mt-2 text-center">
-                    Vozes do
-                    <br />
-                    Silêncio
-                  </span>
-                  <span className="font-caption text-caption opacity-60 mt-4">
-                    Maria Costa
-                  </span>
+                <div className="w-48 h-64 border border-outline-variant bg-surface-container-low overflow-hidden">
+                  <SafeImage
+                    src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=400&auto=format&fit=crop"
+                    alt="Vozes do Silêncio"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
               {/* Description */}
@@ -116,7 +110,7 @@ export default function LandingPage() {
                   Um romance íntimo sobre três gerações de mulheres que
                   descobrem, nas entrelinhas do passado, a força para
                   reescrever o futuro. Publicado de forma independente
-                  através do Aura.
+                  através do GospelReads.
                 </p>
                 <Link
                   href="/acervo"
@@ -134,22 +128,21 @@ export default function LandingPage() {
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { title: "Aurora", author: "Pedro Lima", genre: "Ficção" },
-                  { title: "Raízes", author: "Ana Torres", genre: "Poesia" },
-                  { title: "O Portal", author: "Lucas Sá", genre: "Fantasia" },
-                  { title: "Cartas", author: "Clara Melo", genre: "Ensaio" },
+                  { title: "Aurora", author: "Pedro Lima", genre: "Ficção", image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=300&auto=format&fit=crop" },
+                  { title: "Raízes", author: "Ana Torres", genre: "Poesia", image: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?q=80&w=300&auto=format&fit=crop" },
+                  { title: "O Portal", author: "Lucas Sá", genre: "Fantasia", image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=300&auto=format&fit=crop" },
+                  { title: "Cartas", author: "Clara Melo", genre: "Ensaio", image: "https://images.unsplash.com/photo-1495640388908-05fa85288e61?q=80&w=300&auto=format&fit=crop" },
                 ].map((book) => (
                   <div
                     key={book.title}
                     className="border border-outline-variant p-4 hover:bg-surface-container-low transition-colors rounded-none"
                   >
-                    <div className="aspect-[3/4] bg-primary text-primary-foreground flex flex-col items-center justify-center mb-3 p-3">
-                      <span className="font-caption text-caption uppercase tracking-widest opacity-60">
-                        {book.genre}
-                      </span>
-                      <span className="font-headline-md text-headline-md font-bold italic mt-1 text-center">
-                        {book.title}
-                      </span>
+                    <div className="aspect-[3/4] bg-surface-container-low overflow-hidden mb-3 border border-outline-variant">
+                      <SafeImage
+                        src={book.image}
+                        alt={book.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <p className="font-label-md text-label-md font-bold text-primary">
                       {book.title}

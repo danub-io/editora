@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Manuscritos — Aura Editorial",
+  title: "Manuscritos — GospelReads.",
 };
 
 import Link from "next/link";

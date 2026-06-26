@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Termos de Uso — Aura Editorial",
+  title: "Termos de Uso — GospelReads.",
 };
 
 import Link from "next/link";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Julian Vance — Aura Editorial",
+  title: "Julian Vance — GospelReads.",
 };
 
 import { HomeHeader } from "@/components/home/HomeHeader";
@@ -13,25 +13,25 @@ const books = [
     title: "The Concrete Horizon",
     subtitle: "Novel • 2023",
     image:
-      "https://books.google.com/books/content?id=port1&printsec=frontcover&img=1&zoom=1",
+      "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "Echoes in the Grid",
     subtitle: "Essay Collection • 2020",
     image:
-      "https://books.google.com/books/content?id=port2&printsec=frontcover&img=1&zoom=1",
+      "https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "Structures of Silence",
     subtitle: "Novel • 2017",
     image:
-      "https://books.google.com/books/content?id=port3&printsec=frontcover&img=1&zoom=1",
+      "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=600&auto=format&fit=crop",
   },
   {
     title: "The Glass Atrium",
     subtitle: "Novella • 2014",
     image:
-      "https://books.google.com/books/content?id=port4&printsec=frontcover&img=1&zoom=1",
+      "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=600&auto=format&fit=crop",
   },
 ];
 
@@ -64,7 +64,7 @@ export default function PortfolioPage() {
           <div className="md:col-span-4">
             <div className="aspect-[3/4] bg-surface-container-low border border-outline-variant overflow-hidden">
               <SafeImage
-                src="https://books.google.com/books/content?id=julianVance&printsec=frontcover&img=1&zoom=1"
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop"
                 alt="Julian Vance"
                 className="object-cover w-full h-full grayscale"
               />
