@@ -170,6 +170,10 @@ export async function GET(
       data: encoder.encode("application/epub+zip"),
     });
 
+    const parsedHtmlContents = await Promise.all(
+      allChapters.map(ch => marked.parse(ch.content || ""))
+    );
+
     for (let i = 0; i < allChapters.length; i++) {
       const ch = allChapters[i];
       const filename = `chapter-${i + 1}.xhtml`;
@@ -179,7 +183,7 @@ export async function GET(
       );
       spineItems.push(`    <itemref idref="${idref}"/>`);
 
-      const htmlContent = await marked.parse(ch.content || "");
+      const htmlContent = parsedHtmlContents[i];
       const xhtml = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="${escapeXml(project.language || "pt-BR")}">
