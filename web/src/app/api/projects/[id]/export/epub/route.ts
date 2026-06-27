@@ -133,7 +133,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await (params as any);
   const db = getDb(process.env as Record<string, unknown>);
 
   try {
@@ -150,7 +150,7 @@ export async function GET(
       .select()
       .from(chapters)
       .where(eq(chapters.projectId, id))
-      .orderBy(asc(chapters.number))
+      .orderBy(asc(chapters.order))
       .all();
 
     if (allChapters.length === 0) {
@@ -171,7 +171,7 @@ export async function GET(
     });
 
     const parsedHtmlContents = await Promise.all(
-      allChapters.map(ch => marked.parse(ch.content || ""))
+      allChapters.map((ch: any) => marked.parse(ch.content || ""))
     );
 
     for (let i = 0; i < allChapters.length; i++) {
@@ -240,7 +240,7 @@ ${spineItems.join("\n")}
     // toc.ncx
     const navPoints = allChapters
       .map(
-        (ch, i) =>
+        (ch: any, i: number) =>
           `    <navPoint id="nav-${i + 1}" playOrder="${i + 1}">
       <navLabel><text>${escapeXml(ch.title)}</text></navLabel>
       <content src="chapter-${i + 1}.xhtml"/>
