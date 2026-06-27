@@ -69,7 +69,7 @@ export async function GET(
       pageSize: project.settingsPageFormat || "6x9",
       fontFamily: project.settingsFontFamily || "Georgia",
       fontSize: project.settingsFontSize || 11,
-      lineHeight: parseFloat(project.settingsLineHeight || "1.4"),
+      lineHeight: parseFloat(String(project.settingsLineHeight || "1.4")),
       marginTop: project.settingsMarginTop || "2cm",
       marginBottom: project.settingsMarginBottom || "2cm",
       marginInner: project.settingsMarginInner || "2.5cm",
@@ -80,7 +80,7 @@ export async function GET(
 
     const compiler = await getCompiler();
     compiler.resetShadow();
-    compiler.addSource("/main.typ", typstSource);
+    compiler.addSource("/main.typ", String(await typstSource));
 
     const result = await compiler.compile({
       mainFilePath: "/main.typ",

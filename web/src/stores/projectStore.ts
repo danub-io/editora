@@ -262,7 +262,11 @@ export const useProjectStore = create<ProjectStore>()(
       fetchProjects: async () => {
         set({ isLoading: true });
         try {
-          const res = await fetch("/api/projects");
+          const headers: Record<string, string> = {};
+          if (process.env.NEXT_PUBLIC_API_SECRET) {
+            headers["x-api-key"] = process.env.NEXT_PUBLIC_API_SECRET;
+          }
+          const res = await fetch("/api/projects", { headers });
           const data = (await res.json()) as any;
           if (Array.isArray(data) && data.length > 0) {
             set({ projects: data, isLoading: false });
@@ -275,9 +279,13 @@ export const useProjectStore = create<ProjectStore>()(
       },
 
       createProject: async (projectData) => {
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (process.env.NEXT_PUBLIC_API_SECRET) {
+          headers["x-api-key"] = process.env.NEXT_PUBLIC_API_SECRET;
+        }
         const res = await fetch("/api/projects", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify(projectData),
         });
         const project = (await res.json()) as any;
@@ -289,9 +297,13 @@ export const useProjectStore = create<ProjectStore>()(
       },
 
       updateProject: async (id, updates) => {
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (process.env.NEXT_PUBLIC_API_SECRET) {
+          headers["x-api-key"] = process.env.NEXT_PUBLIC_API_SECRET;
+        }
         await fetch(`/api/projects/${id}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify(updates),
         });
         set((s) => ({
@@ -302,7 +314,11 @@ export const useProjectStore = create<ProjectStore>()(
       },
 
       deleteProject: async (id) => {
-        await fetch(`/api/projects/${id}`, { method: "DELETE" });
+        const headers: Record<string, string> = {};
+        if (process.env.NEXT_PUBLIC_API_SECRET) {
+          headers["x-api-key"] = process.env.NEXT_PUBLIC_API_SECRET;
+        }
+        await fetch(`/api/projects/${id}`, { method: "DELETE", headers });
         set((s) => ({
           projects: s.projects.filter((p) => p.id !== id),
           chapters: s.chapters.filter((c) => c.projectId !== id),

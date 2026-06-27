@@ -12,6 +12,17 @@ export async function GET(
 ) {
   const { id } = await params;
   try {
+    const apiSecret = process.env.API_SECRET;
+    if (apiSecret) {
+      const authHeader = req.headers.get("authorization");
+      const apiKeyHeader = req.headers.get("x-api-key");
+      const token = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : apiKeyHeader;
+
+      if (token !== apiSecret) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+    }
+
     const db = getDb(process.env as Record<string, unknown>);
     const [row] = await db.select().from(projects).where(eq(projects.id, id));
     if (!row) return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -45,6 +56,17 @@ export async function PUT(
 ) {
   const { id } = await params;
   try {
+    const apiSecret = process.env.API_SECRET;
+    if (apiSecret) {
+      const authHeader = req.headers.get("authorization");
+      const apiKeyHeader = req.headers.get("x-api-key");
+      const token = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : apiKeyHeader;
+
+      if (token !== apiSecret) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+    }
+
     const db = getDb(process.env as Record<string, unknown>);
     const body = (await req.json()) as Record<string, any>;
     const now = new Date().toISOString();
@@ -88,6 +110,17 @@ export async function DELETE(
 ) {
   const { id } = await params;
   try {
+    const apiSecret = process.env.API_SECRET;
+    if (apiSecret) {
+      const authHeader = req.headers.get("authorization");
+      const apiKeyHeader = req.headers.get("x-api-key");
+      const token = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : apiKeyHeader;
+
+      if (token !== apiSecret) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+    }
+
     const db = getDb(process.env as Record<string, unknown>);
     await db.delete(projects).where(eq(projects.id, id));
     return NextResponse.json({ success: true });
