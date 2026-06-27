@@ -236,7 +236,7 @@ ${spineItems.join("\n")}
     // toc.ncx
     const navPoints = allChapters
       .map(
-        (ch, i) =>
+        (ch: any, i: number) =>
           `    <navPoint id="nav-${i + 1}" playOrder="${i + 1}">
       <navLabel><text>${escapeXml(ch.title)}</text></navLabel>
       <content src="chapter-${i + 1}.xhtml"/>

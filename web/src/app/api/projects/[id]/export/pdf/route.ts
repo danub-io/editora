@@ -62,7 +62,7 @@ export async function GET(
     const typstSource = buildTypstDocument({
       title: project.title,
       author: project.author,
-      chapters: allChapters.map((ch) => ({
+      chapters: allChapters.map((ch: any) => ({
         title: ch.title,
         content: ch.content || "",
       })),

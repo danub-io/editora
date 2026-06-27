@@ -20,7 +20,7 @@ export async function GET(
       .where(eq(characters.projectId, id))
       .all();
     return NextResponse.json(
-      rows.map((r) => ({
+      rows.map((r: any) => ({
         ...r,
         relationships: JSON.parse(r.relationships || "[]"),
       }))

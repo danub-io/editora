@@ -14,7 +14,7 @@ export async function GET(
   try {
     const db = getDb(process.env as Record<string, unknown>);
     const rows = await db.select().from(timelineEvents).where(eq(timelineEvents.projectId, id)).all();
-    return NextResponse.json(rows.map((r) => ({ ...r, characterIds: JSON.parse(r.characterIds || "[]") })));
+    return NextResponse.json(rows.map((r: any) => ({ ...r, characterIds: JSON.parse(r.characterIds || "[]") })));
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

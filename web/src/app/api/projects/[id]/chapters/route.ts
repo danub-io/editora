@@ -20,7 +20,7 @@ export async function GET(
       .where(eq(chapters.projectId, id))
       .all();
     return NextResponse.json(
-      rows.map((r) => ({
+      rows.map((r: any) => ({
         ...r,
         tags: JSON.parse(r.tags || "[]"),
         type: r.type || "chapter",
