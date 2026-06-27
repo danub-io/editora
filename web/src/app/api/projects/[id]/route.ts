@@ -1,7 +1,5 @@
-export const runtime = "edge";
-
 import { NextRequest, NextResponse } from "next/server";
-import { getDb } from "@/lib/db";
+import { db } from "@/lib/db";
 import { projects } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 
@@ -12,7 +10,6 @@ export async function GET(
 ) {
   const { id } = await params;
   try {
-    const db = getDb(process.env as Record<string, unknown>);
     const [row] = await db.select().from(projects).where(eq(projects.id, id));
     if (!row) return NextResponse.json({ error: "Not found" }, { status: 404 });
     return NextResponse.json({
@@ -45,8 +42,7 @@ export async function PUT(
 ) {
   const { id } = await params;
   try {
-    const db = getDb(process.env as Record<string, unknown>);
-    const body = (await req.json()) as Record<string, any>;
+    const body = await req.json();
     const now = new Date().toISOString();
     const updates: Record<string, any> = { updatedAt: now };
 
@@ -88,7 +84,6 @@ export async function DELETE(
 ) {
   const { id } = await params;
   try {
-    const db = getDb(process.env as Record<string, unknown>);
     await db.delete(projects).where(eq(projects.id, id));
     return NextResponse.json({ success: true });
   } catch (error: any) {

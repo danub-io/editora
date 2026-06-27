@@ -1,7 +1,5 @@
-export const runtime = "edge";
-
 import { NextRequest, NextResponse } from "next/server";
-import { getDb } from "@/lib/db";
+import { db } from "@/lib/db";
 import { chapters } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { generateId } from "@/lib/utils";
@@ -13,7 +11,6 @@ export async function GET(
 ) {
   const { id } = await params;
   try {
-    const db = getDb(process.env as Record<string, unknown>);
     const rows = await db
       .select()
       .from(chapters)
@@ -38,8 +35,7 @@ export async function POST(
 ) {
   const { id } = await params;
   try {
-    const db = getDb(process.env as Record<string, unknown>);
-    const body = (await req.json()) as Record<string, any>;
+    const body = await req.json();
     const now = new Date().toISOString();
     const chapterId = generateId();
 

@@ -79,10 +79,3 @@ node_modules/
 web/.next/
 web/out/
 web/build/
-web/drizzle/
-
-# SQLite database
-*.db
-
-# Vercel
-web/.vercel/

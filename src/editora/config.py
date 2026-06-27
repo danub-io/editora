@@ -83,6 +83,47 @@ class TypesettingConfig(BaseModel):
         return v
 
 
+class LLMConfig(BaseModel):
+    """Configurações de LLM."""
+
+    provider: Literal["openai", "anthropic", "google", "ollama", "local"] = Field(
+        default="anthropic"
+    )
+    model: str = Field(default="claude-sonnet-4-20250514")
+    temperature: float = Field(default=0.3, ge=0, le=2)
+    max_tokens: int = Field(default=4096)
+    api_key: str | None = Field(default=None)
+    base_url: str | None = Field(default=None)
+
+
+class EditingConfig(BaseModel):
+    """Configurações de edição de texto."""
+
+    mode: Literal["light", "medium", "aggressive"] = Field(default="light")
+    preserve_voice: bool = Field(default=True)
+    max_changes_percent: float = Field(default=15.0)
+    passes: int = Field(default=1, ge=1, le=3)
+
+
+class ProofreadingConfig(BaseModel):
+    """Configurações de proofreading."""
+
+    enabled: bool = Field(default=True)
+    language: str = Field(default="pt-BR")
+    check_grammar: bool = Field(default=True)
+    check_spelling: bool = Field(default=True)
+    check_punctuation: bool = Field(default=True)
+    use_llm: bool = Field(default=True)  # Usar LLM para contexto
+
+
+class ConsistencyConfig(BaseModel):
+    """Configurações de revisão de consistência."""
+
+    enabled: bool = Field(default=True)
+    check_characters: bool = Field(default=True)
+    check_timeline: bool = Field(default=True)
+    check_facts: bool = Field(default=True)
+    check_tone: bool = Field(default=True)
 
 
 class OutputConfig(BaseModel):
@@ -111,6 +152,10 @@ class EditorConfig(BaseSettings):
     # Sub-configurações
     book: BookMetadata
     typesetting: TypesettingConfig = Field(default_factory=TypesettingConfig)
+    llm: LLMConfig = Field(default_factory=LLMConfig)
+    editing: EditingConfig = Field(default_factory=EditingConfig)
+    proofreading: ProofreadingConfig = Field(default_factory=ProofreadingConfig)
+    consistency: ConsistencyConfig = Field(default_factory=ConsistencyConfig)
     output: OutputConfig = Field(default_factory=OutputConfig)
 
     # Debug

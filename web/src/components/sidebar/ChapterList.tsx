@@ -87,16 +87,14 @@ function SortableItem({
       <div
         ref={setNodeRef}
         style={style}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveChapter(chapter.id); onSelect?.(); } }}
         className={cn(
-          "group flex items-center gap-2 px-4 py-2 cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+          "group flex items-center gap-2 px-4 py-2 cursor-pointer transition-colors",
           isActive
-            ? "bg-surface-container-high text-on-surface"
+            ? "bg-accent text-accent-foreground"
             : "text-sidebar-fg/60 hover:bg-sidebar-muted hover:text-sidebar-fg",
-          isDragging && "bg-surface-container-lowest z-10"
+          isDragging && "bg-card shadow-lg z-10"
         )}
+        onClick={() => { setActiveChapter(chapter.id); onSelect?.(); }}
       >
         <div
           {...attributes}
@@ -119,21 +117,20 @@ function SortableItem({
     );
   }
 
+  // Front matter or regular chapter row
   return (
     <div
       ref={setNodeRef}
       style={style}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveChapter(chapter.id); onSelect?.(); } }}
       className={cn(
-        "group flex items-center gap-1.5 pr-2 py-1.5 cursor-pointer transition-all duration-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+        "group flex items-center gap-1.5 pr-2 py-1.5 cursor-pointer transition-all duration-100",
         isPart ? "pl-4" : "pl-4",
         isActive
-          ? "bg-surface-container-high text-on-surface"
+          ? "bg-accent text-accent-foreground"
           : "text-sidebar-fg/70 hover:bg-sidebar-muted hover:text-sidebar-fg",
-        isDragging && "bg-surface-container-lowest z-10"
+        isDragging && "bg-card shadow-lg z-10"
       )}
+      onClick={() => { setActiveChapter(chapter.id); onSelect?.(); }}
     >
       {/* Drag Handle */}
       <div
@@ -237,7 +234,7 @@ export function ChapterList({
 
   if (localChapters.length === 0) {
     return (
-      <div className="px-5 py-3 text-[13px] text-on-surface-variant italic">
+      <div className="px-5 py-3 text-[13px] text-muted-foreground italic">
         {section === "front_matter"
           ? "Nenhuma página. Use Add para adicionar."
           : "Nenhum capítulo. Use Add para adicionar."}
