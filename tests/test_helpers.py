@@ -140,3 +140,66 @@ def test_count_pages():
     assert count_pages(300) == 1
     assert count_pages(301) == 2
     assert count_pages(600) == 2
+
+# create_version_backup tests
+import pytest
+from editora.utils.helpers import create_version_backup
+
+def test_create_version_backup_with_version_name(tmp_path):
+    # Setup
+    source_file = tmp_path / "test_file.txt"
+    source_file.write_text("content")
+    version_dir = tmp_path / "backups"
+
+    # Execute
+    backup_path = create_version_backup(
+        filepath=source_file,
+        version_dir=version_dir,
+        version_name="v1"
+    )
+
+    # Assert
+    assert backup_path.exists()
+    assert backup_path.parent == version_dir
+    assert backup_path.name == "test_file_v1.txt"
+    assert backup_path.read_text() == "content"
+
+def test_create_version_backup_without_version_name(tmp_path):
+    # Setup
+    source_file = tmp_path / "doc.md"
+    source_file.write_text("markdown content")
+    version_dir = tmp_path / "versions"
+
+    # Execute
+    backup_path = create_version_backup(
+        filepath=source_file,
+        version_dir=version_dir
+    )
+
+    # Assert
+    assert backup_path.exists()
+    assert backup_path.parent == version_dir
+    # Check that the file was copied correctly
+    assert backup_path.read_text() == "markdown content"
+
+    # Check filename format: doc_YYYYMMDD_HHMMSS.md
+    import re
+    assert re.match(r"^doc_\d{8}_\d{6}\.md$", backup_path.name)
+
+def test_create_version_backup_no_extension(tmp_path):
+    # Setup
+    source_file = tmp_path / "README"
+    source_file.write_text("readme content")
+    version_dir = tmp_path / "backups"
+
+    # Execute
+    backup_path = create_version_backup(
+        filepath=source_file,
+        version_dir=version_dir,
+        version_name="final"
+    )
+
+    # Assert
+    assert backup_path.exists()
+    assert backup_path.name == "README_final"
+    assert backup_path.read_text() == "readme content"
