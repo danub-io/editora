@@ -18,8 +18,8 @@ def word_count(text: str) -> int:
     # Remove marcações Markdown
     text = re.sub(r"#{1,6}\s+", "", text)  # Headers
     text = re.sub(r"\*{1,2}|_{1,2}", "", text)  # Bold/italic
-    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)  # Links
     text = re.sub(r"!\[[^\]]*\]\([^)]+\)", "", text)  # Images
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)  # Links
     text = re.sub(r"`{1,3}[^`]*`{1,3}", "", text)  # Code
     text = re.sub(r"^>\s+", "", text, flags=re.MULTILINE)  # Blockquotes
     text = re.sub(r"^-+\s*", "", text, flags=re.MULTILINE)  # List items
@@ -142,8 +142,6 @@ def split_into_paragraphs(text: str) -> list[str]:
     """
     paragraphs = re.split(r"\n\s*\n", text.strip())
     return [p.strip() for p in paragraphs if p.strip()]
-
-
 
 
 def create_version_backup(
