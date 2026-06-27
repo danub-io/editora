@@ -11,7 +11,7 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await (params as any);
   try {
     const db = getDb(process.env as Record<string, unknown>);
     const rows = await db
@@ -36,10 +36,10 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await (params as any);
   try {
     const db = getDb(process.env as Record<string, unknown>);
-    const body = (await req.json()) as Record<string, any>;
+    const body = (await req.json()) as any as Record<string, any>;
     const now = new Date().toISOString();
     const chapterId = generateId();
 

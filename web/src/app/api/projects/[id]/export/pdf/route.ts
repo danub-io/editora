@@ -35,7 +35,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await (params as any);
   const db = getDb(process.env as Record<string, unknown>);
 
   try {
@@ -52,7 +52,7 @@ export async function GET(
       .select()
       .from(chapters)
       .where(eq(chapters.projectId, id))
-      .orderBy(asc(chapters.number))
+      .orderBy(asc(chapters.order))
       .all();
 
     if (allChapters.length === 0) {

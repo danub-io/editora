@@ -1,18 +1,16 @@
 import { drizzle } from 'drizzle-orm/libsql';
-import { createClient } from '@libsql/client/web';
+import { createClient } from '@libsql/client';
 import * as schema from './schema';
 
-export const getDb = (env?: Record<string, unknown>) => {
-  if (env && typeof (env as any).DB !== 'undefined') {
-    // Cloudflare D1
-    const { drizzle: drizzleD1 } = require('drizzle-orm/d1');
-    return drizzleD1((env as any).DB, { schema });
-  }
+let dbInstance: any = null;
+
+export function getDb(env?: Record<string, unknown>) {
+  if (dbInstance) return dbInstance;
 
   const client = createClient({
-    url: typeof process !== 'undefined' && process.env.DATABASE_URL ? process.env.DATABASE_URL : 'libsql://dummy-url-for-build.com',
+    url: process.env.DATABASE_URL || (env && (env as any).DATABASE_URL) || 'file:local.db',
   });
-  return drizzle(client, { schema });
-};
 
-export const db = getDb();
+  dbInstance = drizzle(client, { schema });
+  return dbInstance;
+}
