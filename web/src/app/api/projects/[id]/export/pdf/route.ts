@@ -35,7 +35,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await (params as any);
   const db = getDb(process.env as Record<string, unknown>);
 
   try {
@@ -52,7 +52,7 @@ export async function GET(
       .select()
       .from(chapters)
       .where(eq(chapters.projectId, id))
-      .orderBy(asc(chapters.number))
+      .orderBy(asc(chapters.order))
       .all();
 
     if (allChapters.length === 0) {
@@ -62,14 +62,14 @@ export async function GET(
     const typstSource = buildTypstDocument({
       title: project.title,
       author: project.author,
-      chapters: allChapters.map((ch) => ({
+      chapters: allChapters.map((ch: any) => ({
         title: ch.title,
         content: ch.content || "",
       })),
       pageSize: project.settingsPageFormat || "6x9",
       fontFamily: project.settingsFontFamily || "Georgia",
       fontSize: project.settingsFontSize || 11,
-      lineHeight: parseFloat(String(project.settingsLineHeight || "1.4")),
+      lineHeight: parseFloat(project.settingsLineHeight || "1.4"),
       marginTop: project.settingsMarginTop || "2cm",
       marginBottom: project.settingsMarginBottom || "2cm",
       marginInner: project.settingsMarginInner || "2.5cm",
@@ -80,7 +80,7 @@ export async function GET(
 
     const compiler = await getCompiler();
     compiler.resetShadow();
-    compiler.addSource("/main.typ", String(await typstSource));
+    compiler.addSource("/main.typ", typstSource);
 
     const result = await compiler.compile({
       mainFilePath: "/main.typ",
