@@ -27,8 +27,9 @@ export async function PUT(
 
     await db.update(chapters).set(updates).where(eq(chapters.id, id));
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -42,7 +43,8 @@ export async function DELETE(
     const db = getDb(process.env as Record<string, unknown>);
     await db.delete(chapters).where(eq(chapters.id, id));
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
