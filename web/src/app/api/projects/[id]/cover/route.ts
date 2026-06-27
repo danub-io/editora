@@ -13,7 +13,7 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await (params as any);
   const db = getDb(process.env as Record<string, unknown>);
 
   try {
