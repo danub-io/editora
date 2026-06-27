@@ -10,7 +10,7 @@ export async function GET() {
   try {
     const db = getDb(process.env as Record<string, unknown>);
     const rows = await db.select().from(projects).all();
-    const result = rows.map((r) => ({
+    const result = rows.map((r: any) => ({
       ...r,
       categories: JSON.parse(r.categories || "[]"),
       keywords: JSON.parse(r.keywords || "[]"),
@@ -38,7 +38,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const db = getDb(process.env as Record<string, unknown>);
-    const body = (await req.json()) as Record<string, any>;
+    const body = (await req.json()) as any as Record<string, any>;
     const now = new Date().toISOString();
     const id = generateId();
 

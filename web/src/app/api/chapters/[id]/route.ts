@@ -10,10 +10,10 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await (params as any);
   try {
     const db = getDb(process.env as Record<string, unknown>);
-    const body = (await req.json()) as Record<string, any>;
+    const body = (await req.json()) as any as Record<string, any>;
     const now = new Date().toISOString();
     const updates: Record<string, any> = { updatedAt: now };
 
@@ -38,7 +38,7 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await (params as any);
   try {
     const db = getDb(process.env as Record<string, unknown>);
     await db.delete(chapters).where(eq(chapters.id, id));
