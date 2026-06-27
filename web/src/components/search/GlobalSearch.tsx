@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { Search, X, FileText, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface GlobalSearchProps {
   isOpen: boolean;
