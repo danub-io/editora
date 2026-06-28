@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ArchiveLayout from "@/components/archive/ArchiveLayout";
 import { useProjectStore } from "@/stores/projectStore";
-import { Save, Trash2, Sliders, Type, BookOpen, Globe } from "lucide-react";
+import { Save, Trash2,Type, BookOpen, Globe } from "lucide-react";
 
 export default function SettingsPage() {
   const params = useParams();

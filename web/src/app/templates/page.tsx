@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { Footer } from "@/components/footer/Footer";
 import { SafeImage } from "@/components/marketplace/SafeImage";
-import { Layout, Compass, Info } from "lucide-react";
+import { Layout, Compass} from "lucide-react";
 
 const mockTemplates = [
   {

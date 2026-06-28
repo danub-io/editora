@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { Footer } from "@/components/footer/Footer";
 import { SafeImage } from "@/components/marketplace/SafeImage";
-import { FileText, Plus, BookOpen, Clock, Calendar } from "lucide-react";
+import { Plus,Clock, Calendar } from "lucide-react";
 import Link from "next/link";
 
 const mockManuscripts = [

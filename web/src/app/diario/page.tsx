@@ -7,7 +7,6 @@ import { HomeHeader } from "@/components/home/HomeHeader";
 import { Footer } from "@/components/footer/Footer";
 import { SafeImage } from "@/components/marketplace/SafeImage";
 import { PenLine, Calendar, Clock, ArrowRight } from "lucide-react";
-import Link from "next/link";
 
 const mockPosts = [
   {

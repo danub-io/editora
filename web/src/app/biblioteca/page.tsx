@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { Footer } from "@/components/footer/Footer";
 import { SafeImage } from "@/components/marketplace/SafeImage";
-import { BookOpen, Star, Clock } from "lucide-react";
+import { Star, Clock } from "lucide-react";
 
 const mockLibraryBooks = [
   {

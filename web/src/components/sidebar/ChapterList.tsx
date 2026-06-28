@@ -22,7 +22,6 @@ import {
   GripVertical,
   Trash2,
   FileText,
-  BookOpen,
   ScrollText,
   BookMarked,
   ListOrdered,
