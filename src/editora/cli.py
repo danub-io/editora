@@ -12,9 +12,8 @@ from rich.table import Table
 
 from . import __version__
 from .config import EditorConfig
-from .core.manuscript import Chapter, Manuscript
+from .core.manuscript import Manuscript
 from .typesetting.converter import Typesetter
-
 
 app = typer.Typer(
     name="editora",
@@ -191,7 +190,7 @@ def build_book(
 
     md_files = list(chapters_dir.glob("*.md"))
     if not md_files:
-        console.print("[red]❌ Nenhum capítulo Markdown encontrado em {}.[/red]".format(chapters_dir))
+        console.print(f"[red]❌ Nenhum capítulo Markdown encontrado em {chapters_dir}.[/red]")
         raise typer.Exit(1)
 
     console.print(f"[blue]📖 Carregando {len(md_files)} capítulos...[/blue]")
