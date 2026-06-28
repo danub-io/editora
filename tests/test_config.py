@@ -1,25 +1,30 @@
-import os
-import pytest
 from pathlib import Path
+
+import pytest
 from pydantic import ValidationError
-from editora.config import BookMetadata, TypesettingConfig, OutputConfig, EditorConfig
+
+from editora.config import BookMetadata, EditorConfig, OutputConfig, TypesettingConfig
+
 
 # BookMetadata Tests
 def test_book_metadata_valid():
     book = BookMetadata(title="My Book", author="John Doe")
     assert book.title == "My Book"
     assert book.author == "John Doe"
-    assert book.language == "pt-BR" # default
+    assert book.language == "pt-BR"  # default
+
 
 def test_book_metadata_missing_required():
     with pytest.raises(ValidationError):
         BookMetadata(title="My Book")
+
 
 # TypesettingConfig Tests
 def test_typesetting_config_defaults():
     config = TypesettingConfig()
     assert config.font_family == "Georgia"
     assert config.margins["top"] == "2cm"
+
 
 def test_typesetting_config_font_family_validation():
     # Valid
@@ -30,13 +35,15 @@ def test_typesetting_config_font_family_validation():
     with pytest.raises(ValidationError):
         TypesettingConfig(font_family="-Invalid")
 
+
 def test_typesetting_config_margins_validation():
     # Valid
     TypesettingConfig(margins={"top": "1in", "bottom": "1.5cm"})
 
     # Invalid
     with pytest.raises(ValidationError):
-        TypesettingConfig(margins={"top": "100"}) # missing unit
+        TypesettingConfig(margins={"top": "100"})  # missing unit
+
 
 def test_typesetting_config_template_validation():
     # Valid
@@ -47,17 +54,20 @@ def test_typesetting_config_template_validation():
     with pytest.raises(ValidationError):
         TypesettingConfig(template="-malicious_flag")
 
+
 # OutputConfig Tests
 def test_output_config_defaults():
     config = OutputConfig()
     assert config.output_dir == Path("output")
     assert config.kdp_compliant is True
 
+
 # EditorConfig Tests
 def test_editor_config_valid():
     config = EditorConfig(book={"title": "Test Book", "author": "Tester"})
     assert config.book.title == "Test Book"
     assert config.project_dir == Path(".")
+
 
 def test_editor_config_env_vars(monkeypatch):
     monkeypatch.setenv("EDITORA_PROJECT_DIR", "/tmp/project")
@@ -69,16 +79,17 @@ def test_editor_config_env_vars(monkeypatch):
     assert config.chapters_dir == Path("/tmp/chapters")
     assert config.assets_dir == Path("/tmp/assets")
 
+
 def test_editor_config_load_defaults():
     config = EditorConfig.load(config_path="nonexistent.yaml")
     assert config.book.title == "Meu Livro"
     assert config.book.author == "Autor Desconhecido"
 
+
 def test_editor_config_save_and_load(tmp_path):
     config_file = tmp_path / "test_editora.yaml"
     config = EditorConfig(
-        book=BookMetadata(title="Saved Book", author="Author Name"),
-        project_dir=Path("/custom/dir")
+        book=BookMetadata(title="Saved Book", author="Author Name"), project_dir=Path("/custom/dir")
     )
 
     # Save

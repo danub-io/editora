@@ -144,8 +144,6 @@ def split_into_paragraphs(text: str) -> list[str]:
     return [p.strip() for p in paragraphs if p.strip()]
 
 
-
-
 def create_version_backup(
     filepath: Path,
     version_dir: Path,

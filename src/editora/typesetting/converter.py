@@ -114,52 +114,64 @@ class Typesetter:
         # Configurações específicas para PDF
         if to_format == "pdf":
             engine = self._get_latex_engine()
-            args.extend([
-                "--pdf-engine",
-                engine,
-            ])
+            args.extend(
+                [
+                    "--pdf-engine",
+                    engine,
+                ]
+            )
 
             # Page size
             page_size = PAGE_SIZES.get(self.config.page_size, PAGE_SIZES["6x9"])
-            args.extend([
-                "--variable",
-                f"papersize={page_size}",
-            ])
+            args.extend(
+                [
+                    "--variable",
+                    f"papersize={page_size}",
+                ]
+            )
 
             # Font settings
-            args.extend([
-                "--variable",
-                f"mainfont={self.config.font_family}",
-                "--variable",
-                f"fontsize={self.config.font_size}pt",
-                "--variable",
-                f"linestretch={self.config.line_height}",
-            ])
+            args.extend(
+                [
+                    "--variable",
+                    f"mainfont={self.config.font_family}",
+                    "--variable",
+                    f"fontsize={self.config.font_size}pt",
+                    "--variable",
+                    f"linestretch={self.config.line_height}",
+                ]
+            )
 
             # Margins
             margins = self.config.margins
-            args.extend([
-                "--variable",
-                f"margin-top={margins.get('top', '2cm')}",
-                "--variable",
-                f"margin-bottom={margins.get('bottom', '2cm')}",
-                "--variable",
-                f"margin-inner={margins.get('inner', '2.5cm')}",
-                "--variable",
-                f"margin-outer={margins.get('outer', '2cm')}",
-            ])
+            args.extend(
+                [
+                    "--variable",
+                    f"margin-top={margins.get('top', '2cm')}",
+                    "--variable",
+                    f"margin-bottom={margins.get('bottom', '2cm')}",
+                    "--variable",
+                    f"margin-inner={margins.get('inner', '2.5cm')}",
+                    "--variable",
+                    f"margin-outer={margins.get('outer', '2cm')}",
+                ]
+            )
 
             # Header font size
-            args.extend([
-                "--variable",
-                "secnumdepth=2",
-            ])
+            args.extend(
+                [
+                    "--variable",
+                    "secnumdepth=2",
+                ]
+            )
 
         # Configurações específicas para EPUB
         elif to_format == "epub":
-            args.extend([
-                "--epub-chapter-level=1",
-            ])
+            args.extend(
+                [
+                    "--epub-chapter-level=1",
+                ]
+            )
 
         # Metadata adicional
         if metadata:
@@ -196,9 +208,7 @@ class Typesetter:
             temp_input = Path(f.name)
 
         try:
-            args = self._build_pandoc_args(
-                temp_input, output_path, "pdf", metadata
-            )
+            args = self._build_pandoc_args(temp_input, output_path, "pdf", metadata)
 
             result = subprocess.run(
                 args,
@@ -235,9 +245,7 @@ class Typesetter:
             temp_input = Path(f.name)
 
         try:
-            args = self._build_pandoc_args(
-                temp_input, output_path, "epub", metadata
-            )
+            args = self._build_pandoc_args(temp_input, output_path, "epub", metadata)
 
             result = subprocess.run(
                 args,
@@ -338,8 +346,7 @@ class Typesetter:
                             (6 * 72, 9 * 72),
                         ]
                         is_valid = any(
-                            abs(width - w) < 5 and abs(height - h) < 5
-                            for w, h in valid_sizes
+                            abs(width - w) < 5 and abs(height - h) < 5 for w, h in valid_sizes
                         )
                         if not is_valid:
                             warnings.append(

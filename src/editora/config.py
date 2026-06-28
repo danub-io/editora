@@ -83,8 +83,6 @@ class TypesettingConfig(BaseModel):
         return v
 
 
-
-
 class OutputConfig(BaseModel):
     """Configurações de saída."""
 

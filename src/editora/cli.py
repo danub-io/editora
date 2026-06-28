@@ -12,9 +12,8 @@ from rich.table import Table
 
 from . import __version__
 from .config import EditorConfig
-from .core.manuscript import Chapter, Manuscript
+from .core.manuscript import Manuscript
 from .typesetting.converter import Typesetter
-
 
 app = typer.Typer(
     name="editora",
@@ -48,9 +47,7 @@ def main(
 def init_project(
     title: str = typer.Option(..., "--title", "-t", help="Título do livro."),
     author: str = typer.Option(..., "--author", "-a", help="Autor do livro."),
-    output_dir: Path = typer.Option(
-        Path("."), "--output", "-o", help="Diretório de saída."
-    ),
+    output_dir: Path = typer.Option(Path("."), "--output", "-o", help="Diretório de saída."),
     language: str = typer.Option("pt-BR", "--language", "-l", help="Idioma do livro."),
 ):
     """Inicializa um novo projeto de livro."""
@@ -148,20 +145,20 @@ tags:
         encoding="utf-8",
     )
 
-    console.print(Panel.fit(
-        f"[bold green]✅ Projeto '{title}' inicializado com sucesso![/bold green]\n\n"
-        f"📁 Diretório: {output_dir.absolute()}\n"
-        f"📝 Capítulos em: {chapters_dir}\n"
-        f"⚙️  Config em: {config_path}\n\n"
-        f"[dim]Use 'cd {output_dir} && editora build' para compilar.[/dim]"
-    ))
+    console.print(
+        Panel.fit(
+            f"[bold green]✅ Projeto '{title}' inicializado com sucesso![/bold green]\n\n"
+            f"📁 Diretório: {output_dir.absolute()}\n"
+            f"📝 Capítulos em: {chapters_dir}\n"
+            f"⚙️  Config em: {config_path}\n\n"
+            f"[dim]Use 'cd {output_dir} && editora build' para compilar.[/dim]"
+        )
+    )
 
 
 @app.command("build")
 def build_book(
-    input_dir: Path = typer.Option(
-        Path("."), "--input", "-i", help="Diretório do projeto."
-    ),
+    input_dir: Path = typer.Option(Path("."), "--input", "-i", help="Diretório do projeto."),
     output_dir: Optional[Path] = typer.Option(
         None, "--output", "-o", help="Diretório de saída (padrão: input/output)."
     ),
@@ -191,7 +188,9 @@ def build_book(
 
     md_files = list(chapters_dir.glob("*.md"))
     if not md_files:
-        console.print("[red]❌ Nenhum capítulo Markdown encontrado em {}.[/red]".format(chapters_dir))
+        console.print(
+            "[red]❌ Nenhum capítulo Markdown encontrado em {}.[/red]".format(chapters_dir)
+        )
         raise typer.Exit(1)
 
     console.print(f"[blue]📖 Carregando {len(md_files)} capítulos...[/blue]")
@@ -275,9 +274,7 @@ def build_book(
 
 @app.command("info")
 def show_info(
-    input_dir: Path = typer.Option(
-        Path("."), "--input", "-i", help="Diretório do projeto."
-    ),
+    input_dir: Path = typer.Option(Path("."), "--input", "-i", help="Diretório do projeto."),
 ):
     """Mostra informações sobre o projeto."""
     config_file = input_dir / "editora.yaml"
@@ -332,19 +329,12 @@ def show_info(
         console.print(f"   Esperado em: {chapters_dir}")
 
 
-
-
-
-
-
 @app.command("template")
 def create_template(
     output_path: Path = typer.Option(
         Path("template.latex"), "--output", "-o", help="Arquivo de saída."
     ),
-    template_type: str = typer.Option(
-        "latex", "--type", "-t", help="Tipo: latex, typst."
-    ),
+    template_type: str = typer.Option("latex", "--type", "-t", help="Tipo: latex, typst."),
 ):
     """Cria um template de diagramação."""
     typesetter = Typesetter()
