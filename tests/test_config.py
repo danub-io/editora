@@ -16,7 +16,7 @@ def test_book_metadata_valid():
 
 def test_book_metadata_missing_required():
     with pytest.raises(ValidationError):
-        BookMetadata(title="My Book")
+        BookMetadata(title="My Book") # type: ignore
 
 
 # TypesettingConfig Tests
@@ -100,7 +100,7 @@ def test_output_config_defaults():
 
 # EditorConfig Tests
 def test_editor_config_valid():
-    config = EditorConfig(book={"title": "Test Book", "author": "Tester"})
+    config = EditorConfig(book=BookMetadata(title="Test Book", author="Tester"))
     assert config.book.title == "Test Book"
     assert config.project_dir == Path(".")
 
@@ -110,7 +110,7 @@ def test_editor_config_env_vars(monkeypatch):
     monkeypatch.setenv("EDITORA_CHAPTERS_DIR", "/tmp/chapters")
     monkeypatch.setenv("EDITORA_ASSETS_DIR", "/tmp/assets")
 
-    config = EditorConfig(book={"title": "Test", "author": "Test"})
+    config = EditorConfig(book=BookMetadata(title="Test", author="Test"))
     assert config.project_dir == Path("/tmp/project")
     assert config.chapters_dir == Path("/tmp/chapters")
     assert config.assets_dir == Path("/tmp/assets")
