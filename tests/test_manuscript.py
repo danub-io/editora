@@ -1,4 +1,8 @@
+import pytest
+import yaml
+
 from editora.core.manuscript import Chapter
+
 
 def test_chapter_from_markdown_no_frontmatter_with_number_heading():
     content = "# 12 - O Retorno\n\nEste é o conteúdo."
@@ -9,6 +13,7 @@ def test_chapter_from_markdown_no_frontmatter_with_number_heading():
     assert chapter.content == "Este é o conteúdo."
     assert chapter.word_count == 4
 
+
 def test_chapter_from_markdown_no_frontmatter_without_number_heading():
     content = "## Apenas um Título\n\nConteúdo aqui."
     chapter = Chapter.from_markdown(content)
@@ -17,6 +22,7 @@ def test_chapter_from_markdown_no_frontmatter_without_number_heading():
     assert chapter.title == "Apenas um Título"
     assert chapter.content == "Conteúdo aqui."
     assert chapter.word_count == 2
+
 
 def test_chapter_from_markdown_no_frontmatter_no_heading():
     content = "Apenas texto solto sem título."
@@ -27,6 +33,7 @@ def test_chapter_from_markdown_no_frontmatter_no_heading():
     assert chapter.content == "Apenas texto solto sem título."
     assert chapter.word_count == 5
 
+
 def test_chapter_from_markdown_no_frontmatter_different_number_format():
     content = "# 5. Uma Nova Esperança\n\nMais texto."
     chapter = Chapter.from_markdown(content)
@@ -36,6 +43,7 @@ def test_chapter_from_markdown_no_frontmatter_different_number_format():
     assert chapter.content == "Mais texto."
     assert chapter.word_count == 2
 
+
 def test_chapter_from_markdown_with_frontmatter():
     content = "---\ntitle: O Início\nnumber: 1\n---\nConteúdo aqui."
     chapter = Chapter.from_markdown(content)
@@ -44,6 +52,7 @@ def test_chapter_from_markdown_with_frontmatter():
     assert chapter.title == "O Início"
     assert chapter.content == "Conteúdo aqui."
 
+
 def test_chapter_from_markdown_with_incomplete_frontmatter_number_fallback():
     content = "---\ntitle: 10 - O Fim\n---\nConteúdo aqui."
     chapter = Chapter.from_markdown(content)
@@ -51,3 +60,39 @@ def test_chapter_from_markdown_with_incomplete_frontmatter_number_fallback():
     assert chapter.number == 10
     assert chapter.title == "O Fim"
     assert chapter.content == "Conteúdo aqui."
+
+
+def test_chapter_from_markdown_empty_frontmatter():
+    content = "---\n\n---\n# 7 - Capítulo Sete\n\nConteúdo vazio no frontmatter."
+    chapter = Chapter.from_markdown(content)
+
+    assert chapter.number == 7
+    assert chapter.title == "Capítulo Sete"
+    assert chapter.content == "Conteúdo vazio no frontmatter."
+
+
+def test_chapter_from_markdown_missing_frontmatter():
+    content = "Este texto não tem frontmatter nem heading de título."
+    chapter = Chapter.from_markdown(content)
+
+    assert chapter.number == 0
+    assert chapter.title == "Capítulo sem título"
+    assert chapter.content == "Este texto não tem frontmatter nem heading de título."
+
+
+def test_chapter_from_markdown_invalid_frontmatter():
+    content = """---
+unbalanced: [
+---
+# 8 - Capítulo Oito
+
+Texto."""
+    with pytest.raises(yaml.YAMLError):
+        Chapter.from_markdown(content)
+
+
+def test_chapter_from_markdown_frontmatter_not_dict():
+    content = "---\njust_a_string\n---\n# 9 - Nove\n\nTexto."
+    chapter = Chapter.from_markdown(content)
+    assert chapter.number == 9
+    assert chapter.title == "Nove"

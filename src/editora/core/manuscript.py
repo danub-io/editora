@@ -38,7 +38,7 @@ class Chapter(BaseModel):
             if match:
                 frontmatter = yaml.safe_load(match.group(1))
                 body = match.group(2)
-                if frontmatter:
+                if frontmatter and isinstance(frontmatter, dict):
                     title = frontmatter.get("title")
                     number = frontmatter.get("number")
                     tags = frontmatter.get("tags", [])
@@ -50,7 +50,7 @@ class Chapter(BaseModel):
             if heading_match:
                 title = heading_match.group(1).strip()
                 # Remove o heading do corpo se foi usado como título
-                body = body[heading_match.end():].strip()
+                body = body[heading_match.end() :].strip()
 
         if not title:
             title = "Capítulo sem título"
