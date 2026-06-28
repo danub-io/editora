@@ -89,3 +89,21 @@ def test_editor_config_save_and_load(tmp_path):
     loaded_config = EditorConfig.load(config_file)
     assert loaded_config.book.title == "Saved Book"
     assert loaded_config.project_dir == Path("/custom/dir")
+
+def test_editor_config_missing_required():
+    with pytest.raises(ValidationError):
+        EditorConfig()
+
+def test_editor_config_invalid_types():
+    with pytest.raises(ValidationError):
+        EditorConfig(
+            book={"title": "Test Book", "author": "Tester"},
+            project_dir=123  # Invalid type, should be Path or string
+        )
+
+def test_editor_config_load_no_args(monkeypatch, tmp_path):
+    # Change current working directory to a tmp path so we don't accidentally find editora.yaml
+    monkeypatch.chdir(tmp_path)
+    config = EditorConfig.load()
+    assert config.book.title == "Meu Livro"
+    assert config.book.author == "Autor Desconhecido"
