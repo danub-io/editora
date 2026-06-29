@@ -4,7 +4,7 @@ import subprocess
 from pathlib import Path
 from typing import Literal
 
-from ...config import TypesettingConfig
+from ..config import TypesettingConfig
 
 # Page size mappings
 PAGE_SIZES = {

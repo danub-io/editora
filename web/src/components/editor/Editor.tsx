@@ -11,17 +11,21 @@ import Link from "@tiptap/extension-link";
 import { useEffect, useRef, useCallback, useState } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { SelectionToolbar } from "./SelectionToolbar";
+import { FindReplaceBar } from "./FindReplaceBar";
 import { cn } from "@/lib/utils";
 import { Check, Loader2, AlertCircle, Minimize2 } from "lucide-react";
 
+type SaveStatus = "idle" | "saving" | "saved" | "error";
+
 export function Editor({ chapterId }: { chapterId: string }) {
-  const { getChapter, updateChapter, focusMode, toggleFocusMode, setActiveChapter } = useProjectStore();
+  const { getChapter, updateChapter, focusMode, toggleFocusMode } = useProjectStore();
   const chapter = getChapter(chapterId);
-  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const saveTimerRef = useRef<number | undefined>(undefined);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [editTitle, setEditTitle] = useState(chapter?.title || "");
   const titleInputRef = useRef<HTMLInputElement>(null);
+  const [findBarOpen, setFindBarOpen] = useState(false);
 
   // Sync editTitle when chapter changes
   useEffect(() => {
@@ -29,9 +33,8 @@ export function Editor({ chapterId }: { chapterId: string }) {
   }, [chapter?.title]);
 
   const handleSaveTitle = useCallback(async () => {
-    const trimmed = editTitle.trim();
-    if (trimmed && trimmed !== chapter?.title) {
-      await updateChapter(chapterId, { title: trimmed });
+    if (editTitle.trim() && editTitle !== chapter?.title) {
+      await updateChapter(chapterId, { title: editTitle.trim() });
     }
     setIsEditingTitle(false);
   }, [editTitle, chapter?.title, chapterId, updateChapter]);
@@ -39,24 +42,27 @@ export function Editor({ chapterId }: { chapterId: string }) {
   const handleTitleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      titleInputRef.current?.blur();
+      handleSaveTitle();
+    } else if (e.key === "Escape") {
+      setEditTitle(chapter?.title || "");
+      setIsEditingTitle(false);
     }
-  }, []);
+  }, [handleSaveTitle, chapter?.title]);
 
   // Debounced save to API (800ms after stop typing)
   const debouncedSave = useCallback(
     (html: string, wordCount: number) => {
-      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      clearTimeout(saveTimerRef.current);
 
-      setSaveStatus('saving');
+      setSaveStatus("saving");
 
-      saveTimerRef.current = setTimeout(async () => {
+      saveTimerRef.current = window.setTimeout(async () => {
         try {
           await updateChapter(chapterId, { content: html, wordCount });
-          setSaveStatus('saved');
-          setTimeout(() => setSaveStatus('idle'), 2000);
-        } catch (e) {
-          setSaveStatus('error');
+          setSaveStatus("saved");
+          setTimeout(() => setSaveStatus("idle"), 2000);
+        } catch {
+          setSaveStatus("error");
         }
       }, 800);
     },
@@ -104,41 +110,38 @@ export function Editor({ chapterId }: { chapterId: string }) {
 
   // Cleanup timer on unmount
   useEffect(() => {
-    return () => {
-      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    return () => clearTimeout(saveTimerRef.current);
+  }, []);
+
+  // Ctrl+H / Cmd+H to toggle Find & Replace bar
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "h") {
+        e.preventDefault();
+        setFindBarOpen((prev) => !prev);
+      }
     };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   if (!editor) return null;
 
   return (
     <div className="flex flex-col h-full bg-background">
+      <FindReplaceBar open={findBarOpen} onClose={() => setFindBarOpen(false)} />
       <SelectionToolbar editor={editor} focusMode={focusMode} />
 
       {/* Exit focus mode button */}
       {focusMode && (
         <button
           onClick={toggleFocusMode}
-          className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-primary hover:bg-accent transition-colors"
+          className="fixed top-4 right-4 z-50 p-2 bg-background/80 backdrop-blur-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
           title="Sair do modo foco"
+          aria-label="Sair do modo foco"
         >
           <Minimize2 className="h-5 w-5" />
         </button>
-      )}
-
-      {/* Status de Salvamento */}
-      {!focusMode && (
-      <div className="absolute right-6 top-20 flex items-center gap-1.5 text-xs text-muted-foreground">
-          {saveStatus === 'saving' && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-          {saveStatus === 'saved' && <Check className="h-3.5 w-3.5 text-green-600" />}
-          {saveStatus === 'error' && <AlertCircle className="h-3.5 w-3.5 text-red-600" />}
-
-          <span>
-            {saveStatus === 'saving' && 'Salvando...'}
-            {saveStatus === 'saved' && 'Salvo'}
-            {saveStatus === 'error' && 'Erro ao salvar'}
-          </span>
-        </div>
       )}
 
       <div className={cn("flex-1 overflow-y-auto px-6 md:px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
@@ -177,6 +180,20 @@ export function Editor({ chapterId }: { chapterId: string }) {
         </article>
         </div>
       </div>
+
+      {/* Save status — floating pill at bottom-right */}
+      {saveStatus !== "idle" && !focusMode && (
+        <div className="fixed bottom-4 right-4 z-40 flex items-center gap-1.5 text-xs text-on-surface-variant bg-surface-container-lowest/80 backdrop-blur-sm px-3 py-1.5 border border-outline-variant">
+          {saveStatus === "saving" && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+          {saveStatus === "saved" && <Check className="h-3.5 w-3.5 text-green-600" />}
+          {saveStatus === "error" && <AlertCircle className="h-3.5 w-3.5 text-red-600" />}
+          <span>
+            {saveStatus === "saving" && "Salvando..."}
+            {saveStatus === "saved" && "Salvo"}
+            {saveStatus === "error" && "Erro ao salvar"}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

@@ -59,98 +59,6 @@ typesetting:
   # Template personalizado (deixe null para usar o padrão)
   template: null
 
-# ============================================
-# CONFIGURAÇÕES DE IA / LLM
-# ============================================
-llm:
-  # Provider: openai, anthropic, google, ollama
-  provider: anthropic
-
-  # Modelo específico
-  # Anthropic: claude-sonnet-4-20250514, claude-opus-4-20250514
-  # OpenAI: gpt-4-turbo, gpt-4o, gpt-4o-mini
-  # Google: gemini-1.5-pro, gemini-1.5-flash
-  # Ollama: llama3.3, mistral, command-r
-  model: claude-sonnet-4-20250514
-
-  # Temperatura (0 = determinístico, 2 = criativo)
-  temperature: 0.3
-
-  # Máximo de tokens na resposta
-  max_tokens: 4096
-
-  # Chave de API (pode ser definida via variável de ambiente)
-  api_key: null
-
-  # URL base customizada (para servidores locais ou proxies)
-  base_url: null
-
-# ============================================
-# CONFIGURAÇÕES DE EDIÇÃO DE TEXTO
-# ============================================
-editing:
-  # Modo de edição: light, medium, aggressive
-  # light: preserva ao máximo a voz do autor
-  # medium: equilíbrio entre preservação e melhoria
-  # aggressive: reescreve para máxima clareza e impacto
-  mode: light
-
-  # Tentar preservar a voz original do autor
-  preserve_voice: true
-
-  # Porcentagem máxima de mudanças (alerta se ultrapassar)
-  max_changes_percent: 15.0
-
-  # Número de passes de edição (1-3)
-  passes: 1
-
-# ============================================
-# CONFIGURAÇÕES DE PROOFREADING (REVISÃO)
-# ============================================
-proofreading:
-  # Habilitar proofreading
-  enabled: true
-
-  # Idioma para verificação gramatical
-  language: pt-BR
-
-  # Verificar gramática
-  check_grammar: true
-
-  # Verificar ortografia
-  check_spelling: true
-
-  # Verificar pontuação
-  check_punctuation: true
-
-  # Usar LLM para proofreading contextual (mais preciso, mais lento)
-  # Se false, usa apenas LanguageTool (baseado em regras)
-  use_llm: true
-
-# ============================================
-# CONFIGURAÇÕES DE CONSISTÊNCIA
-# ============================================
-consistency:
-  # Habilitar verificação de consistência
-  enabled: true
-
-  # Verificar consistência de personagens
-  # (descrições físicas, personalidade, relacionamentos)
-  check_characters: true
-
-  # Verificar consistência de timeline
-  # (ordem de eventos, referências temporais)
-  check_timeline: true
-
-  # Verificar consistência de fatos
-  # (regras do mundo, informações históricas, lógica interna)
-  check_facts: true
-
-  # Verificar consistência de tom
-  # (voz narrativa, estilo, formalidade)
-  check_tone: true
-
-# ============================================
 # CONFIGURAÇÕES DE SAÍDA
 # ============================================
 output:
@@ -195,15 +103,5 @@ verbose: false
 # Compilar livro:
 #   editora build
 #   editora build --format pdf
-#
-# Editar capítulos:
-#   editora edit --preview --mode light
-#   editora edit --mode medium
-#
-# Revisar gramática:
-#   editora proofread --report
-#
-# Verificar consistência:
-#   editora consistency
 #
 # ============================================

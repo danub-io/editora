@@ -120,12 +120,13 @@ export function SelectionToolbar({ editor, focusMode }: SelectionToolbarProps) {
       key={label}
       onClick={onClick}
       className={cn(
-        "relative flex items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-xs font-medium transition-colors",
+        "relative flex items-center justify-center gap-0.5 px-2 py-1.5 text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
         isActive
           ? "bg-primary/10 text-primary"
-          : "text-muted-foreground hover:bg-accent hover:text-foreground",
+          : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface",
       )}
       title={label}
+      aria-label={label}
     >
       {icon}
       {hasArrow && <ChevronDown className="h-3 w-3 opacity-50" />}
@@ -135,7 +136,7 @@ export function SelectionToolbar({ editor, focusMode }: SelectionToolbarProps) {
   const dropdownMenu = (
     items: { label: string; icon: React.ReactNode; isActive: boolean; onClick: () => void }[],
   ) => (
-    <div className="absolute left-0 top-full z-50 mt-0 min-w-[120px] overflow-hidden rounded-lg border border-border bg-popover p-1 shadow-lg">
+    <div className="absolute left-0 top-full z-50 mt-0 min-w-[120px] overflow-hidden border border-outline-variant bg-surface-container-lowest p-1">
       {items.map((item) => (
         <button
           key={item.label}
@@ -144,10 +145,10 @@ export function SelectionToolbar({ editor, focusMode }: SelectionToolbarProps) {
             closeDropdown();
           }}
           className={cn(
-            "flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
+            "flex w-full items-center gap-2 px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
               item.isActive
               ? "bg-primary/10 text-primary"
-              : "text-muted-foreground hover:bg-accent hover:text-foreground",
+              : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface",
           )}
         >
           {item.icon}
@@ -168,9 +169,9 @@ export function SelectionToolbar({ editor, focusMode }: SelectionToolbarProps) {
       className="fixed z-50 -translate-x-1/2"
       style={{ left: toolbarState.left, top: toolbarState.top }}
     >
-      <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-popover/95 shadow-xl backdrop-blur-sm">
+      <div className="flex flex-col overflow-hidden border border-outline-variant bg-surface-container-lowest">
         {/* Top row — Block / Structure */}
-        <div className="flex items-center gap-0.5 border-b border-border/50 px-2 py-1.5">
+        <div className="flex items-center gap-0.5 border-b border-outline-variant px-2 py-1.5">
           {btn("Parágrafo", <Pilcrow className="h-4 w-4" />, isPara, () => {
             editor.chain().focus().setParagraph().run();
             closeDropdown();
@@ -212,7 +213,7 @@ export function SelectionToolbar({ editor, focusMode }: SelectionToolbarProps) {
               ])}
           </div>
 
-          <span className="mx-0.5 h-5 w-px bg-border/50" />
+          <span className="mx-0.5 h-5 w-px bg-outline-variant" />
 
           {btn("Lista Numerada", <ListOrdered className="h-4 w-4" />, editor.isActive("orderedList"), () => {
             editor.chain().focus().toggleOrderedList().run();
@@ -223,7 +224,7 @@ export function SelectionToolbar({ editor, focusMode }: SelectionToolbarProps) {
             closeDropdown();
           })}
 
-          <span className="mx-0.5 h-5 w-px bg-border/50" />
+          <span className="mx-0.5 h-5 w-px bg-outline-variant" />
 
           {btn("Citação", <Quote className="h-4 w-4" />, editor.isActive("blockquote"), () => {
             editor.chain().focus().toggleBlockquote().run();
@@ -250,7 +251,7 @@ export function SelectionToolbar({ editor, focusMode }: SelectionToolbarProps) {
             editor.chain().focus().toggleStrike().run();
           })}
 
-          <span className="mx-0.5 h-5 w-px bg-border/50" />
+          <span className="mx-0.5 h-5 w-px bg-outline-variant" />
 
           <div className="relative">
             {btn(
@@ -269,7 +270,7 @@ export function SelectionToolbar({ editor, focusMode }: SelectionToolbarProps) {
               ])}
           </div>
 
-          <span className="mx-0.5 h-5 w-px bg-border/50" />
+          <span className="mx-0.5 h-5 w-px bg-outline-variant" />
 
           {btn("Link", <Link className="h-4 w-4" />, editor.isActive("link"), () => {
             if (editor.isActive("link")) {

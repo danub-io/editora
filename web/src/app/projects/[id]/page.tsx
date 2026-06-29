@@ -1,10 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useProjectStore } from "@/stores/projectStore";
 import { Editor } from "@/components/editor/Editor";
-import { toast } from "sonner";
-import { FileText, ListOrdered, CheckCircle, Edit3 } from "lucide-react";
+import { BookOpen, Settings } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const STATUS_LABELS: Record<string, { label: string; className: string }> = {
+  completed: {
+    label: "Concluído",
+    className: "bg-primary/15 text-primary border-primary/20",
+  },
+  review: {
+    label: "Revisão",
+    className: "bg-secondary/15 text-secondary-foreground border-secondary/20",
+  },
+  draft: {
+    label: "Rascunho",
+    className: "bg-surface-container text-on-surface-variant border-outline-variant",
+  },
+};
 
 export default function ProjectPage() {
   const {
@@ -13,8 +28,8 @@ export default function ProjectPage() {
     projects,
     getChaptersByProject,
     fetchChapters,
-    fetchProjects,
     setActiveChapter,
+    createChapter,
   } = useProjectStore();
 
   useEffect(() => {
@@ -37,151 +52,134 @@ export default function ProjectPage() {
       ? Math.round((completedCount / chapters.length) * 100)
       : 0;
 
-
   // Show editor when a chapter is selected
   if (activeChapterId) {
     return <Editor chapterId={activeChapterId} />;
   }
 
-  // Dashboard view
+  // Writing-focused welcome view
   return (
-    <div className="p-4 overflow-y-auto">
-      <div className="max-w-6xl mx-auto space-y-4">
-        {/* Project Header */}
-        <div className="flex flex-col gap-2 mb-4">
-          <span className="text-xs text-primary uppercase tracking-wider font-medium">
-            Projeto Atual
-          </span>
-          <h1 className="text-3xl font-bold text-foreground">
-            {activeProject?.title || "Projeto"}
-          </h1>
-          <p className="text-sm text-muted-foreground max-w-2xl mt-0">
-            {activeProject?.description ||
-              "Sem descrição. Edite as configurações do projeto para adicionar detalhes."}
-          </p>
+    <div className="h-full overflow-y-auto">
+      <div className="max-w-3xl mx-auto p-6 md:p-12 space-y-8">
+
+        {/* Header */}
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-on-surface">
+              {activeProject?.title || "Projeto"}
+            </h1>
+            <p className="text-sm text-on-surface-variant mt-1">
+              {activeProject?.author || "Autor"} · {chapters.length} {chapters.length === 1 ? "capítulo" : "capítulos"} · {totalWords.toLocaleString("pt-BR")} palavras
+            </p>
+          </div>
+          {activeProjectId && (
+            <a
+              href={`/projects/${activeProjectId}/settings`}
+              className="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              title="Configurações"
+            >
+              <Settings className="h-5 w-5" />
+            </a>
+          )}
         </div>
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-card rounded-xl border border-border p-6 shadow-sm flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
-                Total de Capítulos
-              </h3>
-              <ListOrdered className="h-5 w-5 text-primary" />
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-foreground">
-                {chapters.length}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                capítulos
-              </span>
-            </div>
+        {/* Empty state */}
+        {chapters.length === 0 ? (
+          <div className="bg-surface-container-lowest border border-outline-variant p-12 text-center">
+            <BookOpen className="h-12 w-12 text-on-surface-variant/30 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-on-surface mb-2">
+              Seu manuscrito está vazio
+            </h2>
+            <p className="text-on-surface-variant mb-6">
+              Crie o primeiro capítulo para começar a escrever.
+            </p>
+            <button
+              onClick={async () => {
+                if (!activeProjectId) return;
+                await createChapter({
+                  projectId: activeProjectId,
+                  type: "chapter",
+                  title: "Capítulo 1",
+                  content: "",
+                  number: 1,
+                  status: "draft",
+                  wordCount: 0,
+                  tags: [],
+                });
+              }}
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 font-label-md uppercase tracking-widest hover:bg-surface-tint transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              <BookOpen className="h-4 w-4" />
+              Criar Primeiro Capítulo
+            </button>
           </div>
-
-          <div className="bg-card rounded-xl border border-border p-6 shadow-sm md:col-span-2 flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
-                Progresso Total do Manuscrito
-              </h3>
-              <span className="text-xs text-primary font-bold">
-                {progress}%
-              </span>
+        ) : (
+          <>
+            {/* CTA */}
+            <div className="bg-surface-container-lowest border border-outline-variant p-8 text-center">
+              <p className="text-on-surface-variant text-lg">
+                Clique em um capítulo na barra lateral para começar a escrever
+              </p>
             </div>
-            <div className="space-y-3">
-              <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
+
+            {/* Progress */}
+            <div>
+              <h3 className="text-xs text-on-surface-variant uppercase tracking-wider font-semibold mb-3">
+                Progresso
+              </h3>
+              <div className="w-full bg-surface-container h-[1px] overflow-hidden">
                 <div
-                  className="bg-primary h-3 rounded-full transition-all duration-500"
+                  className="bg-primary h-[1px] transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>{totalWords.toLocaleString("pt-BR")} palavras</span>
-                <span>{completedCount} concluídos</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="mt-0">
-          <h2 className="text-2xl font-semibold text-foreground mb-4">
-            Atividade Recente
-          </h2>
-
-          {chapters.length === 0 ? (
-            <div className="border-2 border-dashed border-border rounded-xl p-12 text-center">
-              <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-30" />
-              <h3 className="text-lg font-medium mb-2 text-foreground">
-                Nenhum capítulo ainda
-              </h3>
-              <p className="text-muted-foreground mb-4">
-                Comece criando seu primeiro capítulo na barra lateral.
+              <p className="text-xs text-on-surface-variant mt-2">
               </p>
             </div>
-          ) : (
-            <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
-              <ul className="divide-y divide-border/50">
-                {chapters.slice(0, 5).map((chapter) => (
-                  <li
-                    key={chapter.id}
-                    onClick={() => setActiveChapter(chapter.id)}
-                    className="p-5 flex items-center justify-between hover:bg-muted/30 transition-colors cursor-pointer"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          chapter.status === "completed"
-                            ? "bg-primary/20 text-primary"
-                            : "bg-secondary text-secondary-foreground"
-                        }`}
+
+            {/* Chapter list */}
+            <div>
+              <h3 className="text-xs text-on-surface-variant uppercase tracking-wider font-semibold mb-3">
+                Capítulos
+              </h3>
+              <div className="bg-surface-container-lowest border border-outline-variant overflow-hidden">
+                <ul className="divide-y divide-outline-variant">
+                  {chapters.map((chapter, i) => {
+                    const status = chapter.status || "draft";
+                    const statusInfo = STATUS_LABELS[status] ?? STATUS_LABELS["draft"];
+                    return (
+                      <li
+                        key={chapter.id}
+                        onClick={() => setActiveChapter(chapter.id)}
+                        className="px-5 py-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:z-10"
                       >
-                        {chapter.status === "completed" ? (
-                          <CheckCircle className="h-5 w-5" />
-                        ) : (
-                          <Edit3 className="h-5 w-5" />
-                        )}
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-foreground">
-                          {chapter.title}
-                        </h4>
-                        <p className="text-xs text-muted-foreground mt-0">
-                          {chapter.wordCount || 0} palavras
-                        </p>
-                      </div>
-                    </div>
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs flex items-center gap-1 border ${
-                        chapter.status === "completed"
-                          ? "bg-primary/20 text-primary border-primary/20"
-                          : chapter.status === "review"
-                          ? "bg-secondary text-secondary-foreground border-secondary/20"
-                          : "bg-muted text-muted-foreground border-border/50"
-                      }`}
-                    >
-                      <span
-                        className={`w-1.5 h-1.5 rounded-full ${
-                          chapter.status === "completed"
-                            ? "bg-primary"
-                            : chapter.status === "review"
-                            ? "bg-secondary"
-                            : "bg-outline"
-                        }`}
-                      />
-                      {chapter.status === "completed"
-                        ? "Concluído"
-                        : chapter.status === "review"
-                        ? "Revisão"
-                        : "Rascunho"}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                        <div className="flex items-center gap-3 min-w-0">
+                          <span className="text-sm text-on-surface-variant tabular-nums w-6 shrink-0">
+                            {i + 1}.
+                          </span>
+                          <span className="text-sm font-medium text-on-surface truncate">
+                            {chapter.title}
+                          </span>
+                          <span className="text-xs text-on-surface-variant shrink-0">
+                            {(chapter.wordCount || 0).toLocaleString("pt-BR")} pal
+                          </span>
+                        </div>
+                        <span
+                          className={cn(
+                            "px-2.5 py-0.5 rounded-none text-[11px] font-medium border shrink-0",
+                            statusInfo.className
+                          )}
+                        >
+                          {statusInfo.label}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
