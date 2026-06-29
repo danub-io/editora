@@ -66,6 +66,22 @@ interface PlanningCard {
   tag?: 'Estrutura' | 'Personagem' | 'Trama' | 'Cenário';
 }
 
+interface PlanningBoard {
+  id: string;
+  name: string;
+  emoji: string;
+  description: string;
+}
+
+interface PlanningBlock {
+  id: string;
+  boardId: string;
+  title: string;
+  type: 'character' | 'location' | 'event' | 'note';
+  content: string;
+  emoji?: string;
+}
+
 interface VersionSnapshot {
   id: string;
   timestamp: string;
@@ -87,7 +103,7 @@ export default function WorkspaceEditor({
   setRightTab
 }: WorkspaceEditorProps) {
   // Navigation & UI layouts
-  const [leftTab, setLeftTab] = useState<'manuscript' | 'planning'>('manuscript');
+  const [leftTab, setLeftTab] = useState<'manuscript' | 'planning' | 'boards'>('manuscript');
   const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
   const [isDistractionFree, setIsDistractionFree] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'dirty'>('saved');
@@ -103,6 +119,21 @@ export default function WorkspaceEditor({
   // Modals
   const [showExporterModal, setShowExporterModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
+
+  // World Building / Boards custom states
+  const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
+  const [showNewBoardModal, setShowNewBoardModal] = useState(false);
+  const [newBoardName, setNewBoardName] = useState('');
+  const [newBoardEmoji, setNewBoardEmoji] = useState('📂');
+  const [newBoardDesc, setNewBoardDesc] = useState('');
+
+  const [editingCard, setEditingCard] = useState<PlanningBlock | null>(null);
+  const [showCardModal, setShowCardModal] = useState(false);
+  const [cardFormTitle, setCardFormTitle] = useState('');
+  const [cardFormType, setCardFormType] = useState<'character' | 'location' | 'event' | 'note'>('note');
+  const [cardFormContent, setCardFormContent] = useState('');
+  const [cardFormEmoji, setCardFormEmoji] = useState('📝');
+  const [isNewCard, setIsNewCard] = useState(false);
 
   // Refs
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -123,6 +154,26 @@ export default function WorkspaceEditor({
       { id: 'pc-6', column: 'ato3', title: 'Retorno com o Elixir', content: 'O livro é exportado e distribuído no marketplace com glória.', tag: 'Cenário' }
     ];
   });
+
+  // Load and persist planning boards and blocks
+  const [planningBoards, setPlanningBoards] = useState<PlanningBoard[]>(() => {
+    const saved = localStorage.getItem('gospelreads_planning_boards');
+    return saved ? JSON.parse(saved) : [
+      { id: 'pb-1', name: 'Personagens', emoji: '🎭', description: 'Fichas detalhadas dos protagonistas, antagonistas e secundários.' },
+      { id: 'pb-2', name: 'Locais', emoji: '🗺️', description: 'Pontos importantes do mundo, reinos, cidades e salas.' },
+      { id: 'pb-3', name: 'Eventos da Trama', emoji: '⏳', description: 'Acontecimentos marcantes da narrativa e marcos cronológicos.' }
+    ];
+  });
+
+  const [planningBlocks, setPlanningBlocks] = useState<PlanningBlock[]>(() => {
+    const saved = localStorage.getItem('gospelreads_planning_blocks');
+    return saved ? JSON.parse(saved) : [
+      { id: 'pbl-1', boardId: 'pb-1', title: 'Luana Costa', type: 'character', content: 'Protagonista. Escritora que descobre que suas palavras moldam o espaço sideral.', emoji: '✍️' },
+      { id: 'pbl-2', boardId: 'pb-2', title: 'Biblioteca de Alexandria II', type: 'location', content: 'Grande acervo localizado na órbita de Netuno.', emoji: '🚀' },
+      { id: 'pbl-3', boardId: 'pb-3', title: 'O Grande Alinhamento', type: 'event', content: 'Evento astronômico que conecta todas as dimensões literárias.', emoji: '🪐' }
+    ];
+  });
+
 
   // Load and persist pinned notes
   const [pinnedNotes, setPinnedNotes] = useState(() => {
@@ -147,10 +198,17 @@ export default function WorkspaceEditor({
   ]);
   const [deletedChapters, setDeletedChapters] = useState<Chapter[]>([]);
 
-  // Local storage synchronization
   useEffect(() => {
     localStorage.setItem('gospelreads_planning_cards', JSON.stringify(planningCards));
   }, [planningCards]);
+
+  useEffect(() => {
+    localStorage.setItem('gospelreads_planning_boards', JSON.stringify(planningBoards));
+  }, [planningBoards]);
+
+  useEffect(() => {
+    localStorage.setItem('gospelreads_planning_blocks', JSON.stringify(planningBlocks));
+  }, [planningBlocks]);
 
   useEffect(() => {
     localStorage.setItem('gospelreads_pinned_notes', pinnedNotes);
@@ -367,6 +425,92 @@ export default function WorkspaceEditor({
     }
   };
 
+  // World Building / Boards helper functions
+  const handleAddBoard = () => {
+    if (!newBoardName.trim()) {
+      alert('Por favor, informe o nome da ficha.');
+      return;
+    }
+    const newBoard: PlanningBoard = {
+      id: `pb-${Date.now()}`,
+      name: newBoardName,
+      emoji: newBoardEmoji || '📂',
+      description: newBoardDesc
+    };
+    setPlanningBoards([...planningBoards, newBoard]);
+    setNewBoardName('');
+    setNewBoardDesc('');
+    setNewBoardEmoji('📂');
+    setShowNewBoardModal(false);
+  };
+
+  const handleDeleteBoard = (boardId: string) => {
+    if (window.confirm('Excluir esta pasta de fichas e todas as suas sub-fichas permanentemente?')) {
+      setPlanningBoards(planningBoards.filter(b => b.id !== boardId));
+      setPlanningBlocks(planningBlocks.filter(c => c.boardId !== boardId));
+      if (activeBoardId === boardId) {
+        setActiveBoardId(null);
+      }
+    }
+  };
+
+  const handleOpenNewCard = () => {
+    if (!activeBoardId) return;
+    setIsNewCard(true);
+    setCardFormTitle('');
+    setCardFormType('note');
+    setCardFormContent('');
+    setCardFormEmoji('📝');
+    setShowCardModal(true);
+  };
+
+  const handleOpenEditCard = (card: PlanningBlock) => {
+    setIsNewCard(false);
+    setEditingCard(card);
+    setCardFormTitle(card.title);
+    setCardFormType(card.type);
+    setCardFormContent(card.content);
+    setCardFormEmoji(card.emoji || '📝');
+    setShowCardModal(true);
+  };
+
+  const handleSaveCard = () => {
+    if (!cardFormTitle.trim()) {
+      alert('Por favor, insira o título do bloco.');
+      return;
+    }
+
+    if (isNewCard) {
+      if (!activeBoardId) return;
+      const newCard: PlanningBlock = {
+        id: `pbl-${Date.now()}`,
+        boardId: activeBoardId,
+        title: cardFormTitle,
+        type: cardFormType,
+        content: cardFormContent,
+        emoji: cardFormEmoji
+      };
+      setPlanningBlocks([...planningBlocks, newCard]);
+    } else {
+      if (!editingCard) return;
+      setPlanningBlocks(prev => prev.map(c => c.id === editingCard.id ? {
+        ...c,
+        title: cardFormTitle,
+        type: cardFormType,
+        content: cardFormContent,
+        emoji: cardFormEmoji
+      } : c));
+    }
+    setShowCardModal(false);
+    setEditingCard(null);
+  };
+
+  const handleDeleteCard = (cardId: string) => {
+    if (window.confirm('Excluir este bloco permanentemente?')) {
+      setPlanningBlocks(planningBlocks.filter(c => c.id !== cardId));
+    }
+  };
+
   // Local state for right active sidebar tool
   const [activeRightTool, setActiveRightTool] = useState<string | null>(null);
 
@@ -415,6 +559,25 @@ export default function WorkspaceEditor({
             >
               <Layout size={18} />
             </button>
+
+            <button
+              onClick={() => {
+                if (leftTab === 'boards' && isLeftPanelOpen) {
+                  setIsLeftPanelOpen(false);
+                } else {
+                  setLeftTab('boards');
+                  setIsLeftPanelOpen(true);
+                }
+              }}
+              className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                leftTab === 'boards' && isLeftPanelOpen
+                  ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400'
+                  : 'border-transparent text-neutral-500 hover:text-white hover:bg-neutral-900'
+              }`}
+              title="Fichas & Notas"
+            >
+              <BookMarked size={18} />
+            </button>
           </div>
 
           {/* Bottom brand indicator */}
@@ -437,26 +600,39 @@ export default function WorkspaceEditor({
                     setLeftTab('manuscript');
                     setIsLeftPanelOpen(true);
                   }}
-                  className={`flex-1 py-1.5 px-3 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`flex-1 py-1.5 px-2 text-[10px] font-bold rounded-xl flex items-center justify-center gap-1 transition-all cursor-pointer ${
                     leftTab === 'manuscript'
                       ? 'bg-indigo-600 text-white shadow-sm font-semibold'
                       : 'text-neutral-400 hover:text-white'
                   }`}
                 >
-                  <BookOpen size={13} /> Manuscrito
+                  <BookOpen size={11} /> Manuscrito
                 </button>
                 <button
                   onClick={() => {
                     setLeftTab('planning');
                     setIsLeftPanelOpen(true);
                   }}
-                  className={`flex-1 py-1.5 px-3 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`flex-1 py-1.5 px-2 text-[10px] font-bold rounded-xl flex items-center justify-center gap-1 transition-all cursor-pointer ${
                     leftTab === 'planning'
                       ? 'bg-indigo-600 text-white shadow-sm font-semibold'
                       : 'text-neutral-400 hover:text-white'
                   }`}
                 >
-                  <Layout size={13} /> Planejamento
+                  <Layout size={11} /> Plan.
+                </button>
+                <button
+                  onClick={() => {
+                    setLeftTab('boards');
+                    setIsLeftPanelOpen(true);
+                  }}
+                  className={`flex-1 py-1.5 px-2 text-[10px] font-bold rounded-xl flex items-center justify-center gap-1 transition-all cursor-pointer ${
+                    leftTab === 'boards'
+                      ? 'bg-indigo-600 text-white shadow-sm font-semibold'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  <BookMarked size={11} /> Fichas
                 </button>
               </div>
               <button 
@@ -668,6 +844,153 @@ export default function WorkspaceEditor({
                     </div>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* Render left Tab: Custom Boards & Blocks (World Building) */}
+            {leftTab === 'boards' && (
+              <div className="p-4 flex-1 flex flex-col overflow-y-auto space-y-4">
+                {activeBoardId === null ? (
+                  // BOARDS LIST VIEW
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-1.5 font-sans">
+                        <BookMarked size={12} /> Fichas de Criação
+                      </span>
+                      <button 
+                        onClick={() => setShowNewBoardModal(true)} 
+                        className="text-[10px] bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition-all"
+                      >
+                        <Plus size={12} /> Pasta
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-3">
+                      {planningBoards.map(board => {
+                        const count = planningBlocks.filter(b => b.boardId === board.id).length;
+                        return (
+                          <div 
+                            key={board.id}
+                            className="bg-neutral-900/40 border border-neutral-850 p-4 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group relative flex flex-col justify-between space-y-2"
+                            onClick={() => setActiveBoardId(board.id)}
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-center gap-3">
+                                <span className="text-2xl">{board.emoji}</span>
+                                <div className="text-left">
+                                  <h4 className="font-serif font-bold text-white text-sm group-hover:text-indigo-300 transition-colors">{board.name}</h4>
+                                  <p className="text-[10px] text-neutral-400 line-clamp-1 font-sans">{board.description || 'Sem descrição'}</p>
+                                </div>
+                              </div>
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteBoard(board.id);
+                                }}
+                                className="opacity-0 group-hover:opacity-100 text-neutral-500 hover:text-red-400 transition-all p-1"
+                              >
+                                <Trash2 size={12} />
+                              </button>
+                            </div>
+                            <div className="flex items-center justify-between pt-1 border-t border-neutral-850/50">
+                              <span className="text-[9px] text-neutral-500 font-mono uppercase">Sub-fichas</span>
+                              <span className="text-[10px] font-mono font-bold bg-neutral-950 text-indigo-400 border border-neutral-800 px-2 py-0.5 rounded-full">{count}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {planningBoards.length === 0 && (
+                      <div className="text-center py-8 text-neutral-500 font-sans text-xs">
+                        Nenhuma pasta de fichas criada. Clique em "+ Pasta" para começar.
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  // BOARD DETAILS VIEW (GRID OF BLOCKS)
+                  <div className="space-y-4">
+                    {/* Header with back button */}
+                    {(() => {
+                      const board = planningBoards.find(b => b.id === activeBoardId);
+                      if (!board) return null;
+                      const boardBlocks = planningBlocks.filter(b => b.boardId === activeBoardId);
+                      return (
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <button 
+                              onClick={() => setActiveBoardId(null)}
+                              className="text-[10px] text-neutral-400 hover:text-white flex items-center gap-1 uppercase tracking-wider font-bold transition-all"
+                            >
+                              ← Voltar
+                            </button>
+                            <button 
+                              onClick={handleOpenNewCard}
+                              className="text-[10px] bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition-all"
+                            >
+                              <Plus size={12} /> Bloco
+                            </button>
+                          </div>
+
+                          <div className="bg-neutral-900/60 p-3.5 border border-neutral-800 rounded-2xl space-y-1.5">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xl">{board.emoji}</span>
+                              <h3 className="font-serif font-bold text-white text-base leading-tight">{board.name}</h3>
+                            </div>
+                            <p className="text-[10px] text-neutral-400 leading-relaxed font-sans">{board.description || 'Organize as fichas deste tópico.'}</p>
+                          </div>
+
+                          <div className="grid grid-cols-1 gap-2.5 max-h-[50vh] overflow-y-auto pr-1">
+                            {boardBlocks.map(block => {
+                              const typeLabels = {
+                                character: { text: 'Personagem', color: 'bg-indigo-500/15 text-indigo-400 border-indigo-500/20' },
+                                location: { text: 'Local', color: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20' },
+                                event: { text: 'Evento', color: 'bg-amber-500/15 text-amber-400 border-amber-500/20' },
+                                note: { text: 'Nota', color: 'bg-purple-500/15 text-purple-400 border-purple-500/20' }
+                              };
+                              const badge = typeLabels[block.type] || typeLabels.note;
+                              return (
+                                <div 
+                                  key={block.id}
+                                  className="bg-neutral-950 border border-neutral-850 p-3 rounded-2xl hover:border-neutral-700 transition-all group relative space-y-2 cursor-pointer"
+                                  onClick={() => handleOpenEditCard(block)}
+                                >
+                                  <div className="flex justify-between items-start">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      <span className="text-sm shrink-0">{block.emoji || '📝'}</span>
+                                      <h5 className="font-serif font-bold text-white text-xs truncate">{block.title}</h5>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all shrink-0">
+                                      <button 
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleDeleteCard(block.id);
+                                        }}
+                                        className="text-neutral-500 hover:text-red-400 p-0.5"
+                                      >
+                                        <Trash2 size={11} />
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <p className="text-[11px] text-neutral-400 line-clamp-2 leading-relaxed font-sans">{block.content || 'Sem conteúdo.'}</p>
+                                  <div className="flex justify-between items-center pt-1">
+                                    <span className={`text-[8px] border px-2 py-0.5 rounded-full font-mono uppercase ${badge.color}`}>{badge.text}</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+
+                            {boardBlocks.length === 0 && (
+                              <div className="text-center py-8 text-neutral-500 font-sans text-xs">
+                                Nenhum bloco nesta pasta. Clique em "+ Bloco" para adicionar.
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -1346,6 +1669,174 @@ export default function WorkspaceEditor({
                 setProfile={setProfile}
                 books={books}
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 3: CREATE NEW BOARD MODAL */}
+      {showNewBoardModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/80 backdrop-blur-sm px-4 select-none">
+          <div className="bg-[#09090b] border border-neutral-850 rounded-2xl w-full max-w-md p-6 shadow-2xl space-y-4 relative">
+            <button 
+              onClick={() => setShowNewBoardModal(false)}
+              className="absolute top-4 right-4 p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+            <h3 className="font-serif font-bold text-lg text-white">Criar Nova Pasta de Fichas</h3>
+            
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <div className="w-16 space-y-1">
+                  <label className="text-[10px] text-neutral-400 font-bold uppercase">Ícone</label>
+                  <input 
+                    type="text" 
+                    value={newBoardEmoji} 
+                    onChange={(e) => setNewBoardEmoji(e.target.value)}
+                    className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2 text-center text-lg"
+                    placeholder="📂"
+                  />
+                </div>
+                <div className="flex-1 space-y-1">
+                  <label className="text-[10px] text-neutral-400 font-bold uppercase font-sans">Nome da Pasta</label>
+                  <input 
+                    type="text" 
+                    value={newBoardName} 
+                    onChange={(e) => setNewBoardName(e.target.value)}
+                    className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2 text-xs text-white"
+                    placeholder="Ex: Personagens Principais"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] text-neutral-400 font-bold uppercase font-sans">Descrição</label>
+                <textarea 
+                  value={newBoardDesc} 
+                  onChange={(e) => setNewBoardDesc(e.target.value)}
+                  className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2 text-xs text-white h-20 resize-none font-sans"
+                  placeholder="Descreva brevemente o propósito desta pasta..."
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2">
+              <button 
+                onClick={() => setShowNewBoardModal(false)}
+                className="outline-btn text-xs font-bold px-4 py-2 rounded-lg cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={handleAddBoard}
+                className="emerald-btn text-xs font-bold px-4 py-2 rounded-lg text-white cursor-pointer"
+              >
+                Criar Pasta
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 4: CREATE / EDIT PLANNING BLOCK MODAL */}
+      {showCardModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/80 backdrop-blur-sm px-4 select-none">
+          <div className="bg-[#09090b] border border-neutral-850 rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 relative">
+            <button 
+              onClick={() => {
+                setShowCardModal(false);
+                setEditingCard(null);
+              }}
+              className="absolute top-4 right-4 p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+            <h3 className="font-serif font-bold text-lg text-white font-serif">
+              {isNewCard ? 'Criar Ficha/Bloco' : 'Editar Ficha/Bloco'}
+            </h3>
+
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <div className="w-16 space-y-1">
+                  <label className="text-[10px] text-neutral-400 font-bold uppercase">Ícone</label>
+                  <input 
+                    type="text" 
+                    value={cardFormEmoji} 
+                    onChange={(e) => setCardFormEmoji(e.target.value)}
+                    className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2 text-center text-lg"
+                    placeholder="📝"
+                  />
+                </div>
+                <div className="flex-1 space-y-1">
+                  <label className="text-[10px] text-neutral-400 font-bold uppercase font-sans">Título do Bloco</label>
+                  <input 
+                    type="text" 
+                    value={cardFormTitle} 
+                    onChange={(e) => setCardFormTitle(e.target.value)}
+                    className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2 text-xs text-white"
+                    placeholder="Ex: Protagonista - Ficha"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] text-neutral-400 font-bold uppercase font-sans">Tipo de Elemento</label>
+                <select 
+                  value={cardFormType} 
+                  onChange={(e) => setCardFormType(e.target.value as any)}
+                  className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2 text-xs text-white"
+                >
+                  <option value="character">Personagem</option>
+                  <option value="location">Local</option>
+                  <option value="event">Evento</option>
+                  <option value="note">Nota</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] text-neutral-400 font-bold uppercase font-sans">Conteúdo da Ficha</label>
+                <textarea 
+                  value={cardFormContent} 
+                  onChange={(e) => setCardFormContent(e.target.value)}
+                  className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2 text-xs text-white h-40 resize-none font-sans"
+                  placeholder="Escreva livremente sobre este personagem, local, cronologia ou observação geral..."
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center pt-2">
+              {!isNewCard && (
+                <button 
+                  onClick={() => {
+                    if (editingCard) {
+                      handleDeleteCard(editingCard.id);
+                      setShowCardModal(false);
+                      setEditingCard(null);
+                    }
+                  }}
+                  className="text-xs text-red-450 hover:text-red-400 font-bold transition-colors cursor-pointer"
+                >
+                  Excluir Bloco
+                </button>
+              )}
+              <div className="flex gap-2 ml-auto">
+                <button 
+                  onClick={() => {
+                    setShowCardModal(false);
+                    setEditingCard(null);
+                  }}
+                  className="outline-btn text-xs font-bold px-4 py-2 rounded-lg cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  onClick={handleSaveCard}
+                  className="emerald-btn text-xs font-bold px-4 py-2 rounded-lg text-white cursor-pointer"
+                >
+                  {isNewCard ? 'Criar Bloco' : 'Salvar Bloco'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
