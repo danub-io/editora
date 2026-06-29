@@ -61,7 +61,7 @@ export default function ContatoPage() {
           {/* Contact Form (7 cols) */}
           <div className="lg:col-span-7 border border-outline-variant p-8 bg-surface-container-lowest">
             <h2 className="font-headline-md text-headline-md text-primary mb-6">Envie uma mensagem</h2>
-            
+
             <form className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">

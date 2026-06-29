@@ -112,7 +112,7 @@ The design system is rooted in the "Editorial Modern" aesthetic, drawing inspira
 The style is a blend of **Minimalism** and **Modern Editorial**. It relies on a rigorous grid, deliberate whitespace, and thin hairline rules rather than shadows or gradients to create structure. The emotional response should be one of calm focus, simulating the tactile experience of reading a premium physical broadsheet or literary magazine.
 
 ## Colors
-The palette is intentionally restrained to mimic ink on newsprint. 
+The palette is intentionally restrained to mimic ink on newsprint.
 
 - **Primary Surface (#F7F7F5):** A warm, off-white "newsprint" grey that reduces eye strain compared to pure white and adds a premium, archival feel.
 - **Primary Text (#111111):** A deep, rich black used for high-contrast legibility in headlines and body copy.
@@ -140,7 +140,7 @@ This design system rejects the use of shadows and blurs. Depth is achieved throu
 - **Inversion:** Dark mode or "Breaking News" callouts use a background of `#111111` with `#F7F7F5` text to create a stark, immediate sense of depth and importance.
 
 ## Shapes
-The shape language is strictly **Sharp**. 
+The shape language is strictly **Sharp**.
 
 - **Corners:** Use 0px radius for all containers, buttons, and input fields. This reinforces the "cut paper" aesthetic of printed media.
 - **Borders:** Hairline 1px borders are the standard. Do not use rounded buttons or pill-shaped tags.

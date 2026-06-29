@@ -141,4 +141,3 @@ function CharacterCard({ character }: { character: Character }) {
     </div>
   );
 }
-
