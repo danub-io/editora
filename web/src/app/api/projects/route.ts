@@ -6,8 +6,19 @@ import { chapters, projects } from "@/lib/schema";
 import { generateId } from "@/lib/utils";
 
 // GET /api/projects — List all projects
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const apiSecret = process.env.API_SECRET;
+    if (apiSecret) {
+      const authHeader = req.headers.get("authorization");
+      const apiKeyHeader = req.headers.get("x-api-key");
+      const token = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : apiKeyHeader;
+
+      if (token !== apiSecret) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+    }
+
     const db = getDb(process.env as Record<string, unknown>);
     const rows = await db.select().from(projects).all();
     const result = rows.map((r: any) => ({
@@ -37,6 +48,17 @@ export async function GET() {
 // POST /api/projects — Create project
 export async function POST(req: NextRequest) {
   try {
+    const apiSecret = process.env.API_SECRET;
+    if (apiSecret) {
+      const authHeader = req.headers.get("authorization");
+      const apiKeyHeader = req.headers.get("x-api-key");
+      const token = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : apiKeyHeader;
+
+      if (token !== apiSecret) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+    }
+
     const db = getDb(process.env as Record<string, unknown>);
     const body = (await req.json()) as any as Record<string, any>;
     const now = new Date().toISOString();
