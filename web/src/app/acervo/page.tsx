@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/gospelreads/Navbar';
 import MarketplaceView from '@/components/gospelreads/MarketplaceView';
+import Footer from '@/components/gospelreads/Footer';
 import { Book } from '@/components/gospelreads/types';
 import { INITIAL_BOOKS } from '@/components/gospelreads/data';
 
@@ -39,6 +40,7 @@ export default function Acervo() {
           setBooks={setBooks}
         />
       </main>
+      <Footer />
     </div>
   );
 }

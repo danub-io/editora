@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/gospelreads/Navbar';
 import LandingView from '@/components/gospelreads/LandingView';
+import Footer from '@/components/gospelreads/Footer';
 import { Book } from '@/components/gospelreads/types';
 import { INITIAL_BOOKS } from '@/components/gospelreads/data';
 
@@ -54,6 +55,7 @@ export default function Home() {
           setProfileEmail={handleSetProfileEmail}
         />
       </main>
+      <Footer />
     </div>
   );
 }

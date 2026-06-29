@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/gospelreads/Navbar';
 import AuthorProfileBuilder from '@/components/gospelreads/AuthorProfileBuilder';
+import Footer from '@/components/gospelreads/Footer';
 import { Book, AuthorProfile } from '@/components/gospelreads/types';
 import { INITIAL_BOOKS } from '@/components/gospelreads/data';
 
@@ -54,6 +55,7 @@ export default function Portfolio() {
           books={books}
         />
       </main>
+      <Footer />
     </div>
   );
 }

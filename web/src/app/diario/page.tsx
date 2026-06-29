@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/gospelreads/Navbar';
 import BlogView from '@/components/gospelreads/BlogView';
+import Footer from '@/components/gospelreads/Footer';
 
 export default function Diario() {
   const [mounted, setMounted] = useState(false);
@@ -21,6 +22,7 @@ export default function Diario() {
       <main className="flex-1">
         <BlogView />
       </main>
+      <Footer />
     </div>
   );
 }
