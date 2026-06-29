@@ -102,7 +102,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Navigation overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-30 bg-[#09090b]/95 backdrop-blur-md flex flex-col p-6 space-y-6 lg:hidden border-t border-neutral-900 text-neutral-100">
+        <div className="mobile-nav-drawer fixed inset-0 top-16 z-30 bg-[#09090b] flex flex-col p-6 space-y-6 lg:hidden border-t border-neutral-900 text-neutral-100">
           <div className="flex flex-col gap-4 text-sm font-bold uppercase tracking-widest">
             <Link 
               href="/" 

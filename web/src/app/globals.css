@@ -614,9 +614,12 @@ html.light .border-indigo-500 {
   border-color: #4f46e5 !important;
 }
 
-/* Fix mobile nav drawer overlay in light theme */
-html.light .lg\:hidden.border-t,
-html.light .fixed.inset-0.top-16 {
+/* Fix mobile nav drawer overlay */
+.mobile-nav-drawer {
+  background-color: #09090b !important;
+  border-color: #1c1917 !important;
+}
+html.light .mobile-nav-drawer {
   background-color: #fbf9f5 !important;
   border-color: #e6e3da !important;
 }
