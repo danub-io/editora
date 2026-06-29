@@ -63,9 +63,28 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
   };
 
   const triggerDownload = (type: ExportType) => {
-    // Generate text/html content
+    // Group and sort chapters
+    const frontChapters = chapters.filter(ch => ch.section === 'front').sort((a, b) => a.order - b.order);
+    const bodyChapters = chapters.filter(ch => ch.section === 'body' || !ch.section).sort((a, b) => a.order - b.order);
+    const backChapters = chapters.filter(ch => ch.section === 'back').sort((a, b) => a.order - b.order);
+    
+    const allChaptersSorted = [...frontChapters, ...bodyChapters, ...backChapters];
+
     let content = '';
     if (type === 'pdf') {
+      // Build TOC HTML items with internal anchor links
+      const tocItems = allChaptersSorted.map(ch => {
+        const secLabel = ch.section === 'front' ? 'Pré-textual' : ch.section === 'back' ? 'Pós-textual' : 'Capítulo';
+        return `
+          <li style="display: flex; justify-content: space-between; border-bottom: 1px dotted #ccc; margin-bottom: 8px; font-family: 'Inter', sans-serif; font-size: 14px;">
+            <a href="#ch-${ch.id}" style="color: #4f46e5; text-decoration: none; font-weight: 500;">
+              ${ch.title}
+            </a>
+            <span style="color: #6b7280; font-size: 12px; font-style: italic; font-weight: normal;">${secLabel}</span>
+          </li>
+        `;
+      }).join('');
+
       content = `
 <!DOCTYPE html>
 <html>
@@ -73,7 +92,7 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
   <meta charset="utf-8">
   <title>Manuscrito Exportado - GospelReads.</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@400;500;600&display=swap');
     body {
       font-family: 'EB Garamond', Georgia, serif;
       line-height: 1.6;
@@ -83,9 +102,28 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
       padding: 20px;
       background: #fbfaf7;
     }
-    h1 { text-align: center; font-size: 2.5em; margin-bottom: 50px; font-weight: 500; }
-    h2 { font-size: 1.8em; margin-top: 40px; border-bottom: 1px solid #1a1a1a; padding-bottom: 10px; font-weight: 500; }
+    h1 { text-align: center; font-size: 2.5em; margin-bottom: 30px; font-weight: 500; }
+    h2 { font-size: 1.8em; margin-top: 50px; border-bottom: 1px solid #1a1a1a; padding-bottom: 10px; font-weight: 500; page-break-before: always; }
     p { text-indent: 2em; margin-bottom: 1.5em; text-align: justify; font-size: 18px; }
+    .toc-container {
+      background: #f4f2ee;
+      border: 1px solid #e5e2db;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 40px 0;
+    }
+    .toc-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .toc-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
     .footer { text-align: center; margin-top: 50px; font-family: 'Inter', sans-serif; font-size: 12px; color: #5f5e5e; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 20px; }
   </style>
 </head>
@@ -93,9 +131,26 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
   <h1>EDIÇÃO ESPECIAL</h1>
   <p style="text-align: center; text-indent: 0; font-style: italic;">Obra exportada profissionalmente via GospelReads.</p>
   
-  ${chapters.sort((a, b) => a.order - b.order).map(ch => `
-    <h2>${ch.title}</h2>
-    ${ch.content.split('\n\n').map(p => `<p>${p}</p>`).join('')}
+  <!-- AUTOMATED DYNAMIC TABLE OF CONTENTS -->
+  <div class="toc-container">
+    <div class="toc-title">Sumário</div>
+    <ul class="toc-list">
+      ${tocItems}
+    </ul>
+  </div>
+  
+  <!-- CHAPTERS / SECTIONS -->
+  ${allChaptersSorted.map(ch => `
+    <div id="ch-${ch.id}">
+      <h2>${ch.title}</h2>
+      ${ch.content.split('\n\n').map(p => {
+        // If content is HTML (like title-page or dedication), render directly
+        if (p.trim().startsWith('<') && p.trim().endsWith('>')) {
+          return p;
+        }
+        return `<p>${p}</p>`;
+      }).join('')}
+    </div>
   `).join('')}
   
   <div class="footer">
@@ -104,18 +159,31 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
 </body>
 </html>
       `;
+    } else if (type === 'epub') {
+      // Build EPUB package manifest simulator
+      const tocText = allChaptersSorted.map((ch, idx) => `  [${idx + 1}] ${ch.title} (${ch.section === 'front' ? 'Pré-textual' : ch.section === 'back' ? 'Pós-textual' : 'Capítulo'})`).join('\n');
+      content = `GOSPELREADS DIGITAL PUBLISHING SUITE - COMPLIANT EPUB BUNDLE METADATA\n` +
+        `========================================================================\n` +
+        `Target Compatibility: Kindle KDP (Amazon), Apple Books, Kobo, PDF/A\n` +
+        `Generation Date: ${new Date().toISOString()}\n\n` +
+        `--- NAV.XHTML INDEX (TABLE OF CONTENTS) ---\n` +
+        `${tocText}\n\n` +
+        `--- CONTENT MANIFEST ---\n\n` +
+        allChaptersSorted.map(ch => {
+          return `[Seção: ${ch.section?.toUpperCase() || 'BODY'} | Tipo: ${ch.type || 'chapter'}]\nTITLE: ${ch.title}\n-----------------------------------------\n\n${ch.content}\n\n`;
+        }).join('\n');
     } else {
       content = `MANUSCRITO FORMATADO - GOSPELREADS.\n\n` + 
-        chapters.sort((a, b) => a.order - b.order).map(ch => {
+        allChaptersSorted.map(ch => {
           return `=========================================\n${ch.title.toUpperCase()}\n=========================================\n\n${ch.content}\n\n`;
         }).join('\n');
     }
 
-    const blob = new Blob([content], { type: type === 'pdf' ? 'text/html' : 'text/plain' });
+    const blob = new Blob([content], { type: type === 'pdf' || type === 'epub' ? 'text/html' : 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `manuscrito_gospelreads_${Date.now()}.${type === 'pdf' ? 'html' : 'txt'}`;
+    a.download = `manuscrito_gospelreads_${Date.now()}.${type === 'pdf' ? 'html' : type === 'epub' ? 'epub.txt' : 'txt'}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

@@ -58,6 +58,45 @@ interface WorkspaceEditorProps {
   setRightTab: (tab: string | null) => void;
 }
 
+const PAGE_TEMPLATES: Record<string, { title: string; content: string }> = {
+  'title-page': {
+    title: 'Página de Título',
+    content: '<div style="text-align: center; margin-top: 100px;">\n  <h1 style="font-size: 3rem; margin-bottom: 20px;">TÍTULO DO LIVRO</h1>\n  <h3 style="font-size: 1.5rem; font-style: italic;">Subtítulo da Obra</h3>\n  <div style="margin-top: 150px; font-size: 1.2rem;">Por Nome do Autor</div>\n</div>'
+  },
+  'copyright': {
+    title: 'Direitos Autorais (Copyright)',
+    content: '© 2026 Nome do Autor. Todos os direitos reservados.\n\nEsta é uma obra de ficção. Nomes, personagens, lugares e incidentes são produtos da imaginação do autor ou são usados de forma fictícia. Qualquer semelhança com pessoas reais, vivas ou mortas, negócios, eventos ou locais é mera coincidência.\n\nISBN: 978-0-00000-000-0\nEdição GospelReads.'
+  },
+  'dedication': {
+    title: 'Dedicatória',
+    content: '\n\n\n<div style="text-align: center; font-style: italic; margin-top: 150px;">\n  Dedico este livro a todos os que acreditam na força invisível das palavras e na poesia do infinito.\n</div>'
+  },
+  'foreword': {
+    title: 'Prefácio',
+    content: 'Escreva aqui o prefácio da obra. O prefácio costuma ser escrito por um terceiro/convidado apresentando o livro ao leitor.'
+  },
+  'introduction': {
+    title: 'Introdução',
+    content: 'Escreva a introdução ao tema do livro. Apresente as premissas e a jornada que o leitor está prestes a iniciar.'
+  },
+  'chapter': {
+    title: 'Novo Capítulo',
+    content: 'Escreva o corpo do seu capítulo aqui...'
+  },
+  'epilogue': {
+    title: 'Epílogo',
+    content: 'Escreva o epílogo do seu livro para encerrar a jornada narrativa...'
+  },
+  'author-bio': {
+    title: 'Sobre o Autor',
+    content: 'Escreva aqui sua biografia profissional e notas sobre sua carreira literária...'
+  },
+  'acknowledgments': {
+    title: 'Agradecimentos',
+    content: 'Gostaria de expressar meus sinceros agradecimentos a todos os que apoiaram a realização deste manuscrito...'
+  }
+};
+
 interface PlanningCard {
   id: string;
   column: 'ato1' | 'ato2' | 'ato3';
@@ -126,6 +165,12 @@ export default function WorkspaceEditor({
   const [newBoardName, setNewBoardName] = useState('');
   const [newBoardEmoji, setNewBoardEmoji] = useState('📂');
   const [newBoardDesc, setNewBoardDesc] = useState('');
+
+  // Add Page Wizard Modal states
+  const [showAddPageModal, setShowAddPageModal] = useState(false);
+  const [addPageSection, setAddPageSection] = useState<'front' | 'body' | 'back'>('body');
+  const [addPageType, setAddPageType] = useState<string>('chapter');
+  const [addPageTitle, setAddPageTitle] = useState<string>('');
 
   const [editingCard, setEditingCard] = useState<PlanningBlock | null>(null);
   const [showCardModal, setShowCardModal] = useState(false);
@@ -276,16 +321,20 @@ export default function WorkspaceEditor({
     }));
   };
 
-  const addNewChapter = () => {
+  const handleAddPage = (section: 'front' | 'body' | 'back', type: string, title: string) => {
+    const template = PAGE_TEMPLATES[type] || { title: 'Nova Página', content: '' };
     const nextOrder = chapters.length > 0 ? Math.max(...chapters.map(c => c.order)) + 1 : 1;
     const newCh: Chapter = {
       id: `ch-${Date.now()}`,
-      title: `Capítulo ${nextOrder}: Novo Manuscrito`,
-      content: '',
-      order: nextOrder
+      title: title || template.title,
+      content: template.content,
+      order: nextOrder,
+      section,
+      type: type as any
     };
     setChapters([...chapters, newCh]);
     setActiveChapterId(newCh.id);
+    setShowAddPageModal(false);
   };
 
   const deleteChapter = (id: string, e: React.MouseEvent) => {
@@ -316,19 +365,32 @@ export default function WorkspaceEditor({
     setActiveChapterId(ch.id);
   };
 
-  const moveChapter = (index: number, direction: 'up' | 'down') => {
-    if (direction === 'up' && index === 0) return;
-    if (direction === 'down' && index === chapters.length - 1) return;
-
-    const targetIndex = direction === 'up' ? index - 1 : index + 1;
-    const reordered = [...chapters];
+  const moveChapterInSection = (id: string, direction: 'up' | 'down') => {
+    const ch = chapters.find(c => c.id === id);
+    if (!ch) return;
+    const section = ch.section || 'body';
     
-    const temp = reordered[index];
-    reordered[index] = reordered[targetIndex];
-    reordered[targetIndex] = temp;
-
-    const final = reordered.map((ch, idx) => ({ ...ch, order: idx + 1 }));
-    setChapters(final);
+    // Find all chapters in the same section, sorted by order
+    const sectionChapters = chapters
+      .filter(c => (c.section || 'body') === section)
+      .sort((a, b) => a.order - b.order);
+      
+    const index = sectionChapters.findIndex(c => c.id === id);
+    if (direction === 'up' && index === 0) return;
+    if (direction === 'down' && index === sectionChapters.length - 1) return;
+    
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    const targetCh = sectionChapters[targetIndex];
+    
+    // Swap the order values of ch and targetCh
+    const tempOrder = ch.order;
+    const updatedChapters = chapters.map(c => {
+      if (c.id === ch.id) return { ...c, order: targetCh.order };
+      if (c.id === targetCh.id) return { ...c, order: tempOrder };
+      return c;
+    });
+    
+    setChapters(updatedChapters);
   };
 
   // Typography styling lookups
@@ -511,6 +573,49 @@ export default function WorkspaceEditor({
     }
   };
 
+  const renderManuscriptItem = (ch: Chapter, idx: number, arr: Chapter[]) => (
+    <div
+      key={ch.id}
+      onClick={() => setActiveChapterId(ch.id)}
+      className={`group flex items-center justify-between p-2.5 cursor-pointer border rounded-xl ${
+        ch.id === activeChapterId 
+          ? 'border-indigo-500 bg-indigo-500/10 font-medium text-indigo-300' 
+          : 'border-transparent text-neutral-400 hover:border-neutral-850 hover:bg-neutral-900/40 hover:text-neutral-200'
+      } transition-all duration-150`}
+    >
+      <div className="flex items-center gap-2 overflow-hidden">
+        <span className="text-[9px] font-mono text-neutral-600 shrink-0">#{idx + 1}</span>
+        <span className="text-xs truncate font-serif">{ch.title || 'Sem título'}</span>
+      </div>
+      
+      <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+        <button 
+          onClick={(e) => { e.stopPropagation(); moveChapterInSection(ch.id, 'up'); }}
+          disabled={idx === 0}
+          className="p-0.5 hover:bg-neutral-800 text-neutral-400 hover:text-neutral-200 rounded disabled:opacity-30"
+          title="Subir"
+        >
+          <ChevronUp size={12} />
+        </button>
+        <button 
+          onClick={(e) => { e.stopPropagation(); moveChapterInSection(ch.id, 'down'); }}
+          disabled={idx === arr.length - 1}
+          className="p-0.5 hover:bg-neutral-800 text-neutral-400 hover:text-neutral-200 rounded disabled:opacity-30"
+          title="Descer"
+        >
+          <ChevronDown size={12} />
+        </button>
+        <button 
+          onClick={(e) => deleteChapter(ch.id, e)}
+          className="p-0.5 hover:bg-red-950/40 text-red-400 rounded"
+          title="Excluir"
+        >
+          <Trash2 size={12} />
+        </button>
+      </div>
+    </div>
+  );
+
   // Local state for right active sidebar tool
   const [activeRightTool, setActiveRightTool] = useState<string | null>(null);
 
@@ -650,63 +755,103 @@ export default function WorkspaceEditor({
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-[10px] font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-2">
-                      <FolderOpen size={12} /> Capítulos do Livro
+                      <FolderOpen size={12} /> Estrutura do Livro
                     </span>
                     <button 
-                      id="btn-add-chapter"
-                      onClick={addNewChapter}
-                      className="p-1 hover:bg-neutral-800 text-indigo-400 hover:text-white rounded-lg transition-colors border border-neutral-800 bg-neutral-900"
-                      title="Adicionar Capítulo"
+                      onClick={() => {
+                        setAddPageSection('body');
+                        setAddPageType('chapter');
+                        setAddPageTitle('');
+                        setShowAddPageModal(true);
+                      }}
+                      className="p-1 hover:bg-neutral-800 text-indigo-400 hover:text-white rounded-lg transition-colors border border-neutral-800 bg-neutral-900 flex items-center gap-1 text-[10px] px-2 font-bold cursor-pointer"
+                      title="Adicionar Página/Capítulo"
                     >
-                      <Plus size={14} />
+                      <Plus size={12} /> Adicionar
                     </button>
                   </div>
 
-                  <div className="space-y-1.5 max-h-[48vh] overflow-y-auto pr-1">
-                    {chapters
-                      .sort((a, b) => a.order - b.order)
-                      .map((ch, idx) => (
-                        <div
-                          key={ch.id}
-                          onClick={() => setActiveChapterId(ch.id)}
-                          className={`group flex items-center justify-between p-3 cursor-pointer border rounded-xl ${
-                            ch.id === activeChapterId 
-                              ? 'border-indigo-500 bg-indigo-500/10 font-medium text-indigo-300' 
-                              : 'border-transparent text-neutral-400 hover:border-neutral-850 hover:bg-neutral-900/40 hover:text-neutral-200'
-                          } transition-all duration-150`}
+                  <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-1">
+                    {/* 1. FRONT MATTER SECTION */}
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between">
+                        <span>Páginas Iniciais</span>
+                        <button 
+                          onClick={() => {
+                            setAddPageSection('front');
+                            setAddPageType('title-page');
+                            setAddPageTitle('');
+                            setShowAddPageModal(true);
+                          }}
+                          className="text-[9px] text-indigo-400 hover:text-white cursor-pointer font-bold"
                         >
-                          <div className="flex items-center gap-2.5 overflow-hidden">
-                            <span className="text-[10px] font-mono text-neutral-600 shrink-0">#{idx + 1}</span>
-                            <span className="text-xs truncate font-serif">{ch.title || 'Sem título'}</span>
-                          </div>
-                          
-                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                            <button 
-                              onClick={(e) => { e.stopPropagation(); moveChapter(idx, 'up'); }}
-                              disabled={idx === 0}
-                              className="p-0.5 hover:bg-neutral-800 text-neutral-400 hover:text-neutral-200 rounded disabled:opacity-30"
-                              title="Subir"
-                            >
-                              <ChevronUp size={12} />
-                            </button>
-                            <button 
-                              onClick={(e) => { e.stopPropagation(); moveChapter(idx, 'down'); }}
-                              disabled={idx === chapters.length - 1}
-                              className="p-0.5 hover:bg-neutral-800 text-neutral-400 hover:text-neutral-200 rounded disabled:opacity-30"
-                              title="Descer"
-                            >
-                              <ChevronDown size={12} />
-                            </button>
-                            <button 
-                              onClick={(e) => deleteChapter(ch.id, e)}
-                              className="p-0.5 hover:bg-red-950/40 text-red-400 rounded"
-                              title="Excluir"
-                            >
-                              <Trash2 size={12} />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
+                          +
+                        </button>
+                      </div>
+                      <div className="space-y-1">
+                        {chapters
+                          .filter(ch => ch.section === 'front')
+                          .sort((a, b) => a.order - b.order)
+                          .map((ch, idx, arr) => renderManuscriptItem(ch, idx, arr))}
+                        {chapters.filter(ch => ch.section === 'front').length === 0 && (
+                          <div className="text-[10px] text-neutral-600 pl-2 italic">Nenhuma página inicial</div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* 2. BODY SECTION */}
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between">
+                        <span>Conteúdo Principal</span>
+                        <button 
+                          onClick={() => {
+                            setAddPageSection('body');
+                            setAddPageType('chapter');
+                            setAddPageTitle('');
+                            setShowAddPageModal(true);
+                          }}
+                          className="text-[9px] text-indigo-400 hover:text-white cursor-pointer font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <div className="space-y-1">
+                        {chapters
+                          .filter(ch => ch.section === 'body' || !ch.section)
+                          .sort((a, b) => a.order - b.order)
+                          .map((ch, idx, arr) => renderManuscriptItem(ch, idx, arr))}
+                        {chapters.filter(ch => ch.section === 'body' || !ch.section).length === 0 && (
+                          <div className="text-[10px] text-neutral-600 pl-2 italic">Nenhum capítulo criado</div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* 3. BACK MATTER SECTION */}
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between">
+                        <span>Páginas Finais</span>
+                        <button 
+                          onClick={() => {
+                            setAddPageSection('back');
+                            setAddPageType('author-bio');
+                            setAddPageTitle('');
+                            setShowAddPageModal(true);
+                          }}
+                          className="text-[9px] text-indigo-400 hover:text-white cursor-pointer font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <div className="space-y-1">
+                        {chapters
+                          .filter(ch => ch.section === 'back')
+                          .sort((a, b) => a.order - b.order)
+                          .map((ch, idx, arr) => renderManuscriptItem(ch, idx, arr))}
+                        {chapters.filter(ch => ch.section === 'back').length === 0 && (
+                          <div className="text-[10px] text-neutral-600 pl-2 italic">Nenhuma página final</div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -1837,6 +1982,115 @@ export default function WorkspaceEditor({
                   {isNewCard ? 'Criar Bloco' : 'Salvar Bloco'}
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 5: ADD PAGE WIZARD MODAL */}
+      {showAddPageModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/80 backdrop-blur-sm px-4 select-none">
+          <div className="bg-[#09090b] border border-neutral-850 rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 relative">
+            <button 
+              onClick={() => setShowAddPageModal(false)}
+              className="absolute top-4 right-4 p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+            <h3 className="font-serif font-bold text-lg text-white">Adicionar Nova Página ao Manuscrito</h3>
+
+            <div className="space-y-4">
+              {/* 1. Choose Section */}
+              <div className="space-y-1">
+                <label className="text-[10px] text-neutral-400 font-bold uppercase tracking-wider block">1. Seção do Livro</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {([
+                    { key: 'front', label: 'Pré-textual (Início)' },
+                    { key: 'body', label: 'Textual (Corpo)' },
+                    { key: 'back', label: 'Pós-textual (Fim)' }
+                  ] as const).map(sec => (
+                    <button
+                      key={sec.key}
+                      onClick={() => {
+                        setAddPageSection(sec.key);
+                        // Reset defaults based on section selection
+                        if (sec.key === 'front') setAddPageType('title-page');
+                        else if (sec.key === 'body') setAddPageType('chapter');
+                        else setAddPageType('author-bio');
+                      }}
+                      className={`py-2 px-3 text-xs border rounded-xl text-center transition-all cursor-pointer font-sans ${
+                        addPageSection === sec.key
+                          ? 'border-indigo-500 bg-indigo-500/10 text-indigo-300 font-bold'
+                          : 'border-neutral-850 hover:bg-neutral-900 text-neutral-400 font-medium'
+                      }`}
+                    >
+                      {sec.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 2. Choose Template Type */}
+              <div className="space-y-1">
+                <label className="text-[10px] text-neutral-400 font-bold uppercase tracking-wider block">2. Tipo de Página / Modelo</label>
+                <select
+                  value={addPageType}
+                  onChange={(e) => setAddPageType(e.target.value)}
+                  className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white"
+                >
+                  {addPageSection === 'front' && (
+                    <>
+                      <option value="title-page">Página de Título</option>
+                      <option value="copyright">Página de Copyright (Direitos Autorais)</option>
+                      <option value="dedication">Dedicatória</option>
+                      <option value="foreword">Prefácio (Introduzido por outro autor)</option>
+                      <option value="introduction">Introdução</option>
+                      <option value="custom">Página Customizada Inicial</option>
+                    </>
+                  )}
+                  {addPageSection === 'body' && (
+                    <>
+                      <option value="chapter">Capítulo Padrão</option>
+                      <option value="epilogue">Epílogo</option>
+                      <option value="custom">Capítulo Customizado</option>
+                    </>
+                  )}
+                  {addPageSection === 'back' && (
+                    <>
+                      <option value="author-bio">Sobre o Autor (Biografia)</option>
+                      <option value="acknowledgments">Agradecimentos</option>
+                      <option value="custom">Página Customizada Final</option>
+                    </>
+                  )}
+                </select>
+              </div>
+
+              {/* 3. Page Title */}
+              <div className="space-y-1">
+                <label className="text-[10px] text-neutral-400 font-bold uppercase tracking-wider block">3. Título da Página</label>
+                <input
+                  type="text"
+                  value={addPageTitle}
+                  onChange={(e) => setAddPageTitle(e.target.value)}
+                  className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white"
+                  placeholder={PAGE_TEMPLATES[addPageType]?.title || 'Ex: Dedicatória Especial'}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2">
+              <button 
+                onClick={() => setShowAddPageModal(false)}
+                className="outline-btn text-xs font-bold px-4 py-2 rounded-lg cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={() => handleAddPage(addPageSection, addPageType, addPageTitle)}
+                className="emerald-btn text-xs font-bold px-4 py-2 rounded-lg text-white cursor-pointer"
+              >
+                Adicionar Página
+              </button>
             </div>
           </div>
         </div>

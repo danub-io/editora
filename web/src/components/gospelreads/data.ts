@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Book } from './types';
+import { Book, Chapter } from './types';
 
 export const INITIAL_BOOKS: Book[] = [
   {
@@ -115,23 +115,45 @@ export const GENRES = [
   'Negócios'
 ];
 
-export const INITIAL_CHAPTERS = [
+export const INITIAL_CHAPTERS: Chapter[] = [
+  {
+    id: 'ch-copyright',
+    title: 'Copyright',
+    content: '© 2026 GospelReads.\n\nTodos os direitos reservados. Nenhuma parte desta publicação pode ser reproduzida, distribuída ou transmitida por qualquer forma ou meio, incluindo fotocópia, gravação ou outros métodos eletrônicos ou mecânicos, sem a permissão prévia por escrito do editor.\n\nISBN: 978-0-00000-000-0',
+    order: 0,
+    section: 'front',
+    type: 'copyright'
+  },
   {
     id: 'ch-1',
     title: 'Capítulo I: A Penumbra do Crepúsculo',
     content: 'O sol despencava por trás das serras cinzentas do norte, arrastando consigo os últimos fios de ouro que insistiam em beijar o horizonte. Na pequena cabana do ateliê editorial, a luz fraca de um candeeiro a óleo era o único farol contra a escuridão que avançava rápida.\n\nEzequiel posicionou a ponta de sua caneta sobre a folha de papel pergaminho levemente áspera. Por um longo tempo, apenas o sussurro do vento nas frestas da janela de carvalho ousava quebrar o silêncio. A folha permanecia em branco, imaculada e assustadora. Cada palavra escrita seria um pacto selado com o tempo.\n\n"Escrever não é sobre colocar palavras no papel", pensou alto, limpando uma mancha invisível em sua mesa de jacarandá. "É sobre esculpir o silêncio."',
-    order: 1
+    order: 1,
+    section: 'body',
+    type: 'chapter'
   },
   {
     id: 'ch-2',
     title: 'Capítulo II: O Primeiro Pacto',
     content: 'Com a primeira frase finalmente talhada na madeira da memória, a tinta preta fluía com facilidade. Os sentimentos se alinhavam em orações ritmadas, equilibradas como o badalar de um relógio de parede antigo.\n\nO segredo, ele bem sabia, residia no espaço negativo. Entre uma frase e outra, o silêncio deve respirar. É ali que reside o leitor, preenchendo as entrelinhas com as próprias angústias e sonhos. Quando parou para contar, mais de setecentas palavras haviam sido confiadas à escuridão compassiva. Um progresso extraordinário para quem, há poucas horas, julgava-se deserto.',
-    order: 2
+    order: 2,
+    section: 'body',
+    type: 'chapter'
   },
   {
     id: 'ch-3',
     title: 'Capítulo III: Diálogo com a Sombra',
     content: 'No terceiro capítulo, uma nova voz exigia passagem. Ezequiel imaginou uma personagem caminhando sob o arco de videiras secas do pomar. O vento carregava o cheiro de terra molhada e folhas caídas, prenúncio de uma tempestade iminente.\n\n— Quem está aí? — ela perguntou ao nada, sabendo que as sombras raramente mentem, embora raramente digam a verdade inteira. A resposta veio sob a forma de um estalar de galhos secos, o passo sutil de alguém que compreende as artes da camuflagem estelar.',
-    order: 3
+    order: 3,
+    section: 'body',
+    type: 'chapter'
+  },
+  {
+    id: 'ch-author',
+    title: 'Sobre o Autor',
+    content: 'Luana Costa é romancista literária, graduada em Astrofísica. Suas obras unem a ficção especulativa profunda com dilemas filosóficos intimistas, retratando o universo sob a lente poética da alma.',
+    order: 4,
+    section: 'back',
+    type: 'author-bio'
   }
 ];

@@ -8,6 +8,8 @@ export interface Chapter {
   title: string;
   content: string;
   order: number;
+  section?: 'front' | 'body' | 'back';
+  type?: 'title-page' | 'copyright' | 'dedication' | 'foreword' | 'introduction' | 'chapter' | 'epilogue' | 'author-bio' | 'acknowledgments' | 'custom';
 }
 
 export interface Book {
