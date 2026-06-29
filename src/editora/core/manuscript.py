@@ -153,7 +153,7 @@ class Manuscript(BaseModel):
         back_matter = []
 
         # Coleta todos os arquivos Markdown
-        md_files = sorted(directory.glob(pattern))
+        md_files = sorted(directory.rglob(pattern))
 
         for filepath in md_files:
             try:

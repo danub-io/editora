@@ -16,7 +16,7 @@ def test_book_metadata_valid():
 
 def test_book_metadata_missing_required():
     with pytest.raises(ValidationError):
-        BookMetadata(title="My Book") # type: ignore
+        BookMetadata(title="My Book")  # type: ignore
 
 
 # TypesettingConfig Tests
