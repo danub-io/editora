@@ -142,4 +142,3 @@ function LocationCard({ location }: { location: Location }) {
     </div>
   );
 }
-

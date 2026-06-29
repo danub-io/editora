@@ -28,7 +28,7 @@ const navItems = [
 
 export default function EditableSidebar({ projectId }: EditableSidebarProps) {
   const pathname = usePathname();
-  
+
   const isActive = (segment: string) => {
     if (!segment) {
       // Manuscritos is default (exact match on /projects/[id]/ or /projects/[id])
