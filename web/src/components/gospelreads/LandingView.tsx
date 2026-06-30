@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { 
   Edit3, 
   FileText, 
@@ -390,39 +391,50 @@ export default function LandingView({
         </div>
       </section>
 
-      {/* Immersive CTA section */}
-      <section className="py-20 md:py-28 bg-white dark:bg-zinc-950 relative overflow-hidden text-center">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        
-        <div className="max-w-4xl mx-auto px-6 space-y-8 relative z-10">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 mx-auto">
-            Acesso Instantâneo
-          </span>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl text-gray-900 dark:text-zinc-100 uppercase tracking-tight leading-none font-extrabold max-w-2xl mx-auto">
-            O mundo está esperando sua história.
-          </h2>
-          <p className="text-xs md:text-sm text-gray-500 dark:text-zinc-400 max-w-md mx-auto">
-            Faça parte da nova onda de autopublicação. Crie sua conta grátis agora mesmo e entre no editor em segundos.
-          </p>
-          
-          <form onSubmit={handleCreateAccount} className="cta-form flex flex-col sm:flex-row gap-2 max-w-md mx-auto p-1.5 border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 rounded-full focus-within:border-indigo-500 dark:focus-within:border-indigo-400 transition-colors">
-            <input
-              required
-              type="email"
-              placeholder="Seu melhor e-mail"
-              value={emailInput}
-              onChange={(e) => setEmailInput(e.target.value)}
-              className="cta-input px-5 py-3 bg-transparent border-0 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-550 text-xs w-full focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer rounded-full"
-            >
-              Criar Conta Grátis
-            </button>
-          </form>
+      {/* Newsletter / CTA Section */}
+      <div className="bg-white dark:bg-zinc-950 py-6 sm:py-8 lg:py-12">
+        <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
+          <div className="flex flex-col items-center rounded-lg bg-gray-100 dark:bg-zinc-900 p-4 sm:p-8">
+            <div className="mb-4 sm:mb-8">
+              <h2 className="text-center text-xl font-bold text-indigo-500 dark:text-indigo-400 sm:text-2xl lg:text-3xl">
+                O mundo está esperando sua história
+              </h2>
+              <p className="text-center text-gray-500 dark:text-zinc-400 text-sm mt-1">
+                Faça parte da nova onda de autopublicação. Crie sua conta grátis.
+              </p>
+            </div>
+
+            <form onSubmit={handleCreateAccount} className="mb-3 flex w-full max-w-md gap-2 sm:mb-5">
+              <input 
+                required
+                type="email"
+                placeholder="Seu melhor e-mail" 
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                className="w-full flex-1 rounded border border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-gray-800 dark:text-zinc-100 placeholder-gray-400 dark:placeholder:text-zinc-500 ring-indigo-300 transition duration-100 outline-none focus:ring" 
+              />
+
+              <button 
+                type="submit"
+                className="inline-block cursor-pointer rounded bg-indigo-500 px-8 py-2 text-center text-sm font-semibold text-white ring-indigo-300 transition duration-100 outline-none hover:bg-indigo-600 focus-visible:ring-2 active:bg-indigo-700 md:text-base"
+              >
+                Cadastrar
+              </button>
+            </form>
+
+            <p className="text-center text-xs text-gray-400 dark:text-zinc-550">
+              Ao se cadastrar, você concorda com nossos{" "}
+              <Link href="/termos" className="underline transition duration-100 hover:text-indigo-500 dark:hover:text-indigo-400 active:text-indigo-600">
+                Termos de Serviço
+              </Link>{" "}
+              e{" "}
+              <Link href="/privacidade" className="underline transition duration-100 hover:text-indigo-500 dark:hover:text-indigo-400 active:text-indigo-600">
+                Política de Privacidade
+              </Link>.
+            </p>
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
