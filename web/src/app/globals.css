@@ -590,38 +590,16 @@ html.light {
 }
 
 html.light body,
-html.light main,
-html.light .bg-\[\#09090b\],
-html.light .bg-neutral-950,
-html.light .bg-neutral-950\/20,
-html.light .bg-neutral-950\/40,
-html.light .bg-neutral-950\/85,
-html.light .bg-neutral-950\/80,
-html.light .bg-\[\#0c0c0e\],
-html.light .bg-\[\#0f0f12\],
-html.light .bg-neutral-900\/60,
-html.light .bg-neutral-900\/40,
-html.light .bg-neutral-900 {
-  background-color: #fbf9f5 !important;
-  color: #24201d !important;
-}
-
-/* Make headers, cards, and special blocks pure white for crisp contrast */
-html.light nav,
-html.light header,
-html.light .bg-neutral-900,
-html.light .bg-neutral-900\/60,
-html.light .bg-neutral-900\/40,
-html.light aside,
-html.light .bg-\[\#0c0c0e\] {
+html.light main {
   background-color: #ffffff !important;
+  color: #1a1512 !important;
 }
 
 /* Soft secondary backgrounds for highlights and specific cards */
 html.light .bg-neutral-950\/20,
 html.light .bg-neutral-950\/40,
 html.light .bg-\[\#0c0c0e\] {
-  background-color: #f4f2eb !important;
+  background-color: #f3f4f6 !important;
 }
 
 /* Overrides for text color */
