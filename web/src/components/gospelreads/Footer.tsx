@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <div className="bg-neutral-primary border-t border-default pt-4 sm:pt-10 lg:pt-12 font-sans">
-      <footer className="mx-auto max-w-screen-2xl px-4 md:px-8">
+    <footer className="bg-neutral-primary border-t border-default pt-4 sm:pt-10 lg:pt-12 font-sans">
+      <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <div className="flex flex-col items-center justify-between gap-4 border-b border-default py-6 md:flex-row">
           {/* nav - start */}
           <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2 md:justify-start md:gap-6 text-sm">
@@ -60,7 +60,7 @@ export default function Footer() {
         <div className="py-8 text-center text-xs text-body-subtle">
           © {new Date().getFullYear()} GospelReads. Todos os direitos reservados.
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
   );
 }
