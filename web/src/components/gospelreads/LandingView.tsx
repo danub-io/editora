@@ -96,7 +96,7 @@ export default function LandingView({
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
           {/* text - start */}
           <div className="mb-10 md:mb-16 text-center">
-            <h2 className="mb-4 text-center text-2xl font-bold text-gray-805 md:mb-6 lg:text-3xl uppercase tracking-tight">
+            <h2 className="mb-4 text-center text-2xl font-bold text-gray-900 dark:text-zinc-100 md:mb-6 lg:text-3xl uppercase tracking-tight">
               Our competitive advantage
             </h2>
             <p className="mx-auto max-w-screen-md text-center text-gray-500 dark:text-zinc-400 md:text-lg">
@@ -114,7 +114,7 @@ export default function LandingView({
               <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <Edit3 size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Editor de Escrita Professional</h3>
+              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Editor de Escrita Professional</h3>
               <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Um ambiente sem distrações criado especificamente para escrita de fôlego com metas diárias.
               </p>
@@ -134,7 +134,7 @@ export default function LandingView({
               <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <FileText size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Exportação para PDF e EPUB</h3>
+              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Exportação para PDF e EPUB</h3>
               <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Gere PDFs prontos para impressão e EPUBs perfeitos com um único clique do diagramador.
               </p>
@@ -154,7 +154,7 @@ export default function LandingView({
               <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <User size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Perfil do Autor</h3>
+              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Perfil do Autor</h3>
               <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Construa seu público com uma página de portfólio de autor bonita, elegante e personalizável.
               </p>
@@ -174,7 +174,7 @@ export default function LandingView({
               <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <Store size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Marketplace Integrado</h3>
+              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Marketplace Integrado</h3>
               <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Venda diretamente aos leitores e mantenha royalties mais altos sem intermediários exploradores.
               </p>
@@ -194,7 +194,7 @@ export default function LandingView({
               <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <Layers size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Ferramentas de Estrutura</h3>
+              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Ferramentas de Estrutura</h3>
               <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Organize facilmente capítulos, seções e prefácios arrastando e soltando na barra lateral.
               </p>
@@ -214,7 +214,7 @@ export default function LandingView({
               <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <RefreshCw size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Salvamento Automático</h3>
+              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Salvamento Automático</h3>
               <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Seu trabalho é sempre salvo e sincronizado localmente em tempo real enquanto você digita.
               </p>

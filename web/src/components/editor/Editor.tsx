@@ -97,7 +97,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
     },
     editorProps: {
       attributes: {
-        class: "focus:outline-none",
+        class: "focus:outline-none font-serif text-lg md:text-xl leading-relaxed text-gray-800 dark:text-zinc-200 min-h-[400px]",
       },
     },
   });
@@ -128,7 +128,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
   if (!editor) return null;
 
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className="flex flex-col h-full bg-[#fbf9f5] dark:bg-[#09090b] transition-colors duration-150">
       <FindReplaceBar open={findBarOpen} onClose={() => setFindBarOpen(false)} />
       <SelectionToolbar editor={editor} focusMode={focusMode} />
 
@@ -136,7 +136,7 @@ export function Editor({ chapterId }: { chapterId: string }) {
       {focusMode && (
         <button
           onClick={toggleFocusMode}
-          className="fixed top-4 right-4 z-50 p-2 bg-background/80 backdrop-blur-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
+          className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm border border-gray-200 dark:border-zinc-800 text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-zinc-100 transition-colors cursor-pointer"
           title="Sair do modo foco"
           aria-label="Sair do modo foco"
         >
@@ -144,40 +144,44 @@ export function Editor({ chapterId }: { chapterId: string }) {
         </button>
       )}
 
-      <div className={cn("flex-1 overflow-y-auto px-6 md:px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
-        <div className={cn("w-full", focusMode ? "max-w-2xl" : "max-w-3xl")}>
-
-        <article>
-          {isEditingTitle ? (
-            <input
-              ref={titleInputRef}
-              type="text"
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              onBlur={handleSaveTitle}
-              onKeyDown={handleTitleKeyDown}
-              className={cn(
-                "w-full bg-transparent font-serif text-3xl outline-none pb-0.5",
-                focusMode ? "mb-8 text-center" : "mb-4"
-              )}
-              autoFocus
-            />
-          ) : (
-            <h1
-              onClick={() => setIsEditingTitle(true)}
-              className={cn(
-                "font-serif text-3xl outline-none cursor-pointer hover:text-primary/80 transition-colors",
-                focusMode ? "mb-8 text-center" : "mb-4"
-              )}
-              title="Clique para editar o título"
-            >
-              {chapter?.title || "Sem Título"}
-            </h1>
+      <div className={cn("flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 flex justify-center", focusMode ? "pb-32 pt-20 lg:pt-32" : "pb-32 pt-16")}>
+        <div 
+          className={cn(
+            "w-full transition-all duration-300 bg-white dark:bg-[#121214] border border-gray-200 dark:border-zinc-800 rounded-lg p-6 sm:p-10 md:p-16 shadow-sm",
+            focusMode ? "max-w-2xl" : "max-w-3xl"
           )}
-          <div className={cn("outline-none", focusMode ? "text-foreground/85 space-y-4 leading-relaxed" : "text-foreground")}>
-            <EditorContent editor={editor} />
-          </div>
-        </article>
+        >
+          <article>
+            {isEditingTitle ? (
+              <input
+                ref={titleInputRef}
+                type="text"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                onBlur={handleSaveTitle}
+                onKeyDown={handleTitleKeyDown}
+                className={cn(
+                  "w-full bg-transparent font-serif text-3xl font-bold text-gray-900 dark:text-zinc-100 outline-none pb-0.5 border-b border-indigo-500",
+                  focusMode ? "mb-8 text-center" : "mb-6"
+                )}
+                autoFocus
+              />
+            ) : (
+              <h1
+                onClick={() => setIsEditingTitle(true)}
+                className={cn(
+                  "font-serif text-3xl font-bold text-gray-900 dark:text-zinc-100 outline-none cursor-pointer hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors",
+                  focusMode ? "mb-8 text-center" : "mb-6"
+                )}
+                title="Clique para editar o título"
+              >
+                {chapter?.title || "Sem Título"}
+              </h1>
+            )}
+            <div className={cn("outline-none font-serif text-lg leading-relaxed text-gray-800 dark:text-zinc-200")}>
+              <EditorContent editor={editor} />
+            </div>
+          </article>
         </div>
       </div>
 
