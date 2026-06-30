@@ -664,9 +664,9 @@ html.light hr {
 html.light input,
 html.light textarea,
 html.light select {
-  background-color: #ffffff !important;
-  color: #1a1512 !important;
-  border-color: #d7d4ca !important;
+  background-color: #ffffff;
+  color: #1a1512;
+  border-color: #d7d4ca;
 }
 
 html.light input:focus,
