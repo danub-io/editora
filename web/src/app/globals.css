@@ -625,22 +625,22 @@ html.light .bg-\[\#0c0c0e\] {
 }
 
 /* Overrides for text color */
-html.light .text-white,
-html.light .text-neutral-100,
-html.light .text-neutral-200,
-html.light h1,
-html.light h2,
-html.light h3,
-html.light h4,
-html.light h5,
-html.light h6 {
+html.light .text-white:not(.hero-section *),
+html.light .text-neutral-100:not(.hero-section *),
+html.light .text-neutral-200:not(.hero-section *),
+html.light h1:not(.hero-section *),
+html.light h2:not(.hero-section *),
+html.light h3:not(.hero-section *),
+html.light h4:not(.hero-section *),
+html.light h5:not(.hero-section *),
+html.light h6:not(.hero-section *) {
   color: #1a1512 !important;
 }
 
-html.light .text-neutral-300,
-html.light .text-neutral-400,
-html.light p,
-html.light span:not(.text-indigo-400):not(.text-amber-400):not(.text-indigo-500) {
+html.light .text-neutral-300:not(.hero-section *),
+html.light .text-neutral-400:not(.hero-section *),
+html.light p:not(.hero-section *),
+html.light span:not(.hero-section *):not(.text-indigo-400):not(.text-amber-400):not(.text-indigo-500) {
   color: #4a453f !important;
 }
 

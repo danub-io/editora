@@ -47,7 +47,7 @@ export default function LandingView({
     <div className="bg-white dark:bg-zinc-950 text-gray-500 dark:text-zinc-400 font-sans antialiased pb-12 pt-16">
       {/* 4.2 Hero Section */}
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8 py-6 md:py-12">
-        <section className="relative flex min-h-96 flex-1 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100 py-16 shadow-lg md:py-20 xl:py-48">
+        <section className="hero-section relative flex min-h-96 flex-1 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100 py-16 shadow-lg md:py-20 xl:py-48">
           {/* image - start */}
           <img 
             src="https://images.unsplash.com/photo-1618004652321-13a63e576b80?auto=format&q=75&fit=crop&w=1500" 
