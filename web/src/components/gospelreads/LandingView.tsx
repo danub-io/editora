@@ -73,14 +73,14 @@ export default function LandingView({
             <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
               <button
                 onClick={() => setActiveTab('editor')}
-                className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white ring-indigo-300 transition duration-100 outline-none hover:bg-indigo-650 focus-visible:ring-2 active:bg-indigo-700 md:text-base cursor-pointer"
+                className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white ring-indigo-300 transition duration-100 outline-none hover:bg-indigo-600 focus-visible:ring-2 active:bg-indigo-700 md:text-base cursor-pointer"
               >
                 Começar Gratuitamente
               </button>
 
               <button
                 onClick={() => setActiveTab('exporter')}
-                className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 ring-indigo-300 transition duration-100 outline-none hover:bg-gray-300 focus-visible:ring-2 active:text-gray-750 md:text-base cursor-pointer"
+                className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 ring-indigo-300 transition duration-100 outline-none hover:bg-gray-300 focus-visible:ring-2 active:text-gray-700 md:text-base cursor-pointer"
               >
                 Explorar Recursos
               </button>
