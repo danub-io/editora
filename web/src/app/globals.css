@@ -47,6 +47,32 @@
   --color-on-tertiary-fixed-variant: var(--on-tertiary-fixed-variant);
 
   /* =================================================================
+     Flowbite Theme tokens
+     ================================================================= */
+  --color-neutral-primary: var(--neutral-primary);
+  --color-neutral-primary-medium: var(--neutral-primary-medium);
+  --color-neutral-primary-soft: var(--neutral-primary-soft);
+  --color-neutral-secondary-soft: var(--neutral-secondary-soft);
+  --color-neutral-tertiary-medium: var(--neutral-tertiary-medium);
+  --color-neutral-tertiary: var(--neutral-tertiary);
+  --color-brand: var(--brand-color);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-medium: var(--brand-medium);
+  --color-success-soft: var(--success-soft);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning-soft: var(--warning-soft);
+  --color-heading: var(--text-heading);
+  --color-body: var(--text-body);
+  --color-body-subtle: var(--text-body-subtle);
+  --color-fg-brand: var(--fg-brand);
+  --color-fg-success: var(--fg-success);
+  --color-fg-danger: var(--fg-danger);
+  --color-fg-warning: var(--fg-warning);
+  --color-default: var(--border-default);
+  --color-default-medium: var(--border-default-medium);
+  --radius-base: var(--rounded-base);
+
+  /* =================================================================
      shadcn/ui token mapping → editorial palette
      ================================================================= */
   --color-background: var(--surface);
@@ -243,6 +269,30 @@
   --destructive: #ba1a1a;
   --input: transparent;
   --radius: 0;
+
+  /* Flowbite Theme Variables */
+  --neutral-primary: #ffffff;
+  --neutral-primary-medium: #f3f4f6;
+  --neutral-primary-soft: #f9fafb;
+  --neutral-secondary-soft: #f3f4f6;
+  --neutral-tertiary-medium: #e5e7eb;
+  --neutral-tertiary: #f3f4f6;
+  --brand-color: #4f46e5;
+  --brand-strong: #4338ca;
+  --brand-medium: rgba(99, 102, 241, 0.5);
+  --success-soft: #def7ec;
+  --danger-soft: #fde8e8;
+  --warning-soft: #fdf6b2;
+  --text-heading: #111827;
+  --text-body: #4b5563;
+  --text-body-subtle: #9ca3af;
+  --fg-brand: #4f46e5;
+  --fg-success: #03543f;
+  --fg-danger: #9b1c1c;
+  --fg-warning: #723b13;
+  --border-default: #e5e7eb;
+  --border-default-medium: #d1d5db;
+  --rounded-base: 0.5rem;
 }
 
 /* =================================================================
@@ -317,6 +367,30 @@
   --destructive: #ff6b6b;
   --input: transparent;
   --radius: 0;
+
+  /* Flowbite Theme Variables */
+  --neutral-primary: #09090b;
+  --neutral-primary-medium: #18181b;
+  --neutral-primary-soft: #27272a;
+  --neutral-secondary-soft: #18181b;
+  --neutral-tertiary-medium: #27272a;
+  --neutral-tertiary: #3f3f46;
+  --brand-color: #6366f1;
+  --brand-strong: #4f46e5;
+  --brand-medium: rgba(99, 102, 241, 0.3);
+  --success-soft: rgba(16, 185, 129, 0.1);
+  --danger-soft: rgba(239, 68, 68, 0.1);
+  --warning-soft: rgba(245, 158, 11, 0.1);
+  --text-heading: #f4f4f5;
+  --text-body: #a1a1aa;
+  --text-body-subtle: #71717a;
+  --fg-brand: #818cf8;
+  --fg-success: #34d399;
+  --fg-danger: #f87171;
+  --fg-warning: #fbbf24;
+  --border-default: #27272a;
+  --border-default-medium: #3f3f46;
+  --rounded-base: 0.5rem;
 }
 
 /* =================================================================

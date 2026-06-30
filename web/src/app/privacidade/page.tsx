@@ -23,7 +23,7 @@ export default function PrivacidadePage() {
         </header>
 
         {/* Content Document */}
-        <div className="max-w-3xl font-serif text-lg leading-relaxed text-primary space-y-8">
+        <div className="max-w-3xl font-sans text-lg leading-relaxed text-primary space-y-8">
           <section className="space-y-4">
             <h2 className="font-display-lg text-2xl font-bold text-primary">1. Coleta de Informações</h2>
             <p>
