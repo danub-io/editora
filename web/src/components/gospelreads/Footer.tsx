@@ -57,7 +57,7 @@ export default function Footer() {
           {/* social - end */}
         </div>
 
-        <div className="py-8 text-center text-xs text-gray-400 dark:text-zinc-500">
+        <div className="py-8 text-center text-sm text-gray-400 dark:text-zinc-500">
           © {new Date().getFullYear()} GospelReads. Todos os direitos reservados.
         </div>
       </div>

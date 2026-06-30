@@ -70,3 +70,47 @@ Unlike the clean SaaS/Marketing interface, the **Manuscritos Editor** uses a ded
 *   **Sizing & Height:** Generous letter size (`text-lg` or `text-xl`) with relaxed line heights (`leading-relaxed` or `leading-loose`).
 *   **Writing Space Constraints:** The writing board has a restricted width (`max-w-2xl` or `max-w-3xl`) to limit characters per line (optimally 65–75 chars).
 *   **Clean Sides:** Sidebars and utility bars are thin, low-contrast, and collapsible to maximize focus on the paper.
+
+---
+
+## 6. Standardized UI Components & Typography
+
+These style patterns are standard across all public pages of the project.
+
+### 6.1 Hero Elements
+- **Hero Title:** `mb-8 text-center text-4xl font-bold text-white sm:text-5xl md:mb-12 md:text-6xl`
+  - *Example:* "Escreva, publique e lucre. Sua jornada começa aqui."
+- **Hero Subtitle:** `mb-4 text-center text-lg text-indigo-200 sm:text-xl md:mb-8`
+  - *Example:* "Plataforma para Autores Autônomos"
+
+### 6.2 Sections
+- **Section Title:** `mb-4 text-2xl font-bold text-gray-900 dark:text-zinc-100 md:mb-6 lg:text-3xl uppercase tracking-tight` (with `text-center` for centered sections).
+  - *Example:* "OUR COMPETITIVE ADVANTAGE"
+- **Section Subtitle:** `text-gray-500 dark:text-zinc-400 text-sm md:text-lg` (with `mx-auto max-w-screen-md text-center` for centered layout).
+  - *Example:* "Foque na escrita. Nós cuidamos da formatação..."
+- **Section Link:** `text-sm font-bold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 hover:text-indigo-650 dark:hover:text-indigo-300 flex items-center gap-1.5 cursor-pointer transition-colors`
+  - *Example:* "Explorar Catálogo Completo"
+
+### 6.3 Badges
+- **Badge Style:** `text-sm font-bold text-indigo-500 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono bg-indigo-50 dark:bg-indigo-950/30 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50 w-fit block`
+  - *Example:* "DIAGRAMAÇÃO INTEGRADA"
+
+### 6.4 Cards
+- **Card Title:** `mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl`
+  - *Example:* "Editor de Escrita Professional"
+- **Card Text:** `mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed`
+  - *Example:* "Um ambiente sem distrações..."
+- **Card Link:** `font-bold text-indigo-550 dark:text-indigo-400 transition duration-100 hover:text-indigo-600 dark:hover:text-indigo-300 flex items-center gap-1 text-sm`
+  - *Example:* "Escrever"
+
+### 6.5 Books
+- **Book Title:** `font-bold text-sm uppercase truncate text-gray-900 dark:text-zinc-100 tracking-tight leading-none`
+- **Book Author:** `text-sm text-gray-400 dark:text-zinc-500 uppercase tracking-wider truncate`
+  - *Example:* "Luana Costa"
+
+### 6.6 Footer
+- **Footer Navigation & Social Links:** Standard `text-sm text-gray-500 dark:text-zinc-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition duration-100`
+- **Footer Copyright:** `text-sm text-gray-400 dark:text-zinc-500`
+
+### 6.7 Minimum Font Size Constraint
+- No font size in the project should be smaller than `text-sm` (14px). Any legacy usages of `text-xs`, `text-[10px]`, `text-[11px]` on text elements have been standardized to `text-sm` to ensure maximum legibility.

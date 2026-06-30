@@ -63,12 +63,11 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white dark:bg-zinc-950 fixed w-full z-45 top-0 start-0 border-b border-gray-250 dark:border-zinc-900 font-sans">
+    <nav className="bg-white dark:bg-zinc-950 fixed w-full z-45 top-0 start-0 font-sans">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse select-none">
-          <img src="https://flowbite.com/docs/images/logo.svg" className="h-7" alt="GospelReads Logo" />
           <span className="self-center text-xl text-gray-900 dark:text-zinc-100 font-bold whitespace-nowrap tracking-wider font-sans">
-            GospelReads<span className="text-indigo-500 dark:text-indigo-400">.</span>
+            GospelReads<span className="text-2xl font-black text-indigo-500 dark:text-indigo-400">.</span>
           </span>
         </Link>
         
