@@ -405,14 +405,14 @@ export default function LandingView({
             Faça parte da nova onda de autopublicação. Crie sua conta grátis agora mesmo e entre no editor em segundos.
           </p>
           
-          <form onSubmit={handleCreateAccount} className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto p-1.5 border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 rounded-full focus-within:border-indigo-500 dark:focus-within:border-indigo-400 transition-colors">
+          <form onSubmit={handleCreateAccount} className="cta-form flex flex-col sm:flex-row gap-2 max-w-md mx-auto p-1.5 border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 rounded-full focus-within:border-indigo-500 dark:focus-within:border-indigo-400 transition-colors">
             <input
               required
               type="email"
               placeholder="Seu melhor e-mail"
               value={emailInput}
               onChange={(e) => setEmailInput(e.target.value)}
-              className="px-5 py-3 bg-transparent border-0 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500 text-xs w-full focus:outline-none"
+              className="cta-input px-5 py-3 bg-transparent border-0 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-550 text-xs w-full focus:outline-none"
             />
             <button
               type="submit"
