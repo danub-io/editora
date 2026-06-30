@@ -63,8 +63,8 @@ export function ToastDanger({ message, onClose, duration = 4000 }: ToastProps) {
   if (!visible) return null;
 
   return (
-    <div id="toast-danger" className="flex items-center w-full max-w-sm p-4 text-gray-700 dark:text-zinc-300 bg-gray-50 dark:bg-zinc-900 rounded-lg shadow-md border border-gray-255 dark:border-zinc-800 font-sans" role="alert">
-      <div className="inline-flex items-center justify-center shrink-0 w-7 h-7 text-red-800 dark:text-red-400 bg-red-100 dark:bg-red-950/40 rounded">
+    <div id="toast-danger" className="flex items-center w-full max-w-sm p-4 text-gray-700 dark:text-zinc-300 bg-gray-50 dark:bg-zinc-900 rounded-lg shadow-md border border-gray-200 dark:border-zinc-800 font-sans" role="alert">
+      <div className="inline-flex items-center justify-center shrink-0 w-7 h-7 text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-950/40 rounded">
         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/>
         </svg>
@@ -102,7 +102,7 @@ export function ToastWarning({ message, onClose, duration = 4000 }: ToastProps) 
   if (!visible) return null;
 
   return (
-    <div id="toast-warning" className="flex items-center w-full max-w-sm p-4 text-gray-700 dark:text-zinc-300 bg-gray-50 dark:bg-zinc-900 rounded-lg shadow-md border border-gray-255 dark:border-zinc-800 font-sans" role="alert">
+    <div id="toast-warning" className="flex items-center w-full max-w-sm p-4 text-gray-700 dark:text-zinc-300 bg-gray-50 dark:bg-zinc-900 rounded-lg shadow-md border border-gray-200 dark:border-zinc-800 font-sans" role="alert">
       <div className="inline-flex items-center justify-center shrink-0 w-7 h-7 text-amber-800 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/40 rounded">
         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>

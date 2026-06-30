@@ -44,10 +44,10 @@ export default function LandingView({
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-950 text-gray-600 dark:text-zinc-400 font-sans antialiased pb-12 pt-16">
+    <div className="bg-white dark:bg-zinc-950 text-gray-500 dark:text-zinc-400 font-sans antialiased pb-12 pt-16">
       {/* 4.2 Hero Section */}
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8 py-6 md:py-12">
-        <section className="relative flex min-h-[420px] flex-1 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-55 dark:bg-zinc-900 py-16 shadow-lg md:py-20 xl:py-36 border border-gray-200 dark:border-zinc-800">
+        <section className="relative flex min-h-[420px] flex-1 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-zinc-900 py-16 shadow-lg md:py-20 xl:py-36 border border-gray-200 dark:border-zinc-800">
           {/* image - start */}
           <img 
             src="https://images.unsplash.com/photo-1618004652321-13a63e576b80?auto=format&q=75&fit=crop&w=1500" 
@@ -58,7 +58,7 @@ export default function LandingView({
           {/* image - end */}
 
           {/* overlay - start */}
-          <div className="absolute inset-0 bg-indigo-650 mix-blend-multiply opacity-70"></div>
+          <div className="absolute inset-0 bg-indigo-500 mix-blend-multiply opacity-70"></div>
           {/* overlay - end */}
 
           {/* text start */}
@@ -67,7 +67,7 @@ export default function LandingView({
               Plataforma para Autores Autônomos
             </p>
             <h1 className="mb-6 text-center text-4xl font-extrabold text-white sm:text-5xl md:mb-10 md:text-6xl leading-[1.1] tracking-tight">
-              Escreva, publique e lucre. Sua jornada literária começa aqui.
+              Revolutionary way to build the web
             </h1>
             <p className="mb-8 text-center text-sm md:text-base text-indigo-100 max-w-xl leading-relaxed opacity-90">
               Do manuscrito à distribuição global, a GospelReads. é a ferramenta profissional para autores independentes. Comece seu livro hoje mesmo, gratuitamente.
@@ -77,7 +77,7 @@ export default function LandingView({
               <button
                 id="hero-btn-start"
                 onClick={() => setActiveTab('editor')}
-                className="inline-block rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 text-center text-sm font-semibold transition duration-100 focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-800 cursor-pointer"
+                className="inline-block rounded-lg bg-indigo-500 hover:bg-indigo-650 text-white px-8 py-3 text-center text-sm font-semibold transition duration-100 focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-800 cursor-pointer"
               >
                 Começar Gratuitamente
               </button>
@@ -85,7 +85,7 @@ export default function LandingView({
               <button
                 id="hero-btn-resources"
                 onClick={() => setActiveTab('exporter')}
-                className="inline-block rounded-lg bg-white dark:bg-zinc-800 border border-gray-300 dark:border-zinc-700 px-8 py-3 text-center text-sm font-semibold text-gray-900 dark:text-zinc-100 transition duration-100 hover:bg-gray-100 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-zinc-800 cursor-pointer"
+                className="inline-block rounded-lg bg-white dark:bg-zinc-805 border border-gray-300 dark:border-zinc-700 px-8 py-3 text-center text-sm font-semibold text-gray-500 dark:text-zinc-100 transition duration-100 hover:bg-gray-100 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-zinc-800 cursor-pointer"
               >
                 Explorar Recursos
               </button>
@@ -100,10 +100,10 @@ export default function LandingView({
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
           {/* text - start */}
           <div className="mb-10 md:mb-16 text-center">
-            <h2 className="mb-4 text-center text-2xl font-bold text-gray-900 dark:text-zinc-100 md:mb-6 lg:text-3xl uppercase tracking-tight">
-              Nosso Diferencial Competitivo
+            <h2 className="mb-4 text-center text-2xl font-bold text-gray-805 md:mb-6 lg:text-3xl uppercase tracking-tight">
+              Our competitive advantage
             </h2>
-            <p className="mx-auto max-w-screen-md text-center text-gray-600 dark:text-zinc-400 md:text-lg">
+            <p className="mx-auto max-w-screen-md text-center text-gray-500 dark:text-zinc-400 md:text-lg">
               Foque na escrita. Nós cuidamos da formatação, exportação e venda. Ferramentas digitais de alta precisão para o autor contemporâneo.
             </p>
           </div>
@@ -113,17 +113,17 @@ export default function LandingView({
             {/* feature - start */}
             <div 
               onClick={() => setActiveTab('editor')}
-              className="flex flex-col rounded-lg border border-gray-255 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
+              className="flex flex-col rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
             >
-              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-600 dark:text-indigo-400">
+              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <Edit3 size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Editor de Escrita Profissional</h3>
-              <p className="mb-4 text-gray-600 dark:text-zinc-400 text-sm leading-relaxed">
+              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Editor de Escrita Professional</h3>
+              <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Um ambiente sem distrações criado especificamente para escrita de fôlego com metas diárias.
               </p>
               <div className="mt-auto">
-                <span className="font-bold text-indigo-600 dark:text-indigo-400 transition duration-100 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
+                <span className="font-bold text-indigo-500 dark:text-indigo-400 transition duration-100 hover:text-indigo-600 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
                   Escrever <ArrowRight size={14} />
                 </span>
               </div>
@@ -133,17 +133,17 @@ export default function LandingView({
             {/* feature - start */}
             <div 
               onClick={() => setActiveTab('exporter')}
-              className="flex flex-col rounded-lg border border-gray-255 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
+              className="flex flex-col rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
             >
-              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-600 dark:text-indigo-400">
+              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <FileText size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Exportação para PDF e EPUB</h3>
-              <p className="mb-4 text-gray-600 dark:text-zinc-400 text-sm leading-relaxed">
+              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Exportação para PDF e EPUB</h3>
+              <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Gere PDFs prontos para impressão e EPUBs perfeitos com um único clique do diagramador.
               </p>
               <div className="mt-auto">
-                <span className="font-bold text-indigo-600 dark:text-indigo-400 transition duration-100 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
+                <span className="font-bold text-indigo-500 dark:text-indigo-400 transition duration-100 hover:text-indigo-600 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
                   Diagramar <ArrowRight size={14} />
                 </span>
               </div>
@@ -153,17 +153,17 @@ export default function LandingView({
             {/* feature - start */}
             <div 
               onClick={() => setActiveTab('profile')}
-              className="flex flex-col rounded-lg border border-gray-255 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
+              className="flex flex-col rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
             >
-              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-600 dark:text-indigo-400">
+              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <User size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Perfil do Autor</h3>
-              <p className="mb-4 text-gray-600 dark:text-zinc-400 text-sm leading-relaxed">
+              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Perfil do Autor</h3>
+              <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Construa seu público com uma página de portfólio de autor bonita, elegante e personalizável.
               </p>
               <div className="mt-auto">
-                <span className="font-bold text-indigo-600 dark:text-indigo-400 transition duration-100 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
+                <span className="font-bold text-indigo-500 dark:text-indigo-400 transition duration-100 hover:text-indigo-600 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
                   Configurar <ArrowRight size={14} />
                 </span>
               </div>
@@ -173,17 +173,17 @@ export default function LandingView({
             {/* feature - start */}
             <div 
               onClick={() => setActiveTab('marketplace')}
-              className="flex flex-col rounded-lg border border-gray-255 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
+              className="flex flex-col rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
             >
-              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-600 dark:text-indigo-400">
+              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <Store size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Marketplace Integrado</h3>
-              <p className="mb-4 text-gray-600 dark:text-zinc-400 text-sm leading-relaxed">
+              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Marketplace Integrado</h3>
+              <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Venda diretamente aos leitores e mantenha royalties mais altos sem intermediários exploradores.
               </p>
               <div className="mt-auto">
-                <span className="font-bold text-indigo-600 dark:text-indigo-400 transition duration-100 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
+                <span className="font-bold text-indigo-500 dark:text-indigo-400 transition duration-100 hover:text-indigo-600 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
                   Vender <ArrowRight size={14} />
                 </span>
               </div>
@@ -193,17 +193,17 @@ export default function LandingView({
             {/* feature - start */}
             <div 
               onClick={() => setActiveTab('editor')}
-              className="flex flex-col rounded-lg border border-gray-255 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
+              className="flex flex-col rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
             >
-              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-600 dark:text-indigo-400">
+              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <Layers size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Ferramentas de Estrutura</h3>
-              <p className="mb-4 text-gray-600 dark:text-zinc-400 text-sm leading-relaxed">
+              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Ferramentas de Estrutura</h3>
+              <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Organize facilmente capítulos, seções e prefácios arrastando e soltando na barra lateral.
               </p>
               <div className="mt-auto">
-                <span className="font-bold text-indigo-600 dark:text-indigo-400 transition duration-100 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
+                <span className="font-bold text-indigo-500 dark:text-indigo-400 transition duration-100 hover:text-indigo-600 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
                   Organizar <ArrowRight size={14} />
                 </span>
               </div>
@@ -213,17 +213,17 @@ export default function LandingView({
             {/* feature - start */}
             <div 
               onClick={() => setActiveTab('editor')}
-              className="flex flex-col rounded-lg border border-gray-255 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
+              className="flex flex-col rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 p-4 md:p-6 hover:border-indigo-500 dark:hover:border-indigo-400 transition duration-100 cursor-pointer group"
             >
-              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-600 dark:text-indigo-400">
+              <div className="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-lg w-fit border border-indigo-100 dark:border-indigo-900/40 mb-4 text-indigo-500 dark:text-indigo-400">
                 <RefreshCw size={24} className="group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-zinc-100 md:text-xl">Salvamento Automático</h3>
-              <p className="mb-4 text-gray-600 dark:text-zinc-400 text-sm leading-relaxed">
+              <h3 className="mb-2 text-lg font-semibold text-gray-805 md:text-xl">Salvamento Automático</h3>
+              <p className="mb-4 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                 Seu trabalho é sempre salvo e sincronizado localmente em tempo real enquanto você digita.
               </p>
               <div className="mt-auto">
-                <span className="font-bold text-indigo-600 dark:text-indigo-400 transition duration-100 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
+                <span className="font-bold text-indigo-500 dark:text-indigo-400 transition duration-100 hover:text-indigo-600 dark:hover:text-indigo-300 flex items-center gap-1 text-sm">
                   Verificar <ArrowRight size={14} />
                 </span>
               </div>
@@ -234,10 +234,10 @@ export default function LandingView({
       </section>
 
       {/* 4.4 PASSO A PASSO Section */}
-      <section className="py-16 md:py-24 bg-gray-50 dark:bg-zinc-900/60 border-t border-b border-gray-200 dark:border-zinc-800">
+      <section className="py-16 md:py-24 bg-gray-100 dark:bg-zinc-900/60 border-t border-b border-gray-200 dark:border-zinc-800">
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16 space-y-2">
-            <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono block">PASSO A PASSO</span>
+            <span className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono block">PASSO A PASSO</span>
             <h2 className="text-3xl md:text-5xl uppercase tracking-tight text-gray-900 dark:text-zinc-100 font-semibold">
               Da página em branco ao livro publicado
             </h2>
@@ -248,9 +248,9 @@ export default function LandingView({
             {/* Step 1 */}
             <div 
               onClick={() => setActiveTab('profile')}
-              className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-lg py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-600 dark:hover:border-indigo-400 transition-all duration-300 group relative overflow-hidden"
+              className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-lg py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-400 transition-all duration-300 group relative overflow-hidden"
             >
-              <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">Passo 01</div>
+              <div className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">Passo 01</div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-zinc-100 mb-3">Crie Sua Conta</h3>
               <p className="text-gray-500 dark:text-zinc-400 text-xs leading-relaxed max-w-[200px]">
                 Cadastre-se e configure seu perfil em poucos minutos.
@@ -260,9 +260,9 @@ export default function LandingView({
             {/* Step 2 */}
             <div 
               onClick={() => setActiveTab('editor')}
-              className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-lg py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-600 dark:hover:border-indigo-400 transition-all duration-300 group relative overflow-hidden"
+              className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-lg py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-400 transition-all duration-300 group relative overflow-hidden"
             >
-              <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">Passo 02</div>
+              <div className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">Passo 02</div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-zinc-100 mb-3">Escreva & Estruture</h3>
               <p className="text-gray-500 dark:text-zinc-400 text-xs leading-relaxed max-w-[200px]">
                 Redija seu manuscrito em um editor imersivo focado nas ideias.
@@ -272,9 +272,9 @@ export default function LandingView({
             {/* Step 3 */}
             <div 
               onClick={() => setActiveTab('exporter')}
-              className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-lg py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-600 dark:hover:border-indigo-400 transition-all duration-300 group relative overflow-hidden"
+              className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-lg py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-400 transition-all duration-300 group relative overflow-hidden"
             >
-              <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">Passo 03</div>
+              <div className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">Passo 03</div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-zinc-100 mb-3">Formatos de Exportação</h3>
               <p className="text-gray-500 dark:text-zinc-400 text-xs leading-relaxed max-w-[200px]">
                 Gere arquivos digitais ou físicos perfeitos de forma instantânea.
@@ -284,9 +284,9 @@ export default function LandingView({
             {/* Step 4 */}
             <div 
               onClick={() => setActiveTab('marketplace')}
-              className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-lg py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-600 dark:hover:border-indigo-400 transition-all duration-300 group relative overflow-hidden"
+              className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-lg py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-400 transition-all duration-300 group relative overflow-hidden"
             >
-              <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">Passo 04</div>
+              <div className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">Passo 04</div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-zinc-100 mb-3">Publique & Venda</h3>
               <p className="text-gray-500 dark:text-zinc-400 text-xs leading-relaxed max-w-[200px]">
                 Lance seu livro para o mundo nos seus termos, faturando direto.
@@ -296,40 +296,40 @@ export default function LandingView({
         </div>
       </section>
 
-      {/* 4.5 DIAGRAMAÇÃO INTEGRADA Section */}
+      {/* 5-DIAGRAMAÇÃO INTEGRADA Section */}
       <section className="py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 items-center bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-8 md:p-12 relative overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-8 items-center bg-gray-100 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-8 md:p-12 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl"></div>
             
             <div className="space-y-8 relative z-10">
-              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono bg-indigo-50 dark:bg-indigo-950/30 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50 w-fit block">DIAGRAMAÇÃO INTEGRADA</span>
-              <h2 className="text-3xl md:text-5xl uppercase tracking-tight leading-tight text-gray-900 dark:text-zinc-100 font-semibold">
+              <span className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono bg-indigo-50 dark:bg-indigo-950/30 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50 w-fit block">DIAGRAMAÇÃO INTEGRADA</span>
+              <h2 className="text-3xl md:text-5xl uppercase tracking-tight leading-tight text-gray-900 dark:text-zinc-100 font-bold">
                 Exporte uma vez. Publique em qualquer lugar.
               </h2>
-              <p className="text-sm md:text-base text-gray-600 dark:text-zinc-400 leading-relaxed">
+              <p className="text-sm md:text-base text-gray-500 dark:text-zinc-400 leading-relaxed">
                 Tipografia profissional aplicada automaticamente para garantir legibilidade absoluta em qualquer meio.
               </p>
               
               <div className="space-y-6">
                 <div className="flex gap-4 items-start">
-                  <div className="bg-white dark:bg-zinc-950 p-2.5 rounded-lg border border-gray-200 dark:border-zinc-800 mt-1 text-indigo-600 dark:text-indigo-400">
+                  <div className="bg-white dark:bg-zinc-950 p-2.5 rounded-lg border border-gray-200 dark:border-zinc-800 mt-1 text-indigo-500 dark:text-indigo-400">
                     <Printer size={20} className="shrink-0" />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-gray-900 dark:text-zinc-100 mb-1">PDF para Impressão</h3>
-                    <p className="text-gray-500 dark:text-zinc-400 text-xs leading-relaxed">
+                    <p className="text-gray-550 dark:text-zinc-400 text-xs leading-relaxed">
                       Pronto para KDP Print e IngramSpark. Inclui margens perfeitas e numeração profissional de páginas.
                     </p>
                   </div>
                 </div>
                 <div className="flex gap-4 items-start">
-                  <div className="bg-white dark:bg-zinc-950 p-2.5 rounded-lg border border-gray-200 dark:border-zinc-800 mt-1 text-indigo-600 dark:text-indigo-400">
+                  <div className="bg-white dark:bg-zinc-950 p-2.5 rounded-lg border border-gray-200 dark:border-zinc-800 mt-1 text-indigo-500 dark:text-indigo-400">
                     <Smartphone size={20} className="shrink-0" />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-gray-900 dark:text-zinc-100 mb-1">EPUB para E-readers</h3>
-                    <p className="text-gray-500 dark:text-zinc-400 text-xs leading-relaxed">
+                    <p className="text-gray-550 dark:text-zinc-400 text-xs leading-relaxed">
                       Renderização impecável no Kindle e Apple Books. Tipografia dinâmica para qualquer tela móvel.
                     </p>
                   </div>
@@ -350,16 +350,16 @@ export default function LandingView({
       </section>
 
       {/* 4.6 Últimos Lançamentos Section */}
-      <section className="py-16 md:py-24 bg-gray-50 dark:bg-zinc-900/60 border-t border-b border-gray-200 dark:border-zinc-800">
+      <section className="py-16 md:py-24 bg-gray-100 dark:bg-zinc-900/60 border-t border-b border-gray-200 dark:border-zinc-800">
         <div className="px-6 md:px-12 max-w-7xl mx-auto space-y-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono block mb-1">MARKETPLACE</span>
+              <span className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono block mb-1">MARKETPLACE</span>
               <h2 className="text-3xl md:text-5xl uppercase tracking-tight text-gray-900 dark:text-zinc-100 font-semibold">Últimos Lançamentos</h2>
             </div>
             <button
               onClick={() => setActiveTab('marketplace')}
-              className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="text-xs font-bold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 hover:text-indigo-650 dark:hover:text-indigo-300 flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               Explorar Catálogo Completo <ArrowRight size={14} />
             </button>
@@ -373,7 +373,7 @@ export default function LandingView({
                 onClick={() => handleBookClick(book)}
                 className="group cursor-pointer space-y-4"
               >
-                <div className="aspect-[2/3] bg-gray-100 dark:bg-zinc-900 rounded-lg border border-gray-200 dark:border-zinc-800 overflow-hidden shadow-sm group-hover:shadow-indigo-500/10 group-hover:shadow-lg group-hover:border-indigo-600 dark:group-hover:border-indigo-400 transition-all duration-300 relative">
+                <div className="aspect-[2/3] bg-gray-100 dark:bg-zinc-900 rounded-lg border border-gray-200 dark:border-zinc-800 overflow-hidden shadow-sm group-hover:shadow-indigo-550/10 group-hover:shadow-lg group-hover:border-indigo-500 dark:group-hover:border-indigo-400 transition-all duration-300 relative">
                   <img
                     alt={book.title}
                     className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
@@ -400,28 +400,28 @@ export default function LandingView({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
         
         <div className="max-w-4xl mx-auto px-6 space-y-8 relative z-10">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 mx-auto">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 mx-auto">
             Acesso Instantâneo
           </span>
           <h2 className="text-3xl md:text-5xl lg:text-6xl text-gray-900 dark:text-zinc-100 uppercase tracking-tight leading-none font-extrabold max-w-2xl mx-auto">
             O mundo está esperando sua história.
           </h2>
-          <p className="text-xs md:text-sm text-gray-550 dark:text-zinc-400 max-w-md mx-auto">
+          <p className="text-xs md:text-sm text-gray-500 dark:text-zinc-400 max-w-md mx-auto">
             Faça parte da nova onda de autopublicação. Crie sua conta grátis agora mesmo e entre no editor em segundos.
           </p>
           
-          <form onSubmit={handleCreateAccount} className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto p-1.5 border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900 rounded-full focus-within:border-indigo-500 dark:focus-within:border-indigo-400 transition-colors">
+          <form onSubmit={handleCreateAccount} className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto p-1.5 border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 rounded-full focus-within:border-indigo-500 dark:focus-within:border-indigo-400 transition-colors">
             <input
               required
               type="email"
               placeholder="Seu melhor e-mail"
               value={emailInput}
               onChange={(e) => setEmailInput(e.target.value)}
-              className="px-5 py-3 bg-transparent border-0 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-550 text-xs w-full focus:outline-none"
+              className="px-5 py-3 bg-transparent border-0 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500 text-xs w-full focus:outline-none"
             />
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-750 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white px-6 py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer rounded-full"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer rounded-full"
             >
               Criar Conta Grátis
             </button>

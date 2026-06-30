@@ -15,7 +15,7 @@ export default function TermosdeUsoPage() {
         {/* Header */}
         <header className="mb-12 border-b border-gray-200 dark:border-zinc-800 pb-8">
           <h1 className="text-display-lg text-gray-900 dark:text-zinc-100 flex items-center gap-3 font-bold font-sans">
-            <Scale className="w-8 h-8 text-indigo-600 dark:text-indigo-400" /> Termos de Uso
+            <Scale className="w-8 h-8 text-indigo-500 dark:text-indigo-400" /> Termos de Uso
           </h1>
           <p className="text-gray-600 dark:text-zinc-400 mt-4 text-base font-sans">
             Última atualização: 26 de Junho de 2026. Por favor, leia atentamente estes termos antes de utilizar o GospelReads.
