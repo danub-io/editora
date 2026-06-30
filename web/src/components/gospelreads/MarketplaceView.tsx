@@ -151,21 +151,12 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
         {/* Bookstore Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-900 pb-6">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-400 font-mono bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20 w-fit block mb-3">LOJA COLETIVA</span>
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-400 font-mono bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20 w-fit block mb-3">MARKETPLACE</span>
             <h2 className="text-4xl font-serif text-white font-semibold mt-1">Últimos Lançamentos</h2>
             <p className="text-xs md:text-sm text-neutral-400 font-sans mt-2 max-w-xl">
-              Apoie autores independentes comprando diretamente deles. Royalties justos de até 90% para o criador.
+              Explore a nossa coleção exclusiva de obras inspiradoras e descubra novos horizontes literários através das vozes de autores independentes.
             </p>
           </div>
-
-          {/* Cart Icon trigger */}
-          <button
-            onClick={() => setIsCartOpen(true)}
-            className="relative p-3 border border-neutral-800 bg-neutral-900 rounded-full hover:border-indigo-500/40 transition-all duration-300 self-start md:self-end flex items-center gap-2.5 text-xs font-bold uppercase tracking-widest cursor-pointer text-neutral-200"
-          >
-            <ShoppingBag size={16} className="text-indigo-400" />
-            Sacola ({cart.reduce((sum, item) => sum + item.quantity, 0)})
-          </button>
         </div>
 
         {/* Filters and Search Bar */}
@@ -339,14 +330,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
                         R$ {selectedBook.price.toFixed(2)}
                       </div>
 
-                      <div className="flex flex-wrap gap-2 justify-center sm:justify-start pt-1">
-                        <button
-                          onClick={() => addToCart(selectedBook)}
-                          className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold uppercase tracking-widest py-3 px-6 flex items-center gap-2 rounded-3xl transition-colors cursor-pointer"
-                        >
-                          <ShoppingBag size={14} /> Adicionar à Sacola
-                        </button>
-                      </div>
+                      {/* No cart action displayed per request */}
                     </div>
                   </div>
 
@@ -378,13 +362,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
                   </div>
 
                   <div className="pt-6 border-t border-neutral-800 text-center">
-                    <p className="text-xs text-neutral-400 italic font-sans">Gostou deste trecho? Adquira o manuscrito completo para continuar sua jornada.</p>
-                    <button
-                      onClick={() => addToCart(selectedBook)}
-                      className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold uppercase tracking-widest py-2.5 px-6 inline-flex items-center gap-2 rounded-3xl transition-all cursor-pointer"
-                    >
-                      <ShoppingBag size={12} /> Comprar Livro
-                    </button>
+                    <p className="text-xs text-neutral-400 italic font-sans">Escreva você também a sua história na GospelReads.</p>
                   </div>
                 </div>
               )}

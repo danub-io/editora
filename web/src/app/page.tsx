@@ -27,7 +27,7 @@ export default function Home() {
     else if (tab === 'editor') router.push('/dash');
     else if (tab === 'exporter') router.push('/dash?tab=exporter');
     else if (tab === 'profile') router.push('/portfolio');
-    else if (tab === 'marketplace') router.push('/acervo');
+    else if (tab === 'marketplace') router.push('/marketplace');
   };
 
   const handleSetProfileEmail = (email: string) => {

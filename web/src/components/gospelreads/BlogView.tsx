@@ -128,6 +128,11 @@ export default function BlogView() {
   
   // Backend Control Panel toggle
   const [isAdminMode, setIsAdminMode] = useState<boolean>(false);
+
+  useEffect(() => {
+    const savedAdminMode = localStorage.getItem('gospelreads_blog_admin_mode') === 'true';
+    setIsAdminMode(savedAdminMode);
+  }, []);
   
   // Admin form state
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
@@ -250,30 +255,15 @@ export default function BlogView() {
       {/* Header section with theme context */}
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 space-y-10">
         
-        {/* Blog Banner & Admin switcher */}
+        {/* Blog Banner */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-900 pb-6">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-400 font-mono bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20 w-fit block mb-3">CONHECIMENTO EDITORIAL</span>
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-400 font-mono bg-indigo-500/10 px-3 py-1 rounded-3xl border border-indigo-500/20 w-fit block mb-3">ARTIGOS & INSPIRAÇÕES</span>
             <h2 className="text-4xl font-serif text-white font-semibold mt-1">O Blog GospelReads</h2>
             <p className="text-xs md:text-sm text-neutral-400 font-sans mt-2 max-w-xl">
               Inspiração, guias estruturais e estratégias valiosas de diagramação e marketing para autores autônomos.
             </p>
           </div>
-
-          <button
-            onClick={() => setIsAdminMode(!isAdminMode)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-neutral-900 border border-neutral-800 hover:border-indigo-500/40 text-xs font-bold tracking-widest uppercase text-neutral-300 hover:text-white rounded-xl cursor-pointer transition-all shrink-0"
-          >
-            {isAdminMode ? (
-              <>
-                <Layout size={14} className="text-indigo-400" /> Ver Blog Público
-              </>
-            ) : (
-              <>
-                <Settings size={14} className="text-indigo-400" /> Painel do Administrador
-              </>
-            )}
-          </button>
         </div>
 
         {/* ADMIN/BACKEND CONTROL PANEL VIEW */}

@@ -10,7 +10,8 @@ import {
   Menu, 
   X, 
   ChevronRight, 
-  User
+  User,
+  Settings
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -54,10 +55,10 @@ export default function Navbar() {
         <Link href="/dash" className={getLinkClass('/dash')}>
           Editor
         </Link>
-        <Link href="/acervo" className={getLinkClass('/acervo')}>
+        <Link href="/marketplace" className={getLinkClass('/marketplace')}>
           Marketplace
         </Link>
-        <Link href="/diario" className={getLinkClass('/diario')}>
+        <Link href="/blog" className={getLinkClass('/blog')}>
           Blog
         </Link>
       </div>
@@ -77,6 +78,13 @@ export default function Navbar() {
           )}
         </button>
 
+        <Link
+          href="/configuracoes"
+          className="text-xs font-bold text-neutral-400 hover:text-white flex items-center gap-2 cursor-pointer transition-colors"
+          title="Configurações"
+        >
+          <Settings size={15} className="text-indigo-400" /> Configurações
+        </Link>
         <Link
           href="/portfolio"
           className="text-xs font-bold text-neutral-400 hover:text-white flex items-center gap-2 cursor-pointer transition-colors"
@@ -119,16 +127,16 @@ export default function Navbar() {
               Editor <ChevronRight size={14} />
             </Link>
             <Link 
-              href="/acervo" 
+              href="/marketplace" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={getMobileLinkClass('/acervo')}
+              className={getMobileLinkClass('/marketplace')}
             >
               Marketplace <ChevronRight size={14} />
             </Link>
             <Link 
-              href="/diario" 
+              href="/blog" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={getMobileLinkClass('/diario')}
+              className={getMobileLinkClass('/blog')}
             >
               Blog <ChevronRight size={14} />
             </Link>
@@ -138,6 +146,13 @@ export default function Navbar() {
               className={getMobileLinkClass('/portfolio')}
             >
               Perfil <ChevronRight size={14} />
+            </Link>
+            <Link 
+              href="/configuracoes" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={getMobileLinkClass('/configuracoes')}
+            >
+              Configurações <ChevronRight size={14} />
             </Link>
             <button 
               onClick={() => {

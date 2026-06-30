@@ -7,7 +7,7 @@ import Footer from '@/components/gospelreads/Footer';
 import { Book } from '@/components/gospelreads/types';
 import { INITIAL_BOOKS } from '@/components/gospelreads/data';
 
-export default function Acervo() {
+export default function Marketplace() {
   const [mounted, setMounted] = useState(false);
   const [books, setBooks] = useState<Book[]>(INITIAL_BOOKS);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);

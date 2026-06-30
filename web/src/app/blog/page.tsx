@@ -5,7 +5,7 @@ import Navbar from '@/components/gospelreads/Navbar';
 import BlogView from '@/components/gospelreads/BlogView';
 import Footer from '@/components/gospelreads/Footer';
 
-export default function Diario() {
+export default function Blog() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

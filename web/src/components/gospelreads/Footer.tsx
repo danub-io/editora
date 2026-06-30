@@ -21,6 +21,7 @@ export default function Footer() {
           </div>
           
           <div className="flex flex-wrap gap-x-8 gap-y-4 text-xs font-bold uppercase tracking-widest">
+            <Link className="text-neutral-400 hover:text-indigo-400 transition-colors" href="/sobre">Sobre</Link>
             <Link className="text-neutral-400 hover:text-indigo-400 transition-colors" href="/termos">Termos</Link>
             <Link className="text-neutral-400 hover:text-indigo-400 transition-colors" href="/privacidade">Privacidade</Link>
             <a className="text-neutral-400 hover:text-indigo-400 transition-colors" href="#">Suporte</a>
