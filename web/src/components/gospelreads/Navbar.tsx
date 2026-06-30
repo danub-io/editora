@@ -12,8 +12,7 @@ import {
   User,
   Settings,
   LayoutDashboard,
-  LogOut,
-  Palette
+  LogOut
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -56,20 +55,20 @@ export default function Navbar() {
 
   const getLinkClass = (path: string) => {
     const isActive = pathname === path;
-    return `block py-2 px-3 rounded md:p-0 ${
+    return `block py-2 px-3 rounded md:p-0 transition-colors ${
       isActive 
-        ? 'text-white bg-brand md:bg-transparent md:text-fg-brand' 
-        : 'text-heading hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand'
+        ? 'text-white bg-indigo-600 md:bg-transparent md:text-indigo-600 dark:md:text-indigo-400 font-semibold' 
+        : 'text-gray-900 dark:text-zinc-100 hover:bg-gray-100 dark:hover:bg-zinc-800 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 dark:md:hover:text-indigo-400'
     }`;
   };
 
   return (
-    <nav className="bg-neutral-primary fixed w-full z-40 top-0 start-0 border-b border-default font-sans">
+    <nav className="bg-white dark:bg-zinc-950 fixed w-full z-45 top-0 start-0 border-b border-gray-250 dark:border-zinc-900 font-sans">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse select-none">
           <img src="https://flowbite.com/docs/images/logo.svg" className="h-7" alt="GospelReads Logo" />
-          <span className="self-center text-xl text-heading font-semibold whitespace-nowrap tracking-wider font-sans">
-            GospelReads<span className="text-brand">.</span>
+          <span className="self-center text-xl text-gray-900 dark:text-zinc-100 font-semibold whitespace-nowrap tracking-wider font-sans">
+            GospelReads<span className="text-indigo-600 dark:text-indigo-500">.</span>
           </span>
         </Link>
         
@@ -80,12 +79,12 @@ export default function Navbar() {
               ref={userButtonRef}
               onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
               type="button" 
-              className="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary cursor-pointer w-8 h-8 items-center justify-center border border-default-medium overflow-hidden" 
+              className="flex text-sm bg-white dark:bg-zinc-950 rounded-full md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-zinc-800 cursor-pointer w-8 h-8 items-center justify-center border border-gray-250 dark:border-zinc-800 overflow-hidden" 
               id="user-menu-button" 
               aria-expanded={isUserDropdownOpen}
             >
               <span className="sr-only">Open user menu</span>
-              <div className="w-8 h-8 rounded-full bg-neutral-secondary-soft flex items-center justify-center text-heading">
+              <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-900 flex items-center justify-center text-gray-900 dark:text-zinc-100">
                 <User size={16} />
               </div>
             </button>
@@ -94,21 +93,21 @@ export default function Navbar() {
             {isUserDropdownOpen && (
               <div 
                 ref={dropdownRef}
-                className="absolute right-0 mt-2 z-50 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-48 font-sans" 
+                className="absolute right-0 mt-2 z-50 bg-white dark:bg-zinc-900 border border-gray-250 dark:border-zinc-800 rounded-lg shadow-lg w-48 font-sans" 
                 id="user-dropdown"
               >
-                <div className="px-4 py-3 text-sm border-b border-default">
-                  <span className="block text-heading font-medium truncate">Autor GospelReads</span>
-                  <span className="block text-body truncate text-xs">{userEmail}</span>
+                <div className="px-4 py-3 text-sm border-b border-gray-200 dark:border-zinc-800">
+                  <span className="block text-gray-950 dark:text-zinc-100 font-medium truncate">Autor GospelReads</span>
+                  <span className="block text-gray-500 dark:text-zinc-400 truncate text-xs">{userEmail}</span>
                 </div>
-                <ul className="p-2 text-sm text-body font-medium space-y-1" aria-labelledby="user-menu-button">
+                <ul className="p-2 text-sm text-gray-700 dark:text-zinc-300 font-medium space-y-1" aria-labelledby="user-menu-button">
                   <li>
                     <Link 
                       href="/dash" 
                       onClick={() => setIsUserDropdownOpen(false)}
-                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded transition-colors"
+                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white rounded transition-colors"
                     >
-                      <LayoutDashboard size={14} className="text-brand" />
+                      <LayoutDashboard size={14} className="text-indigo-600 dark:text-indigo-400" />
                       Workspace
                     </Link>
                   </li>
@@ -116,9 +115,9 @@ export default function Navbar() {
                     <Link 
                       href="/portfolio" 
                       onClick={() => setIsUserDropdownOpen(false)}
-                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded transition-colors"
+                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white rounded transition-colors"
                     >
-                      <User size={14} className="text-brand" />
+                      <User size={14} className="text-indigo-600 dark:text-indigo-400" />
                       Meu Perfil
                     </Link>
                   </li>
@@ -126,9 +125,9 @@ export default function Navbar() {
                     <Link 
                       href="/configuracoes" 
                       onClick={() => setIsUserDropdownOpen(false)}
-                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded transition-colors"
+                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white rounded transition-colors"
                     >
-                      <Settings size={14} className="text-brand" />
+                      <Settings size={14} className="text-indigo-600 dark:text-indigo-400" />
                       Configurações
                     </Link>
                   </li>
@@ -138,29 +137,29 @@ export default function Navbar() {
                         setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
                         setIsUserDropdownOpen(false);
                       }}
-                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded transition-colors text-left cursor-pointer bg-transparent border-0 font-medium"
+                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white rounded transition-colors text-left cursor-pointer bg-transparent border-0 font-medium w-full"
                     >
                       {mounted && resolvedTheme === 'light' ? (
                         <>
-                          <Moon size={14} className="text-indigo-400" />
+                          <Moon size={14} className="text-indigo-600" />
                           <span>Tema Escuro</span>
                         </>
                       ) : (
                         <>
-                          <Sun size={14} className="text-amber-400" />
+                          <Sun size={14} className="text-amber-500" />
                           <span>Tema Claro</span>
                         </>
                       )}
                     </button>
                   </li>
-                  <li className="border-t border-default pt-1 mt-1">
+                  <li className="border-t border-gray-200 dark:border-zinc-800 pt-1 mt-1">
                     <Link 
                       href="/" 
                       onClick={() => {
                         setIsUserDropdownOpen(false);
                         localStorage.removeItem('gospelreads_profile_email_temp');
                       }}
-                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded transition-colors text-red-500 hover:text-red-600"
+                      className="inline-flex items-center gap-2 w-full p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-red-600 dark:hover:text-red-400 rounded transition-colors text-red-500 font-medium"
                     >
                       <LogOut size={14} />
                       Sair
@@ -175,7 +174,7 @@ export default function Navbar() {
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             type="button" 
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary cursor-pointer" 
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 dark:text-zinc-400 rounded-lg md:hidden hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-zinc-800 cursor-pointer" 
             aria-controls="navbar-user" 
             aria-expanded={isMobileMenuOpen}
           >
@@ -192,7 +191,7 @@ export default function Navbar() {
 
         {/* Navigation Links */}
         <div className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isMobileMenuOpen ? 'block' : 'hidden'}`} id="navbar-user">
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
+          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-250 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-900 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:md:bg-zinc-950">
             <li>
               <Link href="/" className={getLinkClass('/')} aria-current={pathname === '/' ? 'page' : undefined}>
                 Início
