@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <div className="flex flex-col items-center justify-between gap-4 border-b border-default py-6 md:flex-row">
           {/* nav - start */}
-          <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2 md:justify-start md:gap-6 text-sm">
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 md:justify-start md:gap-6 text-sm">
             <Link href="/sobre" className="text-body transition duration-100 hover:text-fg-brand">
               Sobre
             </Link>
@@ -25,7 +25,7 @@ export default function Footer() {
             <a href="#" className="text-body transition duration-100 hover:text-fg-brand">
               Vagas / Jobs
             </a>
-          </nav>
+          </div>
           {/* nav - end */}
 
           {/* social - start */}
