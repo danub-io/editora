@@ -47,45 +47,40 @@ export default function LandingView({
     <div className="bg-white dark:bg-zinc-950 text-gray-500 dark:text-zinc-400 font-sans antialiased pb-12 pt-16">
       {/* 4.2 Hero Section */}
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8 py-6 md:py-12">
-        <section className="relative flex min-h-[420px] flex-1 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-zinc-900 py-16 shadow-lg md:py-20 xl:py-36 border border-gray-200 dark:border-zinc-800">
+        <section className="relative flex min-h-96 flex-1 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100 py-16 shadow-lg md:py-20 xl:py-48">
           {/* image - start */}
           <img 
             src="https://images.unsplash.com/photo-1618004652321-13a63e576b80?auto=format&q=75&fit=crop&w=1500" 
             loading="lazy" 
             alt="Photo by Fakurian Design" 
-            className="absolute inset-0 h-full w-full object-cover object-center opacity-85" 
+            className="absolute inset-0 h-full w-full object-cover object-center" 
           />
           {/* image - end */}
 
           {/* overlay - start */}
-          <div className="absolute inset-0 bg-indigo-500 mix-blend-multiply opacity-70"></div>
+          <div className="absolute inset-0 bg-indigo-500 mix-blend-multiply"></div>
           {/* overlay - end */}
 
           {/* text start */}
-          <div className="relative flex flex-col items-center p-6 sm:max-w-2xl z-10 text-center">
-            <p className="mb-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-indigo-100 md:mb-6">
+          <div className="relative flex flex-col items-center p-4 sm:max-w-xl">
+            <p className="mb-4 text-center text-lg text-indigo-200 sm:text-xl md:mb-8">
               Plataforma para Autores Autônomos
             </p>
-            <h1 className="mb-6 text-center text-4xl font-extrabold text-white sm:text-5xl md:mb-10 md:text-6xl leading-[1.1] tracking-tight">
-              Revolutionary way to build the web
+            <h1 className="mb-8 text-center text-4xl font-bold text-white sm:text-5xl md:mb-12 md:text-6xl">
+              Escreva, publique e lucre. Sua jornada começa aqui.
             </h1>
-            <p className="mb-8 text-center text-sm md:text-base text-indigo-100 max-w-xl leading-relaxed opacity-90">
-              Do manuscrito à distribuição global, a GospelReads. é a ferramenta profissional para autores independentes. Comece seu livro hoje mesmo, gratuitamente.
-            </p>
 
-            <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
+            <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
               <button
-                id="hero-btn-start"
                 onClick={() => setActiveTab('editor')}
-                className="inline-block rounded-lg bg-indigo-500 hover:bg-indigo-650 text-white px-8 py-3 text-center text-sm font-semibold transition duration-100 focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-800 cursor-pointer"
+                className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white ring-indigo-300 transition duration-100 outline-none hover:bg-indigo-650 focus-visible:ring-2 active:bg-indigo-700 md:text-base cursor-pointer"
               >
                 Começar Gratuitamente
               </button>
 
               <button
-                id="hero-btn-resources"
                 onClick={() => setActiveTab('exporter')}
-                className="inline-block rounded-lg bg-white dark:bg-zinc-805 border border-gray-300 dark:border-zinc-700 px-8 py-3 text-center text-sm font-semibold text-gray-500 dark:text-zinc-100 transition duration-100 hover:bg-gray-100 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-zinc-800 cursor-pointer"
+                className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 ring-indigo-300 transition duration-100 outline-none hover:bg-gray-300 focus-visible:ring-2 active:text-gray-750 md:text-base cursor-pointer"
               >
                 Explorar Recursos
               </button>
