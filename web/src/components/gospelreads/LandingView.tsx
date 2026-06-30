@@ -54,7 +54,7 @@ export default function LandingView({
     <div className="bg-[#09090b] text-neutral-100 font-sans antialiased pb-12">
       {/* Hero Section */}
       <section className="px-6 md:px-12 max-w-7xl mx-auto py-12 md:py-20 grid lg:grid-cols-12 gap-6 items-stretch">
-        <div className="lg:col-span-7 bg-neutral-900/60 border border-neutral-800 rounded-3xl p-8 md:p-12 flex flex-col justify-between gap-8 relative overflow-hidden shadow-xl backdrop-blur-sm">
+        <div className="lg:col-span-7 bg-neutral-900/60 border border-neutral-800 rounded-3xl p-8 md:p-12 flex flex-col justify-between gap-8 relative overflow-hidden bento-card backdrop-blur-sm">
           {/* Subtle Ambient Glow */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
           
@@ -75,21 +75,21 @@ export default function LandingView({
             <button
               id="hero-btn-start"
               onClick={() => setActiveTab('editor')}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer rounded-full shadow-lg hover:shadow-indigo-500/25"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer rounded-3xl shadow-lg hover:shadow-indigo-500/25"
             >
               Começar Gratuitamente
             </button>
             <button
               id="hero-btn-resources"
               onClick={() => setActiveTab('exporter')}
-              className="outline-btn px-8 py-4 text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer rounded-full"
+              className="outline-btn px-8 py-4 text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer rounded-3xl"
             >
               Explorar Recursos
             </button>
           </div>
         </div>
         
-        <div className="lg:col-span-5 relative w-full min-h-[320px] bg-neutral-900/60 border border-neutral-800 rounded-3xl p-4 shadow-xl group overflow-hidden flex items-center justify-center backdrop-blur-sm">
+        <div className="lg:col-span-5 relative w-full min-h-[320px] bg-neutral-900/60 border border-neutral-800 rounded-3xl p-4 bento-card group overflow-hidden flex items-center justify-center backdrop-blur-sm">
           {/* Subtle ambient blur */}
           <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-indigo-500/15 rounded-full blur-3xl"></div>
           
@@ -124,7 +124,7 @@ export default function LandingView({
             {/* Feature 1 */}
             <div 
               onClick={() => setActiveTab('editor')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden bento-card"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors"></div>
               <div className="bg-indigo-500/10 p-3 rounded-2xl w-fit border border-indigo-500/20 mb-6">
@@ -141,7 +141,7 @@ export default function LandingView({
             {/* Feature 2 */}
             <div 
               onClick={() => setActiveTab('exporter')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden bento-card"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors"></div>
               <div className="bg-indigo-500/10 p-3 rounded-2xl w-fit border border-indigo-500/20 mb-6">
@@ -158,7 +158,7 @@ export default function LandingView({
             {/* Feature 3 */}
             <div 
               onClick={() => setActiveTab('profile')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden bento-card"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors"></div>
               <div className="bg-indigo-500/10 p-3 rounded-2xl w-fit border border-indigo-500/20 mb-6">
@@ -175,7 +175,7 @@ export default function LandingView({
             {/* Feature 4 */}
             <div 
               onClick={() => setActiveTab('marketplace')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden bento-card"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors"></div>
               <div className="bg-indigo-500/10 p-3 rounded-2xl w-fit border border-indigo-500/20 mb-6">
@@ -192,7 +192,7 @@ export default function LandingView({
             {/* Feature 5 */}
             <div 
               onClick={() => setActiveTab('editor')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden bento-card"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors"></div>
               <div className="bg-indigo-500/10 p-3 rounded-2xl w-fit border border-indigo-500/20 mb-6">
@@ -209,7 +209,7 @@ export default function LandingView({
             {/* Feature 6 */}
             <div 
               onClick={() => setActiveTab('editor')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[220px] relative overflow-hidden bento-card"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors"></div>
               <div className="bg-indigo-500/10 p-3 rounded-2xl w-fit border border-indigo-500/20 mb-6">
@@ -241,7 +241,7 @@ export default function LandingView({
             {/* Step 1 */}
             <div 
               onClick={() => setActiveTab('profile')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500/40 hover:bg-neutral-850 transition-all duration-300 group relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500/40 hover:bg-neutral-850 transition-all duration-300 group relative overflow-hidden bento-card"
             >
               <div className="text-[10px] font-bold text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">Passo 01</div>
               <h3 className="font-serif text-lg font-bold text-white mb-3">Crie Sua Conta</h3>
@@ -253,7 +253,7 @@ export default function LandingView({
             {/* Step 2 */}
             <div 
               onClick={() => setActiveTab('editor')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500/40 hover:bg-neutral-850 transition-all duration-300 group relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500/40 hover:bg-neutral-850 transition-all duration-300 group relative overflow-hidden bento-card"
             >
               <div className="text-[10px] font-bold text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">Passo 02</div>
               <h3 className="font-serif text-lg font-bold text-white mb-3">Escreva & Estruture</h3>
@@ -265,7 +265,7 @@ export default function LandingView({
             {/* Step 3 */}
             <div 
               onClick={() => setActiveTab('exporter')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500/40 hover:bg-neutral-850 transition-all duration-300 group relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500/40 hover:bg-neutral-850 transition-all duration-300 group relative overflow-hidden bento-card"
             >
               <div className="text-[10px] font-bold text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">Passo 03</div>
               <h3 className="font-serif text-lg font-bold text-white mb-3">Formatos de Exportação</h3>
@@ -277,7 +277,7 @@ export default function LandingView({
             {/* Step 4 */}
             <div 
               onClick={() => setActiveTab('marketplace')}
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500/40 hover:bg-neutral-850 transition-all duration-300 group relative overflow-hidden"
+              className="bg-neutral-900 border border-neutral-800 rounded-3xl py-10 px-6 flex flex-col items-center text-center cursor-pointer hover:border-indigo-500/40 hover:bg-neutral-850 transition-all duration-300 group relative overflow-hidden bento-card"
             >
               <div className="text-[10px] font-bold text-indigo-400 mb-6 tracking-widest uppercase font-mono bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">Passo 04</div>
               <h3 className="font-serif text-lg font-bold text-white mb-3">Publique & Venda</h3>
@@ -292,7 +292,7 @@ export default function LandingView({
       {/* Export Showcase Section */}
       <section className="py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 items-center bg-neutral-900/40 border border-neutral-800 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-8 items-center bg-neutral-900/40 border border-neutral-800 rounded-3xl p-8 md:p-12 relative overflow-hidden bento-card">
             <div className="absolute top-0 left-0 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl"></div>
             
             <div className="space-y-8 relative z-10">
@@ -369,7 +369,7 @@ export default function LandingView({
                 <div className="aspect-[2/3] bg-neutral-900 rounded-2xl border border-neutral-800 overflow-hidden shadow-sm group-hover:shadow-indigo-500/10 group-hover:shadow-lg group-hover:border-indigo-500/30 transition-all duration-300 relative">
                   <img
                     alt={book.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 opacity-90 group-hover:opacity-100"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
                     referrerPolicy="no-referrer"
                     src={book.coverUrl}
                   />
@@ -403,18 +403,18 @@ export default function LandingView({
             Faça parte da nova onda de autopublicação. Crie sua conta grátis agora mesmo e entre no editor em segundos.
           </p>
           
-          <form onSubmit={handleCreateAccount} className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto p-1.5 bg-neutral-950 border border-neutral-800 rounded-full focus-within:border-indigo-500/50 transition-colors">
+          <form onSubmit={handleCreateAccount} className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto p-1.5 cta-form rounded-3xl focus-within:border-indigo-500/50 transition-colors">
             <input
               required
               type="email"
               placeholder="Seu melhor e-mail"
               value={emailInput}
               onChange={(e) => setEmailInput(e.target.value)}
-              className="px-5 py-3 bg-transparent border-none w-full focus:ring-0 text-white placeholder:text-neutral-500 text-xs focus:outline-none"
+              className="px-5 py-3 cta-input w-full placeholder:text-neutral-500 text-xs"
             />
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer rounded-full font-mono"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors cursor-pointer rounded-3xl font-mono"
             >
               Criar Conta Grátis
             </button>

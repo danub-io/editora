@@ -38,7 +38,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 w-full z-40 bg-[#09090b]/80 backdrop-blur-md border-b border-neutral-900 flex justify-between items-center px-6 md:px-12 h-16 shrink-0 text-neutral-100 font-sans">
+    <nav className="sticky top-0 w-full z-40 bg-[#09090b] border-b border-neutral-900 flex justify-between items-center px-6 md:px-12 h-16 shrink-0 text-neutral-100 font-sans">
       <Link 
         href="/"
         className="font-serif font-semibold text-lg tracking-widest text-white cursor-pointer uppercase flex items-center gap-1.5 select-none"

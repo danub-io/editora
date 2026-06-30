@@ -28,7 +28,6 @@ export default function Footer() {
           </div>
 
           <div className="text-[11px] font-medium text-neutral-500 uppercase tracking-wider font-mono flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             © {new Date().getFullYear()} GospelReads. Todos os direitos reservados.
           </div>
         </div>

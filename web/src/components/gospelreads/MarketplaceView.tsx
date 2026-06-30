@@ -207,7 +207,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
               <div 
                 key={book.id} 
                 onClick={() => { setSelectedBook(book); setActiveModalTab('info'); }}
-                className="group cursor-pointer flex flex-col justify-between h-full bg-neutral-900 border border-neutral-800 p-4 rounded-3xl hover:border-indigo-500/30 hover:shadow-indigo-500/5 hover:shadow-xl transition-all duration-300"
+                className="group cursor-pointer flex flex-col justify-between h-full bg-neutral-900 border border-neutral-800 p-4 rounded-3xl hover:border-indigo-500/30 hover:shadow-indigo-500/5 hover:shadow-xl transition-all duration-300 bento-card"
               >
                 <div className="space-y-4">
                   {/* Book cover wrapping with premium grayscale transition */}
@@ -215,7 +215,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
                     <img 
                       src={book.coverUrl} 
                       alt={book.title} 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 opacity-90 group-hover:opacity-100" 
+                      className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100" 
                     />
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-neutral-950/10 group-hover:bg-transparent transition-colors" />
@@ -342,7 +342,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
                       <div className="flex flex-wrap gap-2 justify-center sm:justify-start pt-1">
                         <button
                           onClick={() => addToCart(selectedBook)}
-                          className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold uppercase tracking-widest py-3 px-6 flex items-center gap-2 rounded-xl transition-colors cursor-pointer"
+                          className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold uppercase tracking-widest py-3 px-6 flex items-center gap-2 rounded-3xl transition-colors cursor-pointer"
                         >
                           <ShoppingBag size={14} /> Adicionar à Sacola
                         </button>
@@ -381,7 +381,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
                     <p className="text-xs text-neutral-400 italic font-sans">Gostou deste trecho? Adquira o manuscrito completo para continuar sua jornada.</p>
                     <button
                       onClick={() => addToCart(selectedBook)}
-                      className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold uppercase tracking-widest py-2.5 px-6 inline-flex items-center gap-2 rounded-xl transition-all cursor-pointer"
+                      className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold uppercase tracking-widest py-2.5 px-6 inline-flex items-center gap-2 rounded-3xl transition-all cursor-pointer"
                     >
                       <ShoppingBag size={12} /> Comprar Livro
                     </button>
@@ -458,7 +458,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
                         </button>
                         <button
                           type="submit"
-                          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase tracking-widest px-4 py-2 rounded-lg"
+                          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase tracking-widest px-4 py-2 rounded-3xl"
                         >
                           Publicar Crítica
                         </button>
@@ -469,7 +469,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
                   {/* Reviews List */}
                   <div className="space-y-4">
                     {selectedBook.reviews.map(rev => (
-                      <div key={rev.id} className="bg-neutral-900 border border-neutral-800 p-5 rounded-2xl space-y-2">
+                      <div key={rev.id} className="bg-neutral-900 border border-neutral-800 p-5 rounded-2xl space-y-2 bento-card">
                         <div className="flex justify-between items-center text-xs">
                           <strong className="text-neutral-200 flex items-center gap-1.5 font-sans font-medium">
                             <User size={12} className="text-neutral-500" /> {rev.authorName}
@@ -524,7 +524,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {cart.length > 0 ? (
                 cart.map(item => (
-                  <div key={item.book.id} className="bg-neutral-950 border border-neutral-850 p-4 rounded-2xl flex gap-4">
+                  <div key={item.book.id} className="bg-neutral-950 border border-neutral-850 p-4 rounded-2xl flex gap-4 bento-card">
                     <img src={item.book.coverUrl} alt={item.book.title} className="w-12 h-18 object-cover border border-neutral-800 rounded shrink-0" />
                     
                     <div className="flex-1 min-w-0 space-y-1.5">
@@ -577,7 +577,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
                 <button
                   id="btn-cart-checkout"
                   onClick={handleCheckout}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-widest py-4 transition-colors cursor-pointer rounded-xl"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-widest py-4 transition-colors cursor-pointer rounded-3xl"
                 >
                   Finalizar Compra Protegida
                 </button>
@@ -591,7 +591,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
       {/* Checkout Processing Loader */}
       {isCheckingOut && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/80 backdrop-blur-sm px-4 animate-fade-in">
-          <div className="bg-neutral-900 p-8 max-w-sm w-full border border-neutral-800 rounded-3xl shadow-2xl space-y-6 text-center">
+          <div className="bg-neutral-900 p-8 max-w-sm w-full border border-neutral-800 rounded-3xl shadow-2xl space-y-6 text-center bento-card">
             <h3 className="text-xl font-serif text-white">Processando Pagamento...</h3>
             <p className="text-xs text-neutral-400">Aguarde enquanto autenticamos a transação segura direta.</p>
             
@@ -607,14 +607,14 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
       {/* Checkout Complete Receipt Modal */}
       {checkoutComplete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/80 backdrop-blur-sm px-4">
-          <div className="bg-neutral-900 p-8 max-w-md w-full border border-neutral-800 rounded-3xl shadow-2xl space-y-6">
+          <div className="bg-neutral-900 p-8 max-w-md w-full border border-neutral-800 rounded-3xl shadow-2xl space-y-6 bento-card">
             <div className="text-center space-y-2">
               <CheckCircle size={44} className="text-emerald-400 mx-auto" />
               <h3 className="text-2xl font-serif text-white">Compra Aprovada!</h3>
               <p className="text-sm text-neutral-400">Agradecemos o seu incentivo direto à literatura independente brasileira.</p>
             </div>
 
-            <div className="bg-neutral-950 p-5 border border-neutral-850 rounded-2xl text-xs space-y-3">
+            <div className="bg-neutral-950 p-5 border border-neutral-850 rounded-2xl text-xs space-y-3 bento-card">
               <div className="font-bold text-white uppercase tracking-wider text-center border-b border-neutral-800 pb-2 mb-2">Comprovante de Compra</div>
               
               <div className="flex justify-between text-neutral-400">
@@ -639,7 +639,7 @@ export default function MarketplaceView({ books, setBooks, onNavigateToAuthor }:
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setCheckoutComplete(false)}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-widest py-3 px-6 cursor-pointer rounded-xl transition-colors"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-widest py-3 px-6 cursor-pointer rounded-3xl transition-colors"
               >
                 Retornar ao Catálogo
               </button>

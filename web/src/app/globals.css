@@ -429,7 +429,7 @@
 .emerald-btn, .primary-btn {
   background-color: #6366f1;
   color: #ffffff;
-  border-radius: 9999px;
+  border-radius: 1.5rem; /* Standardized to 24px (rounded-3xl) */
   transition: all 0.2s ease-in-out;
   display: inline-flex;
   align-items: center;
@@ -444,7 +444,7 @@
   background-color: transparent;
   color: #f5f5f5;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 9999px;
+  border-radius: 1.5rem; /* Standardized to 24px (rounded-3xl) */
   transition: all 0.2s ease-in-out;
   display: inline-flex;
   align-items: center;
@@ -453,6 +453,42 @@
 .outline-btn:hover {
   background-color: rgba(255, 255, 255, 0.05);
   border-color: #6366f1;
+}
+
+/* Bento Apple-style shadow and card styling (Item 1.2) */
+.bento-card {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+html.light .bento-card {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+/* CTA Form & Input styling (Item 1.4) */
+.cta-form {
+  background-color: #0c0c0e !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.cta-input {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+.cta-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+html.light .cta-form {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+html.light .cta-input {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #1a1512 !important;
 }
 
 /* Scrollbar overrides */
@@ -623,5 +659,13 @@ html.light .mobile-nav-drawer {
   background-color: #fbf9f5 !important;
   border-color: #e6e3da !important;
 }
-
-
+/* Fix button text color contrast in light mode (Item 1.5) */
+html.light .bg-indigo-600,
+html.light .bg-indigo-600 *,
+html.light button.bg-indigo-600,
+html.light .emerald-btn,
+html.light .emerald-btn *,
+html.light .primary-btn,
+html.light .primary-btn * {
+  color: #ffffff !important;
+}

@@ -147,7 +147,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
           <div className="grid lg:grid-cols-12 gap-8">
             
             {/* Form Column */}
-            <div className="lg:col-span-7 bg-neutral-900/60 backdrop-blur-md p-6 md:p-8 border border-neutral-850 space-y-6 rounded-3xl shadow-sm">
+            <div className="lg:col-span-7 bg-neutral-900/60 backdrop-blur-md p-6 md:p-8 border border-neutral-850 space-y-6 rounded-3xl shadow-sm bento-card">
               <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-400 flex items-center gap-2 border-b border-neutral-800 pb-3 font-mono">
                 <PenTool size={14} /> Detalhes Biográficos
               </h3>
@@ -162,7 +162,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                     value={profile.name}
                     onChange={handleInputChange}
                     placeholder="Seu nome completo"
-                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-sm rounded-xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
+                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-sm rounded-3xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
                   />
                 </div>
                 <div className="space-y-1">
@@ -173,7 +173,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                     value={profile.penName}
                     onChange={handleInputChange}
                     placeholder="Nome artístico (ex: L. C. Star)"
-                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-sm rounded-xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
+                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-sm rounded-3xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
                   />
                 </div>
               </div>
@@ -187,7 +187,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                   onChange={handleInputChange}
                   rows={4}
                   placeholder="Escreva sobre suas inspirações, prêmios, histórico literário..."
-                  className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-sm rounded-xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none font-sans"
+                  className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-sm rounded-3xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none font-sans"
                 />
               </div>
 
@@ -223,7 +223,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                   value={profile.avatarUrl}
                   onChange={handleInputChange}
                   placeholder="URL de foto customizada..."
-                  className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-xs rounded-xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none mt-2"
+                  className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-xs rounded-3xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none mt-2"
                 />
               </div>
 
@@ -243,7 +243,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                     value={profile.website}
                     onChange={handleInputChange}
                     placeholder="https://meusite.com"
-                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-xs rounded-xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
+                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-xs rounded-3xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
                   />
                 </div>
                 <div className="space-y-1">
@@ -256,7 +256,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                     value={profile.twitter}
                     onChange={handleInputChange}
                     placeholder="https://twitter.com/autor"
-                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-xs rounded-xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
+                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-xs rounded-3xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
                   />
                 </div>
                 <div className="space-y-1">
@@ -269,7 +269,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                     value={profile.instagram}
                     onChange={handleInputChange}
                     placeholder="https://instagram.com/autor"
-                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-xs rounded-xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
+                    className="w-full border border-neutral-800 bg-neutral-950 text-white p-3 text-xs rounded-3xl focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500/40 focus:outline-none"
                   />
                 </div>
               </div>
@@ -288,7 +288,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                       <div
                         key={b.id}
                         onClick={() => toggleFeaturedBook(b.id)}
-                        className={`p-3.5 border cursor-pointer flex items-center gap-3 transition-all rounded-2xl ${
+                        className={`p-3.5 border cursor-pointer flex items-center gap-3 transition-all rounded-3xl ${
                           isSelected 
                             ? 'border-indigo-500 bg-indigo-500/5' 
                             : 'border-neutral-800 hover:bg-neutral-950 bg-neutral-950/40'
@@ -313,7 +313,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
               <div className="pt-4 border-t border-neutral-800 flex justify-end">
                 <button
                   onClick={triggerSave}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold uppercase tracking-widest py-3 px-8 transition-colors rounded-xl cursor-pointer"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold uppercase tracking-widest py-3 px-8 transition-colors rounded-3xl cursor-pointer"
                 >
                   Salvar Portfólio
                 </button>
@@ -323,14 +323,14 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
 
             {/* Quick Live Preview column */}
             <div className="lg:col-span-5 flex flex-col justify-start">
-              <div className="bg-neutral-950 border border-neutral-850 p-4 rounded-2xl text-center mb-4 text-neutral-400">
+              <div className="bg-neutral-950 border border-neutral-850 p-4 rounded-3xl text-center mb-4 text-neutral-400 bento-card">
                 <span className="text-[10px] font-mono uppercase tracking-widest">
                   Demonstração da Página de Autor ao Vivo
                 </span>
               </div>
 
               {/* Minimalist Premium Paper Render */}
-              <div className="bg-neutral-950 border border-neutral-850 rounded-3xl shadow-2xl p-8 space-y-8 min-h-[500px]">
+              <div className="bg-neutral-950 border border-neutral-850 rounded-3xl shadow-2xl p-8 space-y-8 min-h-[500px] bento-card">
                 <div className="text-center space-y-3">
                   <img
                     src={profile.avatarUrl}
@@ -375,7 +375,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
                     <div className="grid grid-cols-3 gap-3">
                       {featuredBooks.map(b => (
                         <div key={b.id} className="text-center group">
-                          <div className="aspect-[2/3] bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden mb-1.5 shadow-sm">
+                          <div className="aspect-[2/3] bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden mb-1.5 shadow-sm">
                             <img src={b.coverUrl} alt={b.title} className="w-full h-full object-cover" />
                           </div>
                           <div className="text-[9px] font-bold text-white truncate font-serif">{b.title}</div>
@@ -390,7 +390,7 @@ export default function AuthorProfileBuilder({ profile, setProfile, books }: Aut
           </div>
         ) : (
           /* Large Standalone Full Public Profile Mockup */
-          <div className="bg-neutral-900 border border-neutral-850 rounded-3xl shadow-2xl p-8 md:p-16 max-w-4xl mx-auto space-y-12">
+          <div className="bg-neutral-900 border border-neutral-850 rounded-3xl shadow-2xl p-8 md:p-16 max-w-4xl mx-auto space-y-12 bento-card">
             
             {/* Header section with cover elements */}
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 pb-8 border-b border-neutral-800/60">

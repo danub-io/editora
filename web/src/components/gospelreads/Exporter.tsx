@@ -229,7 +229,7 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
           </div>
 
           {/* Formatter Controls Box */}
-          <div className="bg-neutral-900 p-6 border border-neutral-800 rounded-3xl space-y-6">
+          <div className="bg-neutral-900 p-6 border border-neutral-800 rounded-3xl space-y-6 bento-card">
             <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-400 flex items-center gap-2">
               <Sliders size={14} /> Padrões de Layout
             </h3>
@@ -299,7 +299,7 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
           </div>
 
           {/* Action Trigger Box */}
-          <div className="bg-neutral-900 p-6 border border-indigo-500/10 rounded-3xl space-y-4">
+          <div className="bg-neutral-900 p-6 border border-indigo-500/10 rounded-3xl space-y-4 bento-card">
             <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-400 flex items-center gap-2">
               <Download size={14} /> Exportação Imediata
             </h3>
@@ -312,14 +312,14 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
               <button
                 id="btn-export-pdf"
                 onClick={() => handleExport('pdf')}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold uppercase tracking-widest py-3 px-4 flex items-center justify-center gap-2 transition-colors cursor-pointer rounded-xl"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold uppercase tracking-widest py-3 px-4 flex items-center justify-center gap-2 transition-colors cursor-pointer rounded-3xl"
               >
                 <Printer size={14} /> Compilar PDF
               </button>
               <button
                 id="btn-export-epub"
                 onClick={() => handleExport('txt')}
-                className="bg-neutral-800 hover:bg-neutral-750 text-neutral-200 text-[11px] font-bold uppercase tracking-widest py-3 px-4 flex items-center justify-center gap-2 border border-neutral-700 transition-colors cursor-pointer rounded-xl"
+                className="bg-neutral-800 hover:bg-neutral-750 text-neutral-200 text-[11px] font-bold uppercase tracking-widest py-3 px-4 flex items-center justify-center gap-2 border border-neutral-700 transition-colors cursor-pointer rounded-3xl"
               >
                 <BookMarked size={14} /> Compilar EPUB
               </button>
@@ -387,7 +387,7 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
       {/* Compiler Dialog Modal */}
       {isCompiling && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/80 backdrop-blur-sm px-4 animate-fade-in">
-          <div className="bg-neutral-900 p-8 max-w-md w-full border border-neutral-800 rounded-3xl shadow-2xl space-y-6">
+          <div className="bg-neutral-900 p-8 max-w-md w-full border border-neutral-800 rounded-3xl shadow-2xl space-y-6 bento-card">
             <div className="text-center">
               <h3 className="text-xl font-serif text-white mb-2">Compilando Livro...</h3>
               <p className="text-xs text-neutral-400">Aguarde enquanto estruturamos sua obra de arte.</p>
@@ -415,7 +415,7 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
       {/* Completion Modal */}
       {showCompleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/80 backdrop-blur-sm px-4">
-          <div className="bg-neutral-900 p-8 max-w-lg w-full border border-neutral-800 rounded-3xl shadow-2xl space-y-6 relative">
+          <div className="bg-neutral-900 p-8 max-w-lg w-full border border-neutral-800 rounded-3xl shadow-2xl space-y-6 relative bento-card">
             <div className="text-center space-y-2">
               <CheckCircle size={44} className="text-emerald-400 mx-auto" />
               <h3 className="text-2xl font-serif text-white">Compilação Concluída!</h3>
@@ -442,7 +442,7 @@ export default function Exporter({ chapters, settings, setSettings }: ExporterPr
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setShowCompleteModal(false)}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-widest py-3 px-6 cursor-pointer rounded-xl transition-colors"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-widest py-3 px-6 cursor-pointer rounded-3xl transition-colors"
               >
                 Concluir & Voltar
               </button>

@@ -291,7 +291,7 @@ export default function BlogView() {
             <div className="grid lg:grid-cols-12 gap-8 items-start">
               
               {/* Left Column: Form to Write/Edit */}
-              <div className="lg:col-span-5 bg-neutral-900/60 border border-neutral-850 rounded-3xl p-6 md:p-8 space-y-4">
+              <div className="lg:col-span-5 bg-neutral-900/60 border border-neutral-850 rounded-3xl p-6 md:p-8 space-y-4 bento-card">
                 <h3 className="font-serif text-lg font-bold text-white mb-2 flex items-center gap-2">
                   <FileText size={18} className="text-indigo-400" />
                   {editingPost ? 'Editar Artigo' : 'Publicar Novo Artigo'}
@@ -382,7 +382,7 @@ export default function BlogView() {
                   <div className="flex gap-2.5 pt-2">
                     <button
                       type="submit"
-                      className="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold tracking-wider uppercase rounded-xl cursor-pointer text-center"
+                      className="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold tracking-wider uppercase rounded-3xl cursor-pointer text-center"
                     >
                       {editingPost ? 'Salvar Edições' : 'Publicar Artigo'}
                     </button>
@@ -400,7 +400,7 @@ export default function BlogView() {
               </div>
 
               {/* Right Column: List of existing posts with actions */}
-              <div className="lg:col-span-7 bg-neutral-900/60 border border-neutral-850 rounded-3xl p-6 md:p-8 space-y-6">
+              <div className="lg:col-span-7 bg-neutral-900/60 border border-neutral-850 rounded-3xl p-6 md:p-8 space-y-6 bento-card">
                 <h3 className="font-serif text-lg font-bold text-white border-b border-neutral-800 pb-3">
                   Artigos Ativos no Blog ({posts.length})
                 </h3>
@@ -497,7 +497,7 @@ export default function BlogView() {
             {filteredPosts.length > 0 && searchTerm === '' && activeCategory === 'Todos' && (
               <div 
                 onClick={() => setSelectedPost(filteredPosts[0])}
-                className="group bg-neutral-900/40 border border-neutral-800 hover:border-indigo-500/30 rounded-3xl p-6 md:p-8 grid md:grid-cols-12 gap-8 items-center cursor-pointer transition-all duration-300 shadow-lg"
+                className="group bg-neutral-900/40 border border-neutral-800 hover:border-indigo-500/30 rounded-3xl p-6 md:p-8 grid md:grid-cols-12 gap-8 items-center cursor-pointer transition-all duration-300 shadow-lg bento-card"
               >
                 <div className="md:col-span-6 aspect-[16/10] w-full rounded-2xl overflow-hidden border border-neutral-850">
                   <img 
@@ -540,7 +540,7 @@ export default function BlogView() {
                     <div 
                       key={post.id}
                       onClick={() => setSelectedPost(post)}
-                      className="group bg-neutral-900 border border-neutral-800 hover:border-indigo-500/30 rounded-3xl p-4 flex flex-col justify-between cursor-pointer transition-all duration-300 shadow-md hover:shadow-indigo-500/5 hover:shadow-xl"
+                      className="group bg-neutral-900 border border-neutral-800 hover:border-indigo-500/30 rounded-3xl p-4 flex flex-col justify-between cursor-pointer transition-all duration-300 shadow-md hover:shadow-indigo-500/5 hover:shadow-xl bento-card"
                     >
                       <div className="space-y-4">
                         <div className="aspect-[16/10] bg-neutral-950 border border-neutral-850 rounded-2xl overflow-hidden relative">
@@ -590,7 +590,7 @@ export default function BlogView() {
       {/* FULL POST READER DIALOG MODAL */}
       {selectedPost && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/85 backdrop-blur-sm p-4">
-          <div className="w-full max-w-3xl bg-neutral-900 border border-neutral-800 rounded-3xl shadow-2xl flex flex-col max-h-[90vh] relative overflow-hidden animate-fade-in">
+          <div className="w-full max-w-3xl bg-neutral-900 border border-neutral-800 rounded-3xl shadow-2xl flex flex-col max-h-[90vh] relative overflow-hidden animate-fade-in bento-card">
             
             {/* Modal Header Controls */}
             <div className="p-4 md:p-6 border-b border-neutral-850 flex justify-between items-center bg-neutral-950/40">
@@ -686,7 +686,7 @@ export default function BlogView() {
             <div className="p-4 border-t border-neutral-850 bg-neutral-900 text-center flex justify-center">
               <button
                 onClick={() => setSelectedPost(null)}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-widest py-3 px-8 rounded-xl transition-all cursor-pointer"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-widest py-3 px-8 rounded-3xl transition-all cursor-pointer"
               >
                 Concluir Leitura
               </button>
