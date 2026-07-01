@@ -3,10 +3,10 @@ export const metadata: Metadata = {
   title: "Manuscritos — GospelReads.",
 };
 
-import { HomeHeader } from "@/components/home/HomeHeader";
-import { Footer } from "@/components/footer/Footer";
+import Navbar from "@/components/gospelreads/Navbar";
+import Footer from "@/components/gospelreads/Footer";
 import { SafeImage } from "@/components/marketplace/SafeImage";
-import { FileText, Plus, BookOpen, Clock, Calendar } from "lucide-react";
+import { Plus, Clock, Calendar } from "lucide-react";
 import Link from "next/link";
 
 const mockManuscripts = [
@@ -47,20 +47,25 @@ const mockManuscripts = [
 
 export default function ManuscritosPage() {
   return (
-    <div className="min-h-screen bg-surface flex flex-col">
-      <HomeHeader />
-      <main id="main-content" className="flex-1 max-w-container-max mx-auto px-edge-margin-mobile md:px-edge-margin-desktop py-12 w-full">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col pt-16">
+      <Navbar />
+      <main id="main-content" className="flex-1 max-w-6xl mx-auto px-6 md:px-12 py-12 w-full">
         {/* Header */}
-        <header className="mb-12 border-b border-outline-variant pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <header className="mb-12 border-b border-gray-200 dark:border-zinc-800 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div>
-            <h1 className="font-display-lg text-display-lg text-primary">Meus Manuscritos</h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant mt-4 max-w-2xl">
+            <span className="text-sm font-bold text-indigo-500 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono bg-indigo-50 dark:bg-indigo-950/30 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50 w-fit block mb-3">
+              ÁREA DE ESCRITA
+            </span>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-100 uppercase tracking-tight">
+              Meus Manuscritos
+            </h1>
+            <p className="text-sm text-gray-500 dark:text-zinc-400 mt-4 max-w-2xl">
               Crie, gerencie e organize seus rascunhos de livros. Utilize nosso editor integrado focado em escrita sem distrações.
             </p>
           </div>
           <Link
             href="/dash"
-            className="flex items-center justify-center bg-primary text-primary-foreground font-label-md text-label-md uppercase px-6 py-3 hover:bg-surface-tint transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary gap-2"
+            className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white text-sm font-bold uppercase tracking-widest px-6 py-3 transition-colors rounded-lg gap-2 cursor-pointer shadow-sm"
           >
             <Plus className="w-4 h-4" />
             Novo Manuscrito
@@ -68,14 +73,14 @@ export default function ManuscritosPage() {
         </header>
 
         {/* Manuscripts Grid List */}
-        <div className="space-y-8">
+        <div className="space-y-6">
           {mockManuscripts.map((manuscript) => (
             <div
               key={manuscript.id}
-              className="border border-outline-variant p-6 hover:bg-surface-container-low transition-colors rounded-none flex flex-col md:flex-row gap-8 items-start md:items-center"
+              className="bg-gray-100 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-6 hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors rounded-lg flex flex-col md:flex-row gap-8 items-start md:items-center"
             >
               {/* Cover layout preview */}
-              <div className="w-24 shrink-0 aspect-[2/3] bg-surface-container-low border border-outline-variant overflow-hidden relative self-center md:self-auto">
+              <div className="w-24 shrink-0 aspect-[2/3] bg-gray-200 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 overflow-hidden relative rounded-lg self-center md:self-auto shadow-sm">
                 <SafeImage
                   src={manuscript.cover}
                   alt={manuscript.title}
@@ -86,16 +91,16 @@ export default function ManuscritosPage() {
               {/* Description and Info */}
               <div className="flex-1 space-y-4 w-full">
                 <div>
-                  <div className="flex flex-wrap gap-3 items-center mb-1">
-                    <span className="font-caption text-caption text-on-surface-variant uppercase tracking-wider">
+                  <div className="flex flex-wrap gap-2 items-center mb-1.5">
+                    <span className="text-sm font-bold text-gray-400 dark:text-zinc-500 uppercase tracking-wider">
                       {manuscript.author}
                     </span>
-                    <span className="w-1 h-1 bg-outline rounded-full" />
-                    <span className="font-caption text-caption text-primary uppercase tracking-wider font-semibold">
+                    <span className="w-1 h-1 bg-gray-300 dark:bg-zinc-700 rounded-full" />
+                    <span className="text-sm font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider font-mono">
                       {manuscript.status}
                     </span>
                   </div>
-                  <h3 className="font-headline-lg text-headline-lg text-primary font-bold">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-100 uppercase tracking-tight">
                     {manuscript.title}
                   </h3>
                 </div>
@@ -103,57 +108,57 @@ export default function ManuscritosPage() {
                 {/* Progress metadata */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
                   <div className="space-y-1">
-                    <span className="font-caption text-[11px] text-on-surface-variant uppercase tracking-wider block">
+                    <span className="text-sm font-bold text-gray-400 dark:text-zinc-500 uppercase tracking-wider block">
                       Palavras
                     </span>
-                    <span className="font-label-lg text-base text-primary font-bold">
+                    <span className="text-sm font-mono text-gray-900 dark:text-zinc-100 font-bold">
                       {manuscript.wordCount.toLocaleString("pt-BR")}
                     </span>
                   </div>
                   <div className="space-y-1">
-                    <span className="font-caption text-[11px] text-on-surface-variant uppercase tracking-wider block">
-                      Progresso do Livro
+                    <span className="text-sm font-bold text-gray-400 dark:text-zinc-500 uppercase tracking-wider block">
+                      Progresso
                     </span>
-                    <span className="font-label-lg text-base text-primary font-bold">
+                    <span className="text-sm font-mono text-gray-900 dark:text-zinc-100 font-bold">
                       {manuscript.progress}%
                     </span>
                   </div>
                   <div className="space-y-1">
-                    <span className="font-caption text-[11px] text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> Última Edição
+                    <span className="text-sm font-bold text-gray-400 dark:text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5" /> Edição
                     </span>
-                    <span className="font-label-md text-sm text-on-surface-variant block mt-0.5">
+                    <span className="text-sm text-gray-600 dark:text-zinc-400 block mt-0.5">
                       {manuscript.lastEdit}
                     </span>
                   </div>
                   <div className="space-y-1">
-                    <span className="font-caption text-[11px] text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
-                      <Calendar className="w-3 h-3" /> Criado em
+                    <span className="text-sm font-bold text-gray-400 dark:text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5" /> Criado em
                     </span>
-                    <span className="font-label-md text-sm text-on-surface-variant block mt-0.5">
+                    <span className="text-sm text-gray-600 dark:text-zinc-400 block mt-0.5">
                       {manuscript.created}
                     </span>
                   </div>
                 </div>
 
                 {/* Progress Line */}
-                <div className="w-full h-1 bg-outline-variant relative">
+                <div className="w-full h-1 bg-gray-200 dark:bg-zinc-800 rounded-full relative overflow-hidden">
                   <div
-                    className="absolute left-0 top-0 h-full bg-primary"
+                    className="absolute left-0 top-0 h-full bg-indigo-500 rounded-full"
                     style={{ width: `${manuscript.progress}%` }}
                   />
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="flex flex-row md:flex-col gap-4 w-full md:w-auto justify-end">
+              <div className="flex flex-row md:flex-col gap-3 w-full md:w-auto justify-end">
                 <Link
                   href="/dash"
-                  className="flex-1 md:flex-none text-center font-label-md text-label-md uppercase tracking-widest bg-primary text-primary-foreground px-6 py-2.5 hover:bg-surface-tint transition-colors"
+                  className="flex-1 md:flex-none text-center text-sm font-bold uppercase tracking-widest bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white px-6 py-2.5 transition-colors rounded-lg cursor-pointer"
                 >
                   Editar Texto
                 </Link>
-                <button className="flex-1 md:flex-none font-label-md text-label-md uppercase tracking-widest border border-outline-variant text-on-surface-variant hover:text-primary px-6 py-2.5 transition-colors">
+                <button className="flex-1 md:flex-none text-sm font-bold uppercase tracking-widest border border-gray-200 dark:border-zinc-800 text-gray-500 dark:text-zinc-400 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-indigo-500 dark:hover:text-indigo-400 px-6 py-2.5 transition-colors rounded-lg cursor-pointer">
                   Configurar Capa
                 </button>
               </div>

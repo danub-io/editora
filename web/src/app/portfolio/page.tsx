@@ -42,11 +42,11 @@ export default function Portfolio() {
   }, [profile, mounted]);
 
   if (!mounted) {
-    return <div className="min-h-screen bg-[#09090b]"></div>;
+    return <div className="min-h-screen bg-white dark:bg-zinc-950"></div>;
   }
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex flex-col justify-between text-neutral-100 font-sans antialiased">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col justify-between text-gray-500 dark:text-zinc-400 font-sans antialiased">
       <Navbar />
       <main className="flex-1">
         <AuthorProfileBuilder 

@@ -3,8 +3,8 @@ export const metadata: Metadata = {
   title: "Biblioteca — GospelReads.",
 };
 
-import { HomeHeader } from "@/components/home/HomeHeader";
-import { Footer } from "@/components/footer/Footer";
+import Navbar from "@/components/gospelreads/Navbar";
+import Footer from "@/components/gospelreads/Footer";
 import { SafeImage } from "@/components/marketplace/SafeImage";
 import { BookOpen, Star, Clock } from "lucide-react";
 
@@ -61,42 +61,47 @@ const mockLibraryBooks = [
 
 export default function BibliotecaPage() {
   return (
-    <div className="min-h-screen bg-surface flex flex-col">
-      <HomeHeader />
-      <main id="main-content" className="flex-1 max-w-container-max mx-auto px-edge-margin-mobile md:px-edge-margin-desktop py-12 w-full">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col pt-16">
+      <Navbar />
+      <main id="main-content" className="flex-1 max-w-6xl mx-auto px-6 md:px-12 py-12 w-full">
         {/* Header */}
-        <header className="mb-12 border-b border-outline-variant pb-8">
-          <h1 className="font-display-lg text-display-lg text-primary">Minha Biblioteca</h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant mt-4 max-w-2xl">
+        <header className="mb-12 border-b border-gray-200 dark:border-zinc-800 pb-8">
+          <span className="text-sm font-bold text-indigo-500 dark:text-indigo-400 tracking-[0.2em] uppercase font-mono bg-indigo-50 dark:bg-indigo-950/30 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50 w-fit block mb-3">
+            ACERVO PESSOAL
+          </span>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-100 uppercase tracking-tight">
+            Minha Biblioteca
+          </h1>
+          <p className="text-gray-500 dark:text-zinc-400 mt-4 max-w-2xl text-sm">
             Gerencie suas leituras ativas, livros favoritos e acompanhe seu progresso de leitura nas obras do acervo.
           </p>
         </header>
 
         {/* Filters bar */}
-        <div className="flex flex-wrap gap-4 mb-8 border-b border-outline-variant pb-4">
-          <button className="font-label-md text-label-md uppercase tracking-widest px-4 py-2 bg-primary text-primary-foreground">
-            Todos os Livros
-          </button>
-          <button className="font-label-md text-label-md uppercase tracking-widest px-4 py-2 border border-outline-variant text-on-surface-variant hover:text-primary transition-colors">
-            Lendo
-          </button>
-          <button className="font-label-md text-label-md uppercase tracking-widest px-4 py-2 border border-outline-variant text-on-surface-variant hover:text-primary transition-colors">
-            Lidos
-          </button>
-          <button className="font-label-md text-label-md uppercase tracking-widest px-4 py-2 border border-outline-variant text-on-surface-variant hover:text-primary transition-colors">
-            Favoritos
-          </button>
+        <div className="flex flex-wrap gap-3 mb-8 border-b border-gray-200 dark:border-zinc-800 pb-4">
+          {["Todos os Livros", "Lendo", "Lidos", "Favoritos"].map((f, i) => (
+            <button
+              key={f}
+              className={`text-sm font-bold uppercase tracking-widest px-4 py-2 rounded-full border transition-colors ${
+                i === 0
+                  ? "bg-indigo-500 border-indigo-500 text-white"
+                  : "border-gray-200 dark:border-zinc-700 text-gray-500 dark:text-zinc-400 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-indigo-500 dark:hover:text-indigo-400"
+              }`}
+            >
+              {f}
+            </button>
+          ))}
         </div>
 
         {/* Books Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {mockLibraryBooks.map((book) => (
             <div
               key={book.title}
-              className="border border-outline-variant p-6 flex gap-6 hover:bg-surface-container-low transition-colors group"
+              className="bg-gray-100 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-5 flex gap-5 hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors group rounded-lg"
             >
               {/* Cover */}
-              <div className="w-24 shrink-0 aspect-[2/3] bg-surface-container-low border border-outline-variant overflow-hidden relative">
+              <div className="w-20 shrink-0 aspect-[2/3] bg-gray-200 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 overflow-hidden relative rounded-lg">
                 <SafeImage
                   src={book.image}
                   alt={book.title}
@@ -108,40 +113,44 @@ export default function BibliotecaPage() {
               <div className="flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="font-caption text-caption text-on-surface-variant uppercase tracking-wider">
+                    <span className="text-sm text-gray-400 dark:text-zinc-500 uppercase tracking-wider">
                       {book.author}
                     </span>
                     {book.favorite && (
-                      <Star className="w-4 h-4 fill-primary text-primary shrink-0" />
+                      <Star className="w-4 h-4 fill-indigo-500 text-indigo-500 shrink-0" />
                     )}
                   </div>
-                  <h3 className="font-headline-md text-lg font-bold text-primary mb-2 line-clamp-2">
+                  <h3 className="text-base font-bold text-gray-900 dark:text-zinc-100 mb-2 line-clamp-2 leading-snug">
                     {book.title}
                   </h3>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   {/* Progress info */}
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="font-caption text-[11px] text-on-surface-variant flex items-center gap-1">
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="text-sm text-gray-400 dark:text-zinc-500 flex items-center gap-1 font-sans">
                         <Clock className="w-3 h-3" /> {book.lastRead}
                       </span>
-                      <span className="font-label-md text-[11px] font-bold text-primary">
+                      <span className="text-sm font-bold text-indigo-500 dark:text-indigo-400 font-mono">
                         {book.progress}%
                       </span>
                     </div>
-                    <div className="w-full h-1 bg-outline-variant relative">
+                    <div className="w-full h-1 bg-gray-200 dark:bg-zinc-800 rounded-full relative overflow-hidden">
                       <div
-                        className="absolute left-0 top-0 h-full bg-primary"
+                        className="absolute left-0 top-0 h-full bg-indigo-500 rounded-full"
                         style={{ width: `${book.progress}%` }}
                       />
                     </div>
                   </div>
 
-                  {/* Actions */}
-                  <button className="font-label-md text-label-md uppercase tracking-widest text-primary hover:text-surface-tint transition-colors border-b border-primary pb-0.5 self-start">
-                    {book.progress === 100 ? "Reler Livro" : book.progress === 0 ? "Começar Lendo" : "Continuar Lendo"}
+                  {/* Action button */}
+                  <button className="text-sm font-bold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors border-b border-indigo-300 dark:border-indigo-700 pb-0.5 self-start">
+                    {book.progress === 100
+                      ? "Reler Livro"
+                      : book.progress === 0
+                      ? "Começar Lendo"
+                      : "Continuar Lendo"}
                   </button>
                 </div>
               </div>
