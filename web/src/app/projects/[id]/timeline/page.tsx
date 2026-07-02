@@ -113,7 +113,7 @@ function EmptyState() {
   );
 }
 
-function EventCard({ event }: { event: { id: string; title: string; description?: string; date?: string; characterIds: string[]; order: number } }) {
+function EventCard({ event }: { event: { id: string; title: string; description?: string; date?: string; characterIds?: string[]; order: number } }) {
   return (
     <div className="relative pl-14">
       {/* Dot on the timeline */}
@@ -143,7 +143,7 @@ function EventCard({ event }: { event: { id: string; title: string; description?
         <div className="pt-4 border-t border-outline-variant/50 flex justify-between items-center text-on-surface-variant">
           <span className="font-caption text-caption uppercase tracking-wider flex items-center gap-2">
             <Users className="w-3.5 h-3.5" />
-            {event.characterIds.length} {event.characterIds.length === 1 ? "personagem" : "personagens"}
+            {(event.characterIds?.length || 0)} {(event.characterIds?.length || 0) === 1 ? "personagem" : "personagens"}
           </span>
           <span className="font-caption text-caption uppercase tracking-wider">
             Ordem: {event.order}

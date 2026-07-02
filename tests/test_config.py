@@ -1,8 +1,10 @@
-import os
-import pytest
 from pathlib import Path
+
+import pytest
 from pydantic import ValidationError
-from editora.config import BookMetadata, TypesettingConfig, OutputConfig, EditorConfig
+
+from editora.config import BookMetadata, EditorConfig, OutputConfig, TypesettingConfig
+
 
 # BookMetadata Tests
 def test_book_metadata_valid():

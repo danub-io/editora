@@ -122,7 +122,7 @@ function CharacterCard({ character }: { character: Character }) {
       <div className="flex-1 flex flex-col">
         <div className="mb-3">
           <span className="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest border-b border-on-surface-variant/30 pb-1">
-            {character.personality || "Personagem"}
+            {character.role || "Personagem"}
           </span>
         </div>
         <h3 className="font-headline-md text-headline-md text-on-surface mb-3 line-clamp-1">

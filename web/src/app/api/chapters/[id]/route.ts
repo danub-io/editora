@@ -19,10 +19,13 @@ export async function PUT(
 
     if (body.title !== undefined) updates.title = body.title;
     if (body.content !== undefined) updates.content = body.content;
-    if (body.number !== undefined) updates.number = body.number;
-    if (body.wordCount !== undefined) updates.wordCount = body.wordCount;
-    if (body.status !== undefined) updates.status = body.status;
+    if (body.parentId !== undefined) updates.parentId = body.parentId;
+    if (body.synopsis !== undefined) updates.synopsis = body.synopsis;
     if (body.notes !== undefined) updates.notes = body.notes;
+    if (body.status !== undefined) updates.status = body.status;
+    if (body.label !== undefined) updates.label = body.label;
+    if (body.isFolder !== undefined) updates.isFolder = body.isFolder;
+    if (body.order !== undefined) updates.order = body.order;
     if (body.tags !== undefined) updates.tags = JSON.stringify(body.tags);
 
     await db.update(chapters).set(updates).where(eq(chapters.id, id));

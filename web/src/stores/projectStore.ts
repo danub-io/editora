@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type {
+  ViewMode,
   Project,
   Chapter,
   Character,
@@ -72,6 +73,10 @@ interface ProjectStore {
   toggleSidebar: () => void;
   setSidebarOpen: (open: boolean) => void;
   toggleFocusMode: () => void;
+  inspectorOpen: boolean;
+  toggleInspector: () => void;
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
 }
 
 // ── Mock Data Fallbacks ──
@@ -113,7 +118,7 @@ const initialChapters: Chapter[] = [
     id: "ch-1",
     projectId: "mock-project-1",
     type: "chapter",
-    number: 1,
+    order: 1,
     title: "O Manuscrito Oculto",
     content: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac ante eget arcu imperdiet ultrices. Phasellus scelerisque tempor urna, ut lacinia tellus elementum sit amet. Aliquam id massa sed diam accumsan hendrerit.</p><p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed vitae tristique purus. Vivamus lobortis scelerisque elit, id pretium quam vulputate eget.</p>",
     wordCount: 2500,
@@ -126,7 +131,7 @@ const initialChapters: Chapter[] = [
     id: "ch-2",
     projectId: "mock-project-1",
     type: "chapter",
-    number: 2,
+    order: 2,
     title: "A Viagem para a Turquia",
     content: "<p>Donec bibendum augue lorem, nec placerat mi sollicitudin vel. Maecenas a rhoncus urna. Integer elementum elit at tellus facilisis hendrerit. Duis efficitur scelerisque est, in congue turpis dictum a.</p><p>Proin quis congue nulla, id bibendum magna. Ut accumsan facilisis est, vitae congue massa lacinia a. Morbi dictum convallis urna quis consequat.</p>",
     wordCount: 3100,
@@ -139,7 +144,7 @@ const initialChapters: Chapter[] = [
     id: "ch-3",
     projectId: "mock-project-1",
     type: "chapter",
-    number: 3,
+    order: 3,
     title: "O Labirinto Debaixo da Cidade",
     content: "<p>Sed ac neque at nulla interdum vestibulum ac tempor sapien. Etiam dictum egestas purus, convallis sodales lorem facilisis quis. In hac habitasse platea dictumst.</p>",
     wordCount: 1800,
@@ -156,8 +161,8 @@ const initialCharacters: Character[] = [
     projectId: "mock-project-1",
     name: "Dr. Henrique Vasconcelos",
     description: "Professor sênior de Arqueologia, pragmático e obstinado pela busca de manuscritos perdidos.",
-    personality: "Intelectual / Arqueólogo",
-    relationships: [],
+    role: "Intelectual / Arqueólogo",
+    relationships: "[]",
     imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop",
     createdAt: date5DaysAgo,
     updatedAt: now,
@@ -167,8 +172,8 @@ const initialCharacters: Character[] = [
     projectId: "mock-project-1",
     name: "Evelyn Carter",
     description: "Tradutora e linguista especialista em grego antigo. Perspicaz, cética e extremamente focada nos fatos.",
-    personality: "Linguista / Cética",
-    relationships: [],
+    role: "Linguista / Cética",
+    relationships: "[]",
     imageUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop",
     createdAt: date5DaysAgo,
     updatedAt: now,
@@ -178,8 +183,8 @@ const initialCharacters: Character[] = [
     projectId: "mock-project-1",
     name: "Yusuf Demir",
     description: "Guia local nas ruínas de Éfeso. Conhece passagens subterrâneas secretas e lendas locais não documentadas.",
-    personality: "Guia / Misterioso",
-    relationships: [],
+    role: "Guia / Misterioso",
+    relationships: "[]",
     imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
     createdAt: date5DaysAgo,
     updatedAt: now,
@@ -223,8 +228,8 @@ const initialTimeline: TimelineEvent[] = [
     title: "Descoberta do Primeiro Fragmento",
     description: "Dr. Henrique encontra um pergaminho escondido atrás de um bloco de mármore na Biblioteca de Celso.",
     date: "Dia 1",
-    characterIds: ["char-1"],
-    locationId: "loc-1",
+
+
     order: 1,
     createdAt: date5DaysAgo,
     updatedAt: date5DaysAgo,
@@ -235,8 +240,8 @@ const initialTimeline: TimelineEvent[] = [
     title: "Chegada de Evelyn Carter",
     description: "Evelyn pousa em Istambul e se junta ao projeto para iniciar a tradução das inscrições gregas antigas.",
     date: "Dia 3",
-    characterIds: ["char-1", "char-2"],
-    locationId: "loc-3",
+
+
     order: 2,
     createdAt: date3DaysAgo,
     updatedAt: date3DaysAgo,
@@ -256,6 +261,8 @@ export const useProjectStore = create<ProjectStore>()(
       activeChapterId: "ch-1",
       sidebarOpen: false,
       focusMode: false,
+      inspectorOpen: true,
+      viewMode: "editor",
       isLoading: false,
 
       // ── Projects ──
@@ -407,7 +414,7 @@ export const useProjectStore = create<ProjectStore>()(
       getChaptersByProject: (projectId) =>
         get()
           .chapters.filter((c) => c.projectId === projectId)
-          .sort((a, b) => a.number - b.number),
+          .sort((a, b) => (a.order || 0) - (b.order || 0)),
 
       setActiveChapter: (id) => set({ activeChapterId: id }),
 
@@ -636,6 +643,8 @@ export const useProjectStore = create<ProjectStore>()(
       toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
       toggleFocusMode: () => set((s) => ({ focusMode: !s.focusMode })),
+      toggleInspector: () => set((s) => ({ inspectorOpen: !s.inspectorOpen })),
+      setViewMode: (viewMode) => set({ viewMode }),
     }),
     {
       name: "editora-storage",
@@ -643,6 +652,8 @@ export const useProjectStore = create<ProjectStore>()(
       partialize: (state) => ({
         activeProjectId: state.activeProjectId,
         focusMode: state.focusMode,
+        inspectorOpen: state.inspectorOpen,
+        viewMode: state.viewMode,
       }),
     }
   )

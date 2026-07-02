@@ -25,6 +25,7 @@
     "@libsql/client": "^0.17.3",
     "@myriaddreamin/typst-ts-web-compiler": "^0.7.0",
     "@myriaddreamin/typst.ts": "^0.7.0",
+    "@radix-ui/react-dropdown-menu": "^2.1.19",
     "@tiptap/extension-link": "^2.27.2",
     "@tiptap/extension-placeholder": "^2.27.2",
     "@tiptap/extension-subscript": "^2.27.2",

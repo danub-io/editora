@@ -8,7 +8,7 @@ import { useProjectStore } from "@/stores/projectStore";
 import type { Location } from "@/types";
 import { ArrowRight, Users, Clock, MapPin } from "lucide-react";
 
-const LOCATION_TYPE_LABELS: Record<Location["type"], string> = {
+const LOCATION_TYPE_LABELS: Record<string, string> = {
   indoor: "Interior",
   outdoor: "Exterior",
   city: "Cidade",
@@ -82,7 +82,7 @@ export default function WorldPage() {
               linkLabel="Ver Personagens"
               items={characters.slice(0, 3).map((c) => ({
                 id: c.id,
-                subtitle: c.personality || "Personagem",
+                subtitle: c.role || "Personagem",
                 title: c.name,
                 description: c.description || "Sem descrição.",
               }))}
@@ -114,7 +114,7 @@ export default function WorldPage() {
               linkLabel="Ver Locais"
               items={locations.slice(0, 3).map((l) => ({
                 id: l.id,
-                subtitle: LOCATION_TYPE_LABELS[l.type],
+                subtitle: LOCATION_TYPE_LABELS[l.type || "other"],
                 title: l.name,
                 description: l.description || "Sem descrição.",
               }))}

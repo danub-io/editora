@@ -49,7 +49,7 @@ export default function ProductionTimelinePage() {
   const chapters = getChaptersByProject(projectId);
 
   const sortedChapters = useMemo(
-    () => [...chapters].sort((a, b) => a.number - b.number),
+    () => [...chapters].sort((a, b) => (a.order || 0) - (b.order || 0)),
     [chapters]
   );
 
@@ -321,7 +321,7 @@ export default function ProductionTimelinePage() {
                           }}
                         >
                           <div
-                            className={`w-full h-full ${barColor(chapter.status)} ${chapter.status !== "completed" ? "hover:bg-primary" : ""} transition-colors`}
+                            className={`w-full h-full ${barColor(chapter.status || undefined)} ${chapter.status !== "completed" ? "hover:bg-primary" : ""} transition-colors`}
                           />
                           {/* Tooltip */}
                           <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-on-primary font-caption text-caption px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">

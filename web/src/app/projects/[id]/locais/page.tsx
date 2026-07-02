@@ -7,7 +7,7 @@ import { useProjectStore } from "@/stores/projectStore";
 import type { Location } from "@/types";
 import { MapPin, Home, Trees, Building, Landmark } from "lucide-react";
 
-const LOCATION_TYPE_ICONS: Record<Location["type"], typeof MapPin> = {
+const LOCATION_TYPE_ICONS: Record<string, typeof MapPin> = {
   indoor: Home,
   outdoor: Trees,
   city: Building,
@@ -15,7 +15,7 @@ const LOCATION_TYPE_ICONS: Record<Location["type"], typeof MapPin> = {
   other: MapPin,
 };
 
-const LOCATION_TYPE_LABELS: Record<Location["type"], string> = {
+const LOCATION_TYPE_LABELS: Record<string, string> = {
   indoor: "Interior",
   outdoor: "Exterior",
   city: "Cidade",
@@ -107,7 +107,7 @@ function EmptyState() {
 }
 
 function LocationCard({ location }: { location: Location }) {
-  const TypeIcon = LOCATION_TYPE_ICONS[location.type] || MapPin;
+  const TypeIcon = LOCATION_TYPE_ICONS[location.type || "other"] || MapPin;
 
   return (
     <div className="group relative flex flex-col bg-surface-container-lowest border border-outline-variant p-6 transition-all duration-300">
@@ -120,7 +120,7 @@ function LocationCard({ location }: { location: Location }) {
         {/* Type Tag */}
         <div className="mb-3">
           <span className="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest border-b border-on-surface-variant/30 pb-1">
-            {LOCATION_TYPE_LABELS[location.type]}
+            {LOCATION_TYPE_LABELS[location.type || "other"]}
           </span>
         </div>
 

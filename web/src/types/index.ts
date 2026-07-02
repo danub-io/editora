@@ -30,38 +30,37 @@ export interface ProjectSettings {
 export interface Chapter {
   id: string;
   projectId: string;
-  type: "front_matter" | "chapter" | "part_header";
-  subType?: "copyright" | "dedication" | "toc" | "epigraph" | "preface" | "introduction";
-  partId?: string; // which part_header this chapter belongs to
-  number: number;
+  parentId?: string | null;
+  isFolder?: boolean;
+  type?: string;
+  subType?: string;
+  partId?: string | null;
+  number?: number;
+  order: number;
   title: string;
   content: string;
+  synopsis?: string | null;
   wordCount: number;
   tags: string[];
-  status?: "draft" | "review" | "completed";
-  notes?: string;
+  status?: string | null;
+  label?: string | null;
+  notes?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type ViewMode = "editor" | "corkboard" | "outliner";
 
 export interface Character {
   id: string;
   projectId: string;
   name: string;
   description?: string;
-  physicalTraits?: string;
-  personality?: string;
-  motivations?: string;
-  relationships: CharacterRelationship[];
+  role?: string;
+  relationships?: string;
   imageUrl?: string;
   createdAt: Date;
   updatedAt: Date;
-}
-
-export interface CharacterRelationship {
-  characterId: string;
-  type: string;
-  description?: string;
 }
 
 export interface Location {
@@ -69,7 +68,7 @@ export interface Location {
   projectId: string;
   name: string;
   description?: string;
-  type: "indoor" | "outdoor" | "city" | "fantasy" | "other";
+  type?: "indoor" | "outdoor" | "city" | "fantasy" | "other";
   imageUrl?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -81,31 +80,18 @@ export interface TimelineEvent {
   title: string;
   description?: string;
   date?: string;
-  chapterId?: string;
-  characterIds: string[];
-  locationId?: string;
   order: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface Note {
-  id: string;
-  projectId: string;
-  title: string;
-  content: string;
-  type: "general" | "research" | "idea" | "todo";
-  tags: string[];
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface EditorState {
   activeProjectId: string | null;
-  activeChapterId: string | null;
+  activeChapterId: string | null; // This acts as the selected item in the Binder
   sidebarOpen: boolean;
   focusMode: boolean;
-  darkMode: boolean;
+  inspectorOpen: boolean;
+  viewMode: ViewMode;
 }
 
 export interface AIResult {

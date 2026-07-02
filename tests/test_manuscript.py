@@ -1,5 +1,6 @@
 from editora.core.manuscript import Chapter
 
+
 def test_chapter_from_markdown_no_frontmatter_with_number_heading():
     content = "# 12 - O Retorno\n\nEste é o conteúdo."
     chapter = Chapter.from_markdown(content)
