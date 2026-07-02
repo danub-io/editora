@@ -580,132 +580,156 @@ html.light .cta-input {
   border-radius: 3px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.4);
-}
-
-/* LIGHT THEME STYLING OVERRIDES */
-html.light {
+/* LIGHT THEME STYLING OVERRIDES - Scoped to the editor workspace to keep LP unaffected */
+html.light .editor-workspace {
   color-scheme: light;
+  background-color: #f4f3ef !important;
+  color: #1a1512 !important;
 }
 
-html.light body,
-html.light main,
-html.light .bg-\[\#09090b\],
-html.light .bg-neutral-950,
-html.light .bg-neutral-900 {
+/* Central canvas background wrapper: warm, comfortable grey-beige */
+html.light .editor-workspace .bg-\[\#09090b\] {
+  background-color: #f4f3ef !important;
+  color: #1a1512 !important;
+}
+
+/* Main editor paper sheet: clean white to stand out and look like a physical paper page */
+html.light .editor-workspace .bg-neutral-900 {
   background-color: #ffffff !important;
+  color: #1a1512 !important;
+}
+
+/* Inset boxes, inputs and detail cards */
+html.light .editor-workspace .bg-neutral-950 {
+  background-color: #f6f5f0 !important;
   color: #1a1512 !important;
 }
 
 /* Soft secondary backgrounds for highlights and specific cards */
-html.light .bg-neutral-900\/60,
-html.light .bg-neutral-950\/40,
-html.light .bg-neutral-950\/20,
-html.light .bg-neutral-900\/20,
-html.light .bg-neutral-950\/60,
-html.light .bg-\[\#0c0c0e\] {
-  background-color: #f3f4f6 !important;
+html.light .editor-workspace .bg-neutral-900\/60,
+html.light .editor-workspace .bg-neutral-950\/40,
+html.light .editor-workspace .bg-neutral-950\/20,
+html.light .editor-workspace .bg-neutral-900\/20,
+html.light .editor-workspace .bg-neutral-950\/60,
+html.light .editor-workspace .bg-\[\#0c0c0e\] {
+  background-color: #efece4 !important;
 }
 
 /* Soft grey backgrounds for neutral components */
-html.light .bg-neutral-800,
-html.light .bg-neutral-850,
-html.light .bg-neutral-750 {
-  background-color: #e5e7eb !important;
+html.light .editor-workspace .bg-neutral-800,
+html.light .editor-workspace .bg-neutral-850,
+html.light .editor-workspace .bg-neutral-750 {
+  background-color: #e5e2d9 !important;
 }
 
 /* Text overrides for light mode */
-html.light .text-neutral-100 {
+html.light .editor-workspace .text-neutral-100 {
   color: #1a1512 !important;
 }
-html.light .text-neutral-200 {
-  color: #27272a !important;
+html.light .editor-workspace .text-neutral-200 {
+  color: #2c2421 !important;
 }
-html.light .text-neutral-300 {
-  color: #3f3f46 !important;
+html.light .editor-workspace .text-neutral-300 {
+  color: #4a423e !important;
 }
-html.light .text-neutral-400,
-html.light .text-zinc-400,
-html.light .text-gray-400 {
-  color: #71717a !important;
+html.light .editor-workspace .text-neutral-400,
+html.light .editor-workspace .text-zinc-400,
+html.light .editor-workspace .text-gray-400 {
+  color: #706a60 !important;
 }
-html.light .text-gray-500 {
-  color: #52525b !important;
+html.light .editor-workspace .text-neutral-500,
+html.light .editor-workspace .text-gray-500 {
+  color: #7c786e !important;
+}
+
+/* Standard white text in dark mode becomes dark neutral in light mode */
+html.light .editor-workspace .text-white {
+  color: #1a1512 !important;
 }
 
 /* Border overrides - soft warm border tones */
-html.light .border-neutral-900,
-html.light .border-neutral-850,
-html.light .border-neutral-800,
-html.light .border-neutral-800\/80,
-html.light .border-neutral-700,
-html.light .border-neutral-700\/50,
-html.light .border-neutral-850\/50,
-html.light hr {
+html.light .editor-workspace .border-neutral-900,
+html.light .editor-workspace .border-neutral-850,
+html.light .editor-workspace .border-neutral-800,
+html.light .editor-workspace .border-neutral-800\/80,
+html.light .editor-workspace .border-neutral-700,
+html.light .editor-workspace .border-neutral-700\/50,
+html.light .editor-workspace .border-neutral-850\/50,
+html.light .editor-workspace hr {
   border-color: #e6e3da !important;
 }
 
 /* Input fields and interactive controls */
-html.light input,
-html.light textarea,
-html.light select {
+html.light .editor-workspace input,
+html.light .editor-workspace textarea,
+html.light .editor-workspace select {
   background-color: #ffffff !important;
   color: #1a1512 !important;
   border-color: #d7d4ca !important;
 }
 
-html.light input:focus,
-html.light textarea:focus,
-html.light select:focus {
+html.light .editor-workspace input:focus,
+html.light .editor-workspace textarea:focus,
+html.light .editor-workspace select:focus {
   border-color: #6366f1 !important;
   outline: none;
 }
 
-html.light input::placeholder,
-html.light textarea::placeholder {
+html.light .editor-workspace input::placeholder,
+html.light .editor-workspace textarea::placeholder {
   color: #a49f95 !important;
 }
 
 /* Primary/secondary text accents */
-html.light .text-indigo-400,
-html.light .text-indigo-500 {
+html.light .editor-workspace .text-indigo-300,
+html.light .editor-workspace .text-indigo-400,
+html.light .editor-workspace .text-indigo-500 {
   color: #4f46e5 !important;
 }
 
-html.light .bg-indigo-500\/10,
-html.light .bg-indigo-500\/15,
-html.light .bg-indigo-500\/5 {
+html.light .editor-workspace .bg-indigo-500\/10,
+html.light .editor-workspace .bg-indigo-500\/15,
+html.light .editor-workspace .bg-indigo-500\/5 {
   background-color: rgba(79, 70, 229, 0.08) !important;
   color: #4f46e5 !important;
 }
 
-html.light .hover\:bg-neutral-900:hover,
-html.light .hover\:bg-neutral-950:hover,
-html.light .hover\:bg-neutral-800:hover {
+html.light .editor-workspace .hover\:bg-neutral-900:hover,
+html.light .editor-workspace .hover\:bg-neutral-950:hover,
+html.light .editor-workspace .hover\:bg-neutral-800:hover {
   background-color: #f0ede5 !important;
   color: #1a1512 !important;
 }
 
-html.light .outline-btn {
+html.light .editor-workspace .bg-neutral-900\/40 {
+  background-color: #f0ede5 !important;
+}
+
+html.light .editor-workspace .outline-btn {
   color: #1a1512 !important;
   border-color: #d7d4ca !important;
 }
 
-html.light .outline-btn:hover {
+html.light .editor-workspace .outline-btn:hover {
   background-color: rgba(0, 0, 0, 0.03) !important;
   border-color: #6366f1 !important;
 }
 
+/* Daily goal widget override in light mode */
+html.light .editor-workspace .bg-\[\#0f0f12\] {
+  background-color: #efece4 !important;
+  border-color: #d7d4ca !important;
+}
+
 /* Modals overlays */
-html.light .fixed.inset-0.z-50,
-html.light .fixed.inset-0.bg-neutral-950\/85,
-html.light .fixed.inset-0.bg-neutral-950\/80 {
+html.light .editor-workspace .fixed.inset-0.z-50,
+html.light .editor-workspace .fixed.inset-0.bg-neutral-950\/85,
+html.light .editor-workspace .fixed.inset-0.bg-neutral-950\/80 {
   background-color: rgba(26, 21, 18, 0.45) !important;
 }
 
 /* Keep active indicators clear */
-html.light .border-indigo-500 {
+html.light .editor-workspace .border-indigo-500 {
   border-color: #4f46e5 !important;
 }
 
@@ -718,6 +742,7 @@ html.light .mobile-nav-drawer {
   background-color: #fbf9f5 !important;
   border-color: #e6e3da !important;
 }
+
 /* Fix button text color contrast in light mode (Item 1.5) */
 html.light .bg-indigo-600,
 html.light .bg-indigo-600 *,

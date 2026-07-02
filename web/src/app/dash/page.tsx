@@ -105,8 +105,7 @@ function DashContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex flex-col justify-between text-neutral-100 font-sans antialiased">
-      <Navbar />
+    <div className="h-screen max-h-screen bg-[#f4f3ef] dark:bg-[#09090b] flex flex-col justify-between text-neutral-100 font-sans antialiased overflow-hidden">
       <main className="flex-1 flex flex-col min-h-0">
         <WorkspaceEditor 
           books={books}

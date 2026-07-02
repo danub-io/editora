@@ -38,7 +38,13 @@ import {
   Meh,
   Frown,
   CheckCircle,
-  Info
+  Info,
+  MapPin,
+  Calendar,
+  BarChart2,
+  Copy,
+  Move,
+  Camera
 } from 'lucide-react';
 import { Chapter, WritingSettings, AuthorProfile, Book } from './types';
 import Exporter from './Exporter';
@@ -57,6 +63,64 @@ interface WorkspaceEditorProps {
   rightTab: string | null;
   setRightTab: (tab: string | null) => void;
 }
+
+interface PlanningTemplate {
+  title: string;
+  description: string;
+  category: 'Worldbuilding' | 'Characters' | 'Settings' | 'Narrative devices';
+  emoji: string;
+}
+
+const PLANNING_TEMPLATES: PlanningTemplate[] = [
+  { title: 'Armor', description: "Clad your heroes and villains in armor that's ready for battle.", category: 'Worldbuilding', emoji: '🛡️' },
+  { title: 'Business & Institutions', description: 'Build a business, guild, or institution from the ground up, defining everything from its origins, leadership, and operations.', category: 'Worldbuilding', emoji: '🏢' },
+  { title: 'Culture', description: 'Explore the foundational aspects of a society and define its beliefs, daily practices, social structures, and customs.', category: 'Worldbuilding', emoji: '🏺' },
+  { title: 'Fauna', description: 'Populate your world with dynamic, realistic fauna by exploring their physical traits, role in the ecosystem, cultural significance, and more.', category: 'Worldbuilding', emoji: '🦜' },
+  { title: 'Flora', description: "It's thyme to branch out: craft plants with believable biology, wild magic, and roots that run through your world's culture.", category: 'Worldbuilding', emoji: '🌿' },
+  { title: 'Food', description: "Cook up the dishes that define your world's cuisine and craft its culinary traditions.", category: 'Worldbuilding', emoji: '🍲' },
+  { title: 'Government', description: 'Found the fictional governments of your world and create their structures, branches, laws, and history.', category: 'Worldbuilding', emoji: '🏛️' },
+  { title: 'Historical Event', description: 'Document the rise, climax, and fallout of a key moment in your world’s history.', category: 'Worldbuilding', emoji: '⏳' },
+  { title: 'Language', description: "Talk the talk — and build the languages your world can't live without by exploring their sound systems, scripts, grammar, and history.", category: 'Worldbuilding', emoji: '🗣️' },
+  { title: 'Magic', description: 'Create a magic system from scratch and conjure its origins, rules, and logic into being.', category: 'Worldbuilding', emoji: '🪄' },
+  { title: 'Religion', description: 'Invent a new religion worthy of worship in your world and then develop the doctrines, rituals, and moral codes that define it.', category: 'Worldbuilding', emoji: '🛐' },
+  { title: 'Schools & Education', description: "Create the education systems that shape your world's thinkers and develop the curriculums, faculties, and traditions that make them deserving of enrollment.", category: 'Worldbuilding', emoji: '🏫' },
+  { title: 'Species', description: "Build your world's next evolutionary marvel (or mistake), from their evolutionary traits all the way to their diet and culture.", category: 'Worldbuilding', emoji: '👽' },
+  { title: 'Sport', description: 'Create a new sport for your world and decide on everything from its core rules to its players, fans, and cultural impact.', category: 'Worldbuilding', emoji: '⚽' },
+  { title: 'Time', description: 'Tick-tock: shape the rhythm of your world by creating an original time system.', category: 'Worldbuilding', emoji: '⏰' },
+  { title: 'Trade & Commerce', description: 'Money makes the world go round, and this Trade & Commerce template will make your world more well-rounded.', category: 'Worldbuilding', emoji: '🪙' },
+  { title: 'Transportation', description: 'Give the people of your world mobility: create the transportation systems that will take them from one place to another.', category: 'Worldbuilding', emoji: '🚂' },
+  { title: 'Very Important Person', description: 'Create the heroes, villains, and visionaries your world still whispers about — from their rise to fame to their deaths.', category: 'Worldbuilding', emoji: '👤' },
+  { title: 'War', description: "Everything's fair in love and war, including a template for the latter.", category: 'Worldbuilding', emoji: '⚔️' },
+  { title: 'Weapon', description: "Forge your world's armory, from its creation to its execution.", category: 'Worldbuilding', emoji: '🗡️' },
+  
+  { title: 'Antagonist', description: "Create an antagonist that challenges your hero — whether it's a villain, force of nature, or conflict within the protagonist themeslves.", category: 'Characters', emoji: '🦹' },
+  { title: 'Antihero', description: 'Craft a morally complex antihero and explore the strengths, flaws, and moral code that will make them endlessly compelling to readers.', category: 'Characters', emoji: '🕶️' },
+  { title: 'Character', description: "Build a fully realized character through Reedsy's Ultimate Character Profile and explore their personal background, personality, motivations, growth, and role within the story.", category: 'Characters', emoji: '👤' },
+  { title: 'Confidant', description: "Develop a confidant who can anchor your protagonist's emotional journey.", category: 'Characters', emoji: '🤝' },
+  { title: 'Joker', description: 'Create a mischievous, unpredictable trickster whose chaos drives change in your world.', category: 'Characters', emoji: '🃏' },
+  { title: 'Mentor', description: 'Develop a mentor who can guide your protagonist in the right direction forward within your narrative.', category: 'Characters', emoji: '🧙‍♂️' },
+  { title: 'Protagonist', description: 'Build a main character whose goals, fears, and values drive your story onward — and give your readers someone to root for.', category: 'Characters', emoji: '🦸' },
+  { title: "Reedsy's 101 Questions", description: "Reedsy's character creation take on Vogue's \"73 Questions\": an interview series wherein an interviewer asks an interviewee a series of spontaneous questions covering everything from favorite things to insights on life.", category: 'Characters', emoji: '❓' },
+  { title: 'Supporting Character', description: "Build out a supporting cast that's distinct, memorable, and necessary to your story.", category: 'Characters', emoji: '👥' },
+  { title: 'The Proust Questionnaire | Celebrity Version', description: "The Proust Questionnaire is a series of introspective questions designed to reveal an individual's personality, values, and desires. This is the celebrity version.", category: 'Characters', emoji: '🎙️' },
+  { title: 'The Proust Questionnaire | Original Version', description: "The Proust Questionnaire is a series of introspective questions designed to reveal an individual's personality, values, and desires. This is the original version.", category: 'Characters', emoji: '📜' },
+  { title: 'Villain', description: "Craft a villain who's a worthy adversary for your hero — and gives your readers someone to root against.", category: 'Characters', emoji: '👿' },
+  
+  { title: 'Biome', description: 'Design a rich and immersive biome and build everything from its climate to its flora and fauna.', category: 'Settings', emoji: '🏜️' },
+  { title: 'City', description: 'Create a city whose skyline, streets, and citizens tell their own story.', category: 'Settings', emoji: '🏙️' },
+  { title: 'Continent', description: 'Create a continent big enough for mountains, coasts, dragons, dictators — and your cast of characters.', category: 'Settings', emoji: '🗺️' },
+  { title: 'Country', description: 'Shape a country whose rise and fall drives your world, defining everything from its government structure and economy to its traditions and conflicts.', category: 'Settings', emoji: '🏳️' },
+  { title: 'Landform', description: 'Explore the natural features of your world, from towering mountains to vast plains.', category: 'Settings', emoji: '🏔️' },
+  { title: 'Landmark', description: 'Develop significant landmarks in your world, from temple ruins to natural caves.', category: 'Settings', emoji: '📍' },
+  { title: 'Locale', description: 'Build a locale complete with atmosphere, secrets, and a population.', category: 'Settings', emoji: '🏡' },
+  { title: 'Location', description: 'This Location template is a catch-all for any remaining locations in your world.', category: 'Settings', emoji: '📌' },
+  { title: 'Planet', description: 'Tired of Earth? Create a new planet where the only boundaries are that of your own imagination.', category: 'Settings', emoji: '🪐' },
+  
+  { title: 'Conflict', description: "You wouldn't want your characters to reach those goals in a span of a few pages, right? Keep track of your evolving conflict.", category: 'Narrative devices', emoji: '💥' },
+  { title: 'Stakes & Consequences', description: 'Craft stakes and consequences that will actually keep your readers invested.', category: 'Narrative devices', emoji: '⚖️' },
+  { title: 'Symbol', description: 'Flesh out the significance of your symbol — and plan how to get it across to your readers.', category: 'Narrative devices', emoji: '🧿' },
+  { title: 'Theme', description: 'Develop a theme that captures the moral or emotional core of your story.', category: 'Narrative devices', emoji: '💡' }
+];
 
 const PAGE_TEMPLATES: Record<string, { title: string; content: string }> = {
   'title-page': {
@@ -99,10 +163,10 @@ const PAGE_TEMPLATES: Record<string, { title: string; content: string }> = {
 
 interface PlanningCard {
   id: string;
-  column: 'ato1' | 'ato2' | 'ato3';
+  column: 'planning' | 'ato1' | 'ato2' | 'ato3';
   title: string;
   content: string;
-  tag?: 'Estrutura' | 'Personagem' | 'Trama' | 'Cenário';
+  tag?: 'Estrutura' | 'Personagem' | 'Trama' | 'Cenário' | 'Geral';
 }
 
 interface PlanningBoard {
@@ -142,12 +206,13 @@ export default function WorkspaceEditor({
   setRightTab
 }: WorkspaceEditorProps) {
   // Navigation & UI layouts
-  const [leftTab, setLeftTab] = useState<'manuscript' | 'planning' | 'boards'>('manuscript');
+  const [leftTab, setLeftTab] = useState<'manuscript' | 'planning' | 'characters' | 'locations' | 'events' | 'statistics'>('manuscript');
   const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
   const [isDistractionFree, setIsDistractionFree] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'dirty'>('saved');
   const [dailyProgress, setDailyProgress] = useState(0);
   const [sessionMood, setSessionMood] = useState<'happy' | 'neutral' | 'sad' | null>(null);
+  const [activePlanningCardId, setActivePlanningCardId] = useState<string | null>(null);
   
   // Search state
   const [findText, setFindText] = useState('');
@@ -172,6 +237,11 @@ export default function WorkspaceEditor({
   const [addPageType, setAddPageType] = useState<string>('chapter');
   const [addPageTitle, setAddPageTitle] = useState<string>('');
 
+  // Templates selector Modal states
+  const [showTemplatesModal, setShowTemplatesModal] = useState(false);
+  const [templateSearch, setTemplateSearch] = useState('');
+  const [templateFilter, setTemplateFilter] = useState<'all' | 'Worldbuilding' | 'Characters' | 'Settings' | 'Narrative devices'>('all');
+
   const [editingCard, setEditingCard] = useState<PlanningBlock | null>(null);
   const [showCardModal, setShowCardModal] = useState(false);
   const [cardFormTitle, setCardFormTitle] = useState('');
@@ -187,10 +257,14 @@ export default function WorkspaceEditor({
   // Active Chapter
   const activeChapter = chapters.find(c => c.id === activeChapterId) || chapters[0];
 
+  const [isAddDropdownOpen, setIsAddDropdownOpen] = useState(false);
+
   // Load and persist planning cards
   const [planningCards, setPlanningCards] = useState<PlanningCard[]>(() => {
     const saved = localStorage.getItem('gospelreads_planning_cards');
     return saved ? JSON.parse(saved) : [
+      { id: 'pc-0', column: 'planning', title: 'Get started', content: 'Use boards to plan, organize, or research anything.', tag: 'Geral' },
+      { id: 'pc-0b', column: 'planning', title: 'Hero\'s Journey Example', content: 'Learn about the Hero\'s Journey.', tag: 'Estrutura' },
       { id: 'pc-1', column: 'ato1', title: 'Mundo Comum', content: 'Apresentar a vida corriqueira do protagonista e seus conflitos internos.', tag: 'Estrutura' },
       { id: 'pc-2', column: 'ato1', title: 'O Chamado para Escrita', content: 'Incentivo externo que desencadeia a necessidade de mudança.', tag: 'Trama' },
       { id: 'pc-3', column: 'ato2', title: 'Travessia do Limiar', content: 'O herói assume o compromisso e adentra o mundo especial do editor.', tag: 'Estrutura' },
@@ -321,7 +395,7 @@ export default function WorkspaceEditor({
     }));
   };
 
-  const handleAddPage = (section: 'front' | 'body' | 'back', type: string, title: string) => {
+  const handleAddPage = (section: 'front' | 'body' | 'back', type: string, title: string, partId?: string) => {
     const template = PAGE_TEMPLATES[type] || { title: 'Nova Página', content: '' };
     const nextOrder = chapters.length > 0 ? Math.max(...chapters.map(c => c.order)) + 1 : 1;
     const newCh: Chapter = {
@@ -330,7 +404,8 @@ export default function WorkspaceEditor({
       content: template.content,
       order: nextOrder,
       section,
-      type: type as any
+      type: type as any,
+      partId
     };
     setChapters([...chapters, newCh]);
     setActiveChapterId(newCh.id);
@@ -467,7 +542,7 @@ export default function WorkspaceEditor({
   };
 
   // Planning board helpers
-  const addPlanningCard = (column: 'ato1' | 'ato2' | 'ato3') => {
+  const addPlanningCard = (column: 'planning' | 'ato1' | 'ato2' | 'ato3') => {
     const title = window.prompt('Digite o título para o seu card de planejamento:');
     if (!title) return;
     const content = window.prompt('Digite uma breve descrição para o card:') || '';
@@ -476,7 +551,7 @@ export default function WorkspaceEditor({
       column,
       title,
       content,
-      tag: 'Estrutura'
+      tag: column === 'planning' ? 'Geral' : 'Estrutura'
     };
     setPlanningCards([...planningCards, newCard]);
   };
@@ -573,19 +648,75 @@ export default function WorkspaceEditor({
     }
   };
 
+  const handleDragStart = (e: React.DragEvent, cardId: string) => {
+    e.dataTransfer.setData('text/plain', cardId);
+  };
+
+  const handleDrop = (e: React.DragEvent, column: 'planning' | 'ato1' | 'ato2' | 'ato3') => {
+    e.preventDefault();
+    const cardId = e.dataTransfer.getData('text/plain');
+    if (cardId) {
+      setPlanningCards(prev => prev.map(c => c.id === cardId ? { ...c, column } : c));
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const addCardFromTemplate = (templateName: string) => {
+    const defaultContents: Record<string, { title: string; content: string; tag: string }> = {
+      'Blank note': { title: 'Nova Nota', content: 'Rascunho de ideias rápidas para a narrativa.', tag: 'Geral' },
+      'Folder': { title: 'Nova Pasta', content: 'Agrupamento de subtramas.', tag: 'Estrutura' },
+      'Worldbuilding': { title: 'Novo Elemento', content: 'Aspectos de ambientação e regras do mundo.', tag: 'Cenário' },
+      'Characters': { title: 'Novo Personagem', content: 'Motivação, fraqueza e arco dramático do personagem.', tag: 'Personagem' },
+      'Settings': { title: 'Nova Configuração', content: 'Regras ou diretrizes da narrativa.', tag: 'Estrutura' },
+      'Narrative devices': { title: 'Dispositivo Narrativo', content: 'Pistas falsas, prenúncios (foreshadowing) ou cliffhangers.', tag: 'Trama' },
+      'Browse templates': { title: 'Template de Jornada', content: 'Estrutura de jornada literária baseada em modelos.', tag: 'Estrutura' }
+    };
+    const details = defaultContents[templateName] || defaultContents['Blank note'];
+    const newCard: PlanningCard = {
+      id: `pc-${Date.now()}`,
+      column: 'planning',
+      title: details.title,
+      content: details.content,
+      tag: details.tag as any
+    };
+    setPlanningCards(prev => [...prev, newCard]);
+  };
+
+  const addTemplateCard = (tpl: PlanningTemplate) => {
+    const newCard: PlanningCard = {
+      id: `pc-${Date.now()}`,
+      column: 'planning',
+      title: tpl.title,
+      content: tpl.description,
+      tag: tpl.category === 'Worldbuilding' ? 'Cenário' :
+           tpl.category === 'Characters' ? 'Personagem' :
+           tpl.category === 'Settings' ? 'Cenário' : 'Trama'
+    };
+    setPlanningCards(prev => [...prev, newCard]);
+    alert(`Card "${tpl.title}" adicionado ao seu planejamento!`);
+  };
+
   const renderManuscriptItem = (ch: Chapter, idx: number, arr: Chapter[]) => (
     <div
       key={ch.id}
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData('text/plain', ch.id);
+        e.dataTransfer.setData('dragType', 'chapter');
+      }}
       onClick={() => setActiveChapterId(ch.id)}
-      className={`group flex items-center justify-between p-2.5 cursor-pointer border rounded-xl ${
+      className={`group flex items-center justify-between p-2.5 cursor-pointer border rounded-xl cursor-grab active:cursor-grabbing ${
         ch.id === activeChapterId 
           ? 'border-indigo-500 bg-indigo-500/10 font-medium text-indigo-300' 
           : 'border-transparent text-neutral-400 hover:border-neutral-850 hover:bg-neutral-900/40 hover:text-neutral-200'
       } transition-all duration-150`}
     >
       <div className="flex items-center gap-2 overflow-hidden">
-        <span className="text-[9px] font-mono text-neutral-600 shrink-0">#{idx + 1}</span>
-        <span className="text-xs truncate font-serif">{ch.title || 'Sem título'}</span>
+        <span className="text-[11px] font-mono text-neutral-500 shrink-0">#{idx + 1}</span>
+        <span className="text-sm truncate font-serif">{ch.title || 'Sem título'}</span>
       </div>
       
       <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
@@ -620,7 +751,7 @@ export default function WorkspaceEditor({
   const [activeRightTool, setActiveRightTool] = useState<string | null>(null);
 
   return (
-    <div className="w-full flex bg-[#09090b] min-h-[calc(100vh-4rem)] border-t border-neutral-900 overflow-x-hidden relative">
+    <div className="w-full flex bg-[#09090b] h-screen max-h-screen overflow-hidden relative editor-workspace">
       
       {/* COLLAPSIBLE LEFT SIDEBAR ICON STRIP */}
       {!isDistractionFree && (
@@ -667,21 +798,78 @@ export default function WorkspaceEditor({
 
             <button
               onClick={() => {
-                if (leftTab === 'boards' && isLeftPanelOpen) {
+                if (leftTab === 'characters' && isLeftPanelOpen) {
                   setIsLeftPanelOpen(false);
                 } else {
-                  setLeftTab('boards');
+                  setLeftTab('characters');
                   setIsLeftPanelOpen(true);
                 }
               }}
               className={`p-2 rounded-xl border transition-all cursor-pointer ${
-                leftTab === 'boards' && isLeftPanelOpen
+                leftTab === 'characters' && isLeftPanelOpen
                   ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400'
                   : 'border-transparent text-neutral-500 hover:text-white hover:bg-neutral-900'
               }`}
-              title="Fichas & Notas"
+              title="Personagens"
             >
-              <BookMarked size={18} />
+              <User size={18} />
+            </button>
+
+            <button
+              onClick={() => {
+                if (leftTab === 'locations' && isLeftPanelOpen) {
+                  setIsLeftPanelOpen(false);
+                } else {
+                  setLeftTab('locations');
+                  setIsLeftPanelOpen(true);
+                }
+              }}
+              className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                leftTab === 'locations' && isLeftPanelOpen
+                  ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400'
+                  : 'border-transparent text-neutral-500 hover:text-white hover:bg-neutral-900'
+              }`}
+              title="Locais"
+            >
+              <MapPin size={18} />
+            </button>
+
+            <button
+              onClick={() => {
+                if (leftTab === 'events' && isLeftPanelOpen) {
+                  setIsLeftPanelOpen(false);
+                } else {
+                  setLeftTab('events');
+                  setIsLeftPanelOpen(true);
+                }
+              }}
+              className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                leftTab === 'events' && isLeftPanelOpen
+                  ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400'
+                  : 'border-transparent text-neutral-500 hover:text-white hover:bg-neutral-900'
+              }`}
+              title="Eventos"
+            >
+              <Calendar size={18} />
+            </button>
+
+            <button
+              onClick={() => {
+                if (leftTab === 'statistics' && isLeftPanelOpen) {
+                  setIsLeftPanelOpen(false);
+                } else {
+                  setLeftTab('statistics');
+                  setIsLeftPanelOpen(true);
+                }
+              }}
+              className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                leftTab === 'statistics' && isLeftPanelOpen
+                  ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400'
+                  : 'border-transparent text-neutral-500 hover:text-white hover:bg-neutral-900'
+              }`}
+              title="Estatísticas"
+            >
+              <BarChart2 size={18} />
             </button>
           </div>
 
@@ -697,49 +885,16 @@ export default function WorkspaceEditor({
         <aside className="w-80 border-r border-neutral-900 bg-[#0c0c0e] flex flex-col justify-between shrink-0 hidden lg:flex select-none">
           <div className="flex flex-col h-full overflow-hidden">
             
-            {/* Sidebar Tab Selector Header with Close Button */}
+            {/* Sidebar Title Header with Close Button */}
             <div className="p-4 border-b border-neutral-900 flex items-center justify-between gap-3 bg-[#09090b]">
-              <div className="flex bg-neutral-950 p-1 border border-neutral-850 rounded-2xl flex-1">
-                <button
-                  onClick={() => {
-                    setLeftTab('manuscript');
-                    setIsLeftPanelOpen(true);
-                  }}
-                  className={`flex-1 py-1.5 px-2 text-[10px] font-bold rounded-xl flex items-center justify-center gap-1 transition-all cursor-pointer ${
-                    leftTab === 'manuscript'
-                      ? 'bg-indigo-600 text-white shadow-sm font-semibold'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  <BookOpen size={11} /> Manuscrito
-                </button>
-                <button
-                  onClick={() => {
-                    setLeftTab('planning');
-                    setIsLeftPanelOpen(true);
-                  }}
-                  className={`flex-1 py-1.5 px-2 text-[10px] font-bold rounded-xl flex items-center justify-center gap-1 transition-all cursor-pointer ${
-                    leftTab === 'planning'
-                      ? 'bg-indigo-600 text-white shadow-sm font-semibold'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  <Layout size={11} /> Plan.
-                </button>
-                <button
-                  onClick={() => {
-                    setLeftTab('boards');
-                    setIsLeftPanelOpen(true);
-                  }}
-                  className={`flex-1 py-1.5 px-2 text-[10px] font-bold rounded-xl flex items-center justify-center gap-1 transition-all cursor-pointer ${
-                    leftTab === 'boards'
-                      ? 'bg-indigo-600 text-white shadow-sm font-semibold'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  <BookMarked size={11} /> Fichas
-                </button>
-              </div>
+              <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 font-sans select-none">
+                {leftTab === 'manuscript' && 'Manuscrito'}
+                {leftTab === 'planning' && 'Quadro de Plotagem'}
+                {leftTab === 'characters' && 'Personagens'}
+                {leftTab === 'locations' && 'Locais'}
+                {leftTab === 'events' && 'Eventos da Trama'}
+                {leftTab === 'statistics' && 'Estatísticas'}
+              </span>
               <button 
                 onClick={() => setIsLeftPanelOpen(false)} 
                 className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-xl transition-colors cursor-pointer"
@@ -754,36 +909,32 @@ export default function WorkspaceEditor({
               <div className="p-5 flex-1 flex flex-col overflow-y-auto justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-2">
-                      <FolderOpen size={12} /> Estrutura do Livro
-                    </span>
-                    <button 
-                      onClick={() => {
-                        setAddPageSection('body');
-                        setAddPageType('chapter');
-                        setAddPageTitle('');
-                        setShowAddPageModal(true);
-                      }}
-                      className="p-1 hover:bg-neutral-800 text-indigo-400 hover:text-white rounded-lg transition-colors border border-neutral-800 bg-neutral-900 flex items-center gap-1 text-[10px] px-2 font-bold cursor-pointer"
-                      title="Adicionar Página/Capítulo"
-                    >
-                      <Plus size={12} /> Adicionar
-                    </button>
+                    <div className="flex flex-col gap-1 select-none">
+                      <span className="text-xs font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-2">
+                        <FolderOpen size={13} /> Estrutura ({chapters.length} Caps)
+                      </span>
+                      <span className="flex items-center gap-1 text-[10px] text-neutral-500 font-mono">
+                        <span className={`w-1 h-1 rounded-full ${
+                          saveStatus === 'saved' ? 'bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]' :
+                          saveStatus === 'saving' ? 'bg-amber-500 animate-pulse' : 'bg-gray-500'
+                        }`} />
+                        {saveStatus === 'saved' ? 'Sincronizado' :
+                         saveStatus === 'saving' ? 'Salvando...' : 'Não salvo'}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-1">
+                  <div className="space-y-4 max-h-[55vh] overflow-y-auto pr-1">
                     {/* 1. FRONT MATTER SECTION */}
                     <div className="space-y-1">
-                      <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between">
+                      <div className="text-[11px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between select-none">
                         <span>Páginas Iniciais</span>
                         <button 
                           onClick={() => {
-                            setAddPageSection('front');
-                            setAddPageType('title-page');
-                            setAddPageTitle('');
-                            setShowAddPageModal(true);
+                            const title = window.prompt("Título da nova Página Inicial:");
+                            if (title) handleAddPage('front', 'custom', title);
                           }}
-                          className="text-[9px] text-indigo-400 hover:text-white cursor-pointer font-bold"
+                          className="text-xs text-indigo-400 hover:text-white cursor-pointer font-bold animate-pulse"
                         >
                           +
                         </button>
@@ -794,50 +945,138 @@ export default function WorkspaceEditor({
                           .sort((a, b) => a.order - b.order)
                           .map((ch, idx, arr) => renderManuscriptItem(ch, idx, arr))}
                         {chapters.filter(ch => ch.section === 'front').length === 0 && (
-                          <div className="text-[10px] text-neutral-600 pl-2 italic">Nenhuma página inicial</div>
+                          <div className="text-xs text-neutral-500 pl-2 italic">Nenhuma página inicial</div>
                         )}
                       </div>
                     </div>
 
-                    {/* 2. BODY SECTION */}
+                    {/* 2. BODY SECTION (MAIN CONTENT & PARTS) */}
                     <div className="space-y-1">
-                      <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between">
+                      <div 
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={(e) => {
+                          const chapterId = e.dataTransfer.getData('text/plain');
+                          const dragType = e.dataTransfer.getData('dragType');
+                          if (dragType === 'chapter' && chapterId) {
+                            setChapters(prev => prev.map(c => c.id === chapterId ? { ...c, partId: undefined } : c));
+                          }
+                        }}
+                        className="text-[11px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between select-none"
+                      >
                         <span>Conteúdo Principal</span>
                         <button 
                           onClick={() => {
-                            setAddPageSection('body');
-                            setAddPageType('chapter');
-                            setAddPageTitle('');
-                            setShowAddPageModal(true);
+                            const isPart = window.confirm("Deseja criar uma nova Parte? (OK para Parte, Cancelar para Capítulo)");
+                            if (isPart) {
+                              const title = window.prompt("Título da nova Parte:");
+                              if (title) handleAddPage('body', 'part', title);
+                            } else {
+                              const title = window.prompt("Título do novo Capítulo:");
+                              if (title) handleAddPage('body', 'chapter', title);
+                            }
                           }}
-                          className="text-[9px] text-indigo-400 hover:text-white cursor-pointer font-bold"
+                          className="text-xs text-indigo-400 hover:text-white cursor-pointer font-bold"
                         >
                           +
                         </button>
                       </div>
-                      <div className="space-y-1">
-                        {chapters
-                          .filter(ch => ch.section === 'body' || !ch.section)
-                          .sort((a, b) => a.order - b.order)
-                          .map((ch, idx, arr) => renderManuscriptItem(ch, idx, arr))}
-                        {chapters.filter(ch => ch.section === 'body' || !ch.section).length === 0 && (
-                          <div className="text-[10px] text-neutral-600 pl-2 italic">Nenhum capítulo criado</div>
-                        )}
+
+                      <div className="space-y-2.5 pt-1.5">
+                        {(() => {
+                          const bodyItems = chapters.filter(ch => ch.section === 'body' || !ch.section);
+                          const parts = bodyItems.filter(ch => ch.type === 'part').sort((a, b) => a.order - b.order);
+                          const rootChapters = bodyItems.filter(ch => ch.type !== 'part' && !ch.partId).sort((a, b) => a.order - b.order);
+
+                          return (
+                            <div className="space-y-2">
+                              {/* Parts and nested chapters */}
+                              {parts.map((part) => {
+                                const partChapters = bodyItems.filter(ch => ch.type !== 'part' && ch.partId === part.id).sort((a, b) => a.order - b.order);
+                                return (
+                                  <div 
+                                    key={part.id} 
+                                    onDragOver={(e) => e.preventDefault()}
+                                    onDrop={(e) => {
+                                      e.stopPropagation();
+                                      const chapterId = e.dataTransfer.getData('text/plain');
+                                      const dragType = e.dataTransfer.getData('dragType');
+                                      if (dragType === 'chapter' && chapterId && chapterId !== part.id) {
+                                        setChapters(prev => prev.map(c => c.id === chapterId ? { ...c, partId: part.id } : c));
+                                      }
+                                    }}
+                                    className="bg-neutral-900/30 border border-neutral-850 rounded-xl p-2.5 space-y-2"
+                                  >
+                                    <div className="flex justify-between items-center select-none border-b border-neutral-800 pb-1.5">
+                                      <span 
+                                        onClick={() => setActiveChapterId(part.id)}
+                                        className={`text-sm font-bold text-neutral-200 flex items-center gap-1.5 cursor-pointer hover:text-indigo-400 transition-colors ${
+                                          part.id === activeChapterId ? 'text-indigo-400 font-semibold' : ''
+                                        }`}
+                                      >
+                                        📁 {part.title}
+                                      </span>
+                                      <div className="flex items-center gap-2">
+                                        <button 
+                                          onClick={() => {
+                                            const chTitle = window.prompt(`Título do novo Capítulo para "${part.title}":`);
+                                            if (chTitle) {
+                                              handleAddPage('body', 'chapter', chTitle, part.id);
+                                            }
+                                          }}
+                                          className="text-[11px] text-indigo-400 hover:text-white cursor-pointer font-bold"
+                                          title="Adicionar capítulo a esta parte"
+                                        >
+                                          + Cap
+                                        </button>
+                                        <button 
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (window.confirm(`Excluir a parte "${part.title}"? Os capítulos desta parte voltarão para o nível principal.`)) {
+                                              setChapters(prev => prev.map(c => c.partId === part.id ? { ...c, partId: undefined } : c).filter(c => c.id !== part.id));
+                                            }
+                                          }}
+                                          className="text-neutral-500 hover:text-red-400 cursor-pointer"
+                                          title="Excluir parte"
+                                        >
+                                          <Trash2 size={11} />
+                                        </button>
+                                      </div>
+                                    </div>
+                                    
+                                    <div className="space-y-1 pl-3.5 border-l border-neutral-800">
+                                      {partChapters.map((ch, idx, arr) => renderManuscriptItem(ch, idx, arr))}
+                                      {partChapters.length === 0 && (
+                                        <div className="text-[10px] text-neutral-600 italic select-none py-1">Arraste capítulos aqui</div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+
+                              {/* Root chapters */}
+                              <div className="space-y-1">
+                                {rootChapters.map((ch, idx, arr) => renderManuscriptItem(ch, idx, arr))}
+                              </div>
+
+                              {bodyItems.length === 0 && (
+                                <div className="text-xs text-neutral-500 pl-2 italic">Nenhum capítulo ou parte criada</div>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
 
                     {/* 3. BACK MATTER SECTION */}
                     <div className="space-y-1">
-                      <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between">
+                      <div className="text-[11px] font-bold uppercase tracking-widest text-neutral-500 pl-1 py-1 border-b border-neutral-900 flex items-center justify-between select-none">
                         <span>Páginas Finais</span>
                         <button 
                           onClick={() => {
-                            setAddPageSection('back');
-                            setAddPageType('author-bio');
-                            setAddPageTitle('');
-                            setShowAddPageModal(true);
+                            const title = window.prompt("Título da nova Página Final:");
+                            if (title) handleAddPage('back', 'custom', title);
                           }}
-                          className="text-[9px] text-indigo-400 hover:text-white cursor-pointer font-bold"
+                          className="text-xs text-indigo-400 hover:text-white cursor-pointer font-bold"
                         >
                           +
                         </button>
@@ -848,43 +1087,402 @@ export default function WorkspaceEditor({
                           .sort((a, b) => a.order - b.order)
                           .map((ch, idx, arr) => renderManuscriptItem(ch, idx, arr))}
                         {chapters.filter(ch => ch.section === 'back').length === 0 && (
-                          <div className="text-[10px] text-neutral-600 pl-2 italic">Nenhuma página final</div>
+                          <div className="text-xs text-neutral-500 pl-2 italic">Nenhuma página final</div>
                         )}
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+            )}
 
-                {/* Left Bottom totals statistics */}
-                <div className="border-t border-neutral-900 pt-5 mt-4 space-y-4">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-neutral-900/60 border border-neutral-850 p-2.5 rounded-xl">
-                      <div className="text-[9px] text-neutral-500 uppercase tracking-wider font-mono">Total Palavras</div>
-                      <div className="text-base font-bold font-serif text-white">{totalWords}</div>
+            {/* Render left Tab: Interactive Kanban Planning Board */}
+            {leftTab === 'planning' && (
+              <div className="p-4 flex-1 flex flex-col overflow-y-auto space-y-4">
+                <div className="flex justify-between items-center select-none">
+                  <span className="text-sm font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-1.5 font-sans">
+                    <Layout size={14} /> Quadro de Plotagem
+                  </span>
+                  <p className="text-xs text-neutral-500 font-mono">Três Atos</p>
+                </div>
+
+                {/* Column lists (vertical mini bento stacks) */}
+                <div className="space-y-4">
+                  {/* Ato 1 */}
+                  <div 
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, 'ato1')}
+                    className="bg-neutral-900/40 p-3 border border-neutral-850 rounded-2xl space-y-2 min-h-[120px] transition-all"
+                  >
+                    <div className="flex justify-between items-center border-b border-neutral-800 pb-1">
+                      <span className="text-sm font-bold text-white uppercase font-serif">Ato I: Partida</span>
+                      <button onClick={() => addPlanningCard('ato1')} className="text-indigo-400 hover:text-white cursor-pointer">
+                        <PlusCircle size={14} />
+                      </button>
                     </div>
-                    <div className="bg-neutral-900/60 border border-neutral-850 p-2.5 rounded-xl">
-                      <div className="text-[9px] text-neutral-500 uppercase tracking-wider font-mono">Caracteres</div>
-                      <div className="text-base font-bold font-serif text-white">{totalChars}</div>
+                    <div className="space-y-1.5 max-h-[22vh] overflow-y-auto pr-1">
+                      {planningCards.filter(c => c.column === 'ato1').map(card => (
+                        <div 
+                          key={card.id} 
+                          draggable
+                          onDragStart={(e) => handleDragStart(e, card.id)}
+                          className="bg-neutral-950 border border-neutral-800 p-2.5 rounded-lg text-sm relative group space-y-1 cursor-grab active:cursor-grabbing select-none hover:border-neutral-700 transition-all"
+                        >
+                          <div className="font-serif font-semibold text-white pr-4">{card.title}</div>
+                          <p className="text-neutral-400 text-xs leading-normal font-sans">{card.content}</p>
+                          <div className="flex justify-between items-center pt-1 border-t border-neutral-850/50 mt-1.5">
+                            <span className="text-[10px] bg-indigo-500/10 text-indigo-400 px-1.5 py-0.5 rounded font-mono uppercase font-bold">{card.tag || 'Estrutura'}</span>
+                            <button onClick={() => deletePlanningCard(card.id)} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity cursor-pointer">
+                              <Trash2 size={11} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                      {planningCards.filter(c => c.column === 'ato1').length === 0 && (
+                        <div className="text-center py-4 text-neutral-500 text-xs font-sans italic">Arrastar cards aqui</div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Ato 2 */}
+                  <div 
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, 'ato2')}
+                    className="bg-neutral-900/40 p-3 border border-neutral-850 rounded-2xl space-y-2 min-h-[120px] transition-all"
+                  >
+                    <div className="flex justify-between items-center border-b border-neutral-800 pb-1">
+                      <span className="text-sm font-bold text-white uppercase font-serif">Ato II: Confronto</span>
+                      <button onClick={() => addPlanningCard('ato2')} className="text-indigo-400 hover:text-white cursor-pointer">
+                        <PlusCircle size={14} />
+                      </button>
+                    </div>
+                    <div className="space-y-1.5 max-h-[22vh] overflow-y-auto pr-1">
+                      {planningCards.filter(c => c.column === 'ato2').map(card => (
+                        <div 
+                          key={card.id} 
+                          draggable
+                          onDragStart={(e) => handleDragStart(e, card.id)}
+                          className="bg-neutral-950 border border-neutral-800 p-2.5 rounded-lg text-sm relative group space-y-1 cursor-grab active:cursor-grabbing select-none hover:border-neutral-700 transition-all"
+                        >
+                          <div className="font-serif font-semibold text-white pr-4">{card.title}</div>
+                          <p className="text-neutral-400 text-xs leading-normal font-sans">{card.content}</p>
+                          <div className="flex justify-between items-center pt-1 border-t border-neutral-850/50 mt-1.5">
+                            <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono uppercase font-bold">{card.tag || 'Trama'}</span>
+                            <button onClick={() => deletePlanningCard(card.id)} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity cursor-pointer">
+                              <Trash2 size={11} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                      {planningCards.filter(c => c.column === 'ato2').length === 0 && (
+                        <div className="text-center py-4 text-neutral-500 text-xs font-sans italic">Arrastar cards aqui</div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Ato 3 */}
+                  <div 
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, 'ato3')}
+                    className="bg-neutral-900/40 p-3 border border-neutral-850 rounded-2xl space-y-2 min-h-[120px] transition-all"
+                  >
+                    <div className="flex justify-between items-center border-b border-neutral-800 pb-1">
+                      <span className="text-sm font-bold text-white uppercase font-serif">Ato III: Resolução</span>
+                      <button onClick={() => addPlanningCard('ato3')} className="text-indigo-400 hover:text-white cursor-pointer">
+                        <PlusCircle size={14} />
+                      </button>
+                    </div>
+                    <div className="space-y-1.5 max-h-[22vh] overflow-y-auto pr-1">
+                      {planningCards.filter(c => c.column === 'ato3').map(card => (
+                        <div 
+                          key={card.id} 
+                          draggable
+                          onDragStart={(e) => handleDragStart(e, card.id)}
+                          className="bg-neutral-950 border border-neutral-800 p-2.5 rounded-lg text-sm relative group space-y-1 cursor-grab active:cursor-grabbing select-none hover:border-neutral-700 transition-all"
+                        >
+                          <div className="font-serif font-semibold text-white pr-4">{card.title}</div>
+                          <p className="text-neutral-400 text-xs leading-normal font-sans">{card.content}</p>
+                          <div className="flex justify-between items-center pt-1 border-t border-neutral-850/50 mt-1.5">
+                            <span className="text-[10px] bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded font-mono uppercase font-bold">{card.tag || 'Clímax'}</span>
+                            <button onClick={() => deletePlanningCard(card.id)} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity cursor-pointer">
+                              <Trash2 size={11} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                      {planningCards.filter(c => c.column === 'ato3').length === 0 && (
+                        <div className="text-center py-4 text-neutral-500 text-xs font-sans italic">Arrastar cards aqui</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Render left Tab: Characters */}
+            {leftTab === 'characters' && (
+              <div className="p-4 flex-1 flex flex-col overflow-y-auto space-y-4">
+                <div className="flex justify-between items-center select-none">
+                  <span className="text-sm font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-1.5 font-sans">
+                    <User size={14} /> Personagens
+                  </span>
+                  <button 
+                    onClick={() => {
+                      setEditingCard(null);
+                      setCardFormTitle('');
+                      setCardFormType('character');
+                      setCardFormContent('');
+                      setCardFormEmoji('👤');
+                      setIsNewCard(true);
+                      setShowCardModal(true);
+                    }} 
+                    className="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition-all cursor-pointer"
+                  >
+                    <Plus size={12} /> Personagem
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3">
+                  {planningBlocks.filter(b => b.type === 'character').map(block => (
+                    <div 
+                      key={block.id}
+                      className="bg-neutral-900/40 border border-neutral-850 p-4 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group relative flex flex-col justify-between space-y-2"
+                      onClick={() => handleOpenEditCard(block)}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{block.emoji || '👤'}</span>
+                          <div className="text-left">
+                            <h4 className="font-serif font-bold text-white text-sm group-hover:text-indigo-300 transition-colors">{block.title}</h4>
+                            <p className="text-xs text-neutral-400 font-sans leading-relaxed mt-1">{block.content || 'Sem descrição'}</p>
+                          </div>
+                        </div>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (window.confirm('Excluir esta ficha?')) {
+                              setPlanningBlocks(prev => prev.filter(b => b.id !== block.id));
+                            }
+                          }}
+                          className="opacity-0 group-hover:opacity-100 text-neutral-500 hover:text-red-400 transition-all p-1 cursor-pointer"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+
+                  {planningBlocks.filter(b => b.type === 'character').length === 0 && (
+                    <div className="text-center py-8 text-neutral-500 font-sans text-xs">
+                      Nenhum personagem criado. Clique em "+ Personagem" para começar.
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Render left Tab: Locations */}
+            {leftTab === 'locations' && (
+              <div className="p-4 flex-1 flex flex-col overflow-y-auto space-y-4">
+                <div className="flex justify-between items-center select-none">
+                  <span className="text-sm font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-1.5 font-sans">
+                    <MapPin size={14} /> Locais
+                  </span>
+                  <button 
+                    onClick={() => {
+                      setEditingCard(null);
+                      setCardFormTitle('');
+                      setCardFormType('location');
+                      setCardFormContent('');
+                      setCardFormEmoji('📍');
+                      setIsNewCard(true);
+                      setShowCardModal(true);
+                    }} 
+                    className="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition-all cursor-pointer"
+                  >
+                    <Plus size={12} /> Local
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3">
+                  {planningBlocks.filter(b => b.type === 'location').map(block => (
+                    <div 
+                      key={block.id}
+                      className="bg-neutral-900/40 border border-neutral-850 p-4 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group relative flex flex-col justify-between space-y-2"
+                      onClick={() => handleOpenEditCard(block)}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{block.emoji || '📍'}</span>
+                          <div className="text-left">
+                            <h4 className="font-serif font-bold text-white text-sm group-hover:text-indigo-300 transition-colors">{block.title}</h4>
+                            <p className="text-xs text-neutral-400 font-sans leading-relaxed mt-1">{block.content || 'Sem descrição'}</p>
+                          </div>
+                        </div>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (window.confirm('Excluir esta ficha?')) {
+                              setPlanningBlocks(prev => prev.filter(b => b.id !== block.id));
+                            }
+                          }}
+                          className="opacity-0 group-hover:opacity-100 text-neutral-500 hover:text-red-400 transition-all p-1 cursor-pointer"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+
+                  {planningBlocks.filter(b => b.type === 'location').length === 0 && (
+                    <div className="text-center py-8 text-neutral-500 font-sans text-xs">
+                      Nenhum local criado. Clique em "+ Local" para começar.
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Render left Tab: Events */}
+            {leftTab === 'events' && (
+              <div className="p-4 flex-1 flex flex-col overflow-y-auto space-y-4">
+                <div className="flex justify-between items-center select-none">
+                  <span className="text-sm font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-1.5 font-sans">
+                    <Calendar size={14} /> Eventos
+                  </span>
+                  <button 
+                    onClick={() => {
+                      setEditingCard(null);
+                      setCardFormTitle('');
+                      setCardFormType('event');
+                      setCardFormContent('');
+                      setCardFormEmoji('📅');
+                      setIsNewCard(true);
+                      setShowCardModal(true);
+                    }} 
+                    className="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition-all cursor-pointer"
+                  >
+                    <Plus size={12} /> Evento
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3">
+                  {planningBlocks.filter(b => b.type === 'event').map(block => (
+                    <div 
+                      key={block.id}
+                      className="bg-neutral-900/40 border border-neutral-850 p-4 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group relative flex flex-col justify-between space-y-2"
+                      onClick={() => handleOpenEditCard(block)}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{block.emoji || '📅'}</span>
+                          <div className="text-left">
+                            <h4 className="font-serif font-bold text-white text-sm group-hover:text-indigo-300 transition-colors">{block.title}</h4>
+                            <p className="text-xs text-neutral-400 font-sans leading-relaxed mt-1">{block.content || 'Sem descrição'}</p>
+                          </div>
+                        </div>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (window.confirm('Excluir esta ficha?')) {
+                              setPlanningBlocks(prev => prev.filter(b => b.id !== block.id));
+                            }
+                          }}
+                          className="opacity-0 group-hover:opacity-100 text-neutral-500 hover:text-red-400 transition-all p-1 cursor-pointer"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+
+                  {planningBlocks.filter(b => b.type === 'event').length === 0 && (
+                    <div className="text-center py-8 text-neutral-500 font-sans text-xs">
+                      Nenhum evento criado. Clique em "+ Evento" para começar.
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Render left Tab: Statistics */}
+            {leftTab === 'statistics' && (
+              <div className="p-5 flex-1 flex flex-col overflow-y-auto justify-between select-none">
+                <div className="space-y-6">
+                  <span className="text-sm font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-2">
+                    <BarChart2 size={14} /> Estatísticas do Livro
+                  </span>
+
+                  {/* Statistics Grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-neutral-900/60 border border-neutral-850 p-3 rounded-2xl">
+                      <div className="text-[11px] text-neutral-500 uppercase tracking-wider font-mono">Capítulo</div>
+                      <div className="text-xl font-bold font-serif text-white mt-1">{activeWords} pal.</div>
+                    </div>
+                    <div className="bg-neutral-900/60 border border-neutral-850 p-3 rounded-2xl">
+                      <div className="text-[11px] text-neutral-500 uppercase tracking-wider font-mono">Livro</div>
+                      <div className="text-xl font-bold font-serif text-white mt-1">{totalWords} pal.</div>
+                    </div>
+                    <div className="bg-neutral-900/60 border border-neutral-850 p-3 rounded-2xl">
+                      <div className="text-[11px] text-neutral-500 uppercase tracking-wider font-mono">Caracteres</div>
+                      <div className="text-xl font-bold font-serif text-white mt-1">{totalChars}</div>
+                    </div>
+                    <div className="bg-neutral-900/60 border border-neutral-850 p-3 rounded-2xl">
+                      <div className="text-[11px] text-neutral-500 uppercase tracking-wider font-mono">Estrutura</div>
+                      <div className="text-xl font-bold font-serif text-white mt-1">{chapters.length} Caps</div>
+                    </div>
+                  </div>
+
+                  {/* Typography Panel */}
+                  <div className="space-y-3 border-t border-neutral-900 pt-4">
+                    <div className="text-[11px] text-neutral-500 uppercase tracking-wider font-mono">Configuração de Texto</div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[10px] text-neutral-500">Fonte</span>
+                        <select
+                          value={settings.preferredFont}
+                          onChange={(e) => setSettings(prev => ({ ...prev, preferredFont: e.target.value as WritingSettings['preferredFont'] }))}
+                          className="text-xs border border-neutral-850 bg-neutral-900 text-neutral-300 p-2.5 rounded-xl focus:outline-none w-full"
+                        >
+                          <option value="serif">Garamond</option>
+                          <option value="sans">Inter (Sans)</option>
+                          <option value="mono">JetBrains</option>
+                        </select>
+                      </div>
+
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[10px] text-neutral-500">Tamanho</span>
+                        <select
+                          value={settings.fontSize}
+                          onChange={(e) => setSettings(prev => ({ ...prev, fontSize: e.target.value as WritingSettings['fontSize'] }))}
+                          className="text-xs border border-neutral-850 bg-neutral-900 text-neutral-300 p-2.5 rounded-xl focus:outline-none w-full"
+                        >
+                          <option value="sm">Pequeno</option>
+                          <option value="md">Médio</option>
+                          <option value="lg">Grande</option>
+                          <option value="xl">Extra G.</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
 
                   {/* Daily Target Widget */}
-                  <div className="bg-[#0f0f12] border border-neutral-850 p-3.5 rounded-xl space-y-2">
-                    <div className="flex justify-between items-center text-[10px]">
-                      <span className="font-medium text-neutral-400 flex items-center gap-1">
-                        <Clock size={11} className="text-indigo-400" /> Meta do Capítulo ({settings.dailyGoal} pal.)
+                  <div className="bg-[#0f0f12] border border-neutral-850 p-4 rounded-2xl space-y-3">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-medium text-neutral-400 flex items-center gap-1.5">
+                        <Clock size={13} className="text-indigo-400" /> Meta do Capítulo
                       </span>
                       <span className="font-mono text-indigo-400 font-bold">{dailyProgress}%</span>
                     </div>
                     
-                    <div className="w-full bg-neutral-950 h-1.5 rounded-full overflow-hidden border border-neutral-900">
+                    <div className="w-full bg-neutral-950 h-2 rounded-full overflow-hidden border border-neutral-900">
                       <div 
                         className="bg-indigo-500 h-full transition-all duration-500 ease-out shadow-[0_0_8px_rgba(99,102,241,0.3)]"
                         style={{ width: `${dailyProgress}%` }}
                       />
                     </div>
-                    <div className="flex justify-between items-center text-[9px]">
-                      <span className="text-neutral-500">{activeWords} escritas</span>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-neutral-400">{activeWords} / {settings.dailyGoal} pal.</span>
                       <button
                         onClick={() => {
                           const goal = window.prompt('Ajustar meta diária de palavras do capítulo:', settings.dailyGoal.toString());
@@ -904,389 +1502,444 @@ export default function WorkspaceEditor({
                 </div>
               </div>
             )}
-
-            {/* Render left Tab: Interactive Kanban Planning Board */}
-            {leftTab === 'planning' && (
-              <div className="p-4 flex-1 flex flex-col overflow-y-auto space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-1.5">
-                    <Layout size={12} /> Quadro de Plotagem
-                  </span>
-                  <p className="text-[9px] text-neutral-500 font-mono">Três Atos</p>
-                </div>
-
-                {/* Column lists (vertical mini bento stacks) */}
-                <div className="space-y-4">
-                  {/* Ato 1 */}
-                  <div className="bg-neutral-900/40 p-3 border border-neutral-850 rounded-2xl space-y-2">
-                    <div className="flex justify-between items-center border-b border-neutral-800 pb-1">
-                      <span className="text-xs font-bold text-white uppercase font-serif">Ato I: Partida</span>
-                      <button onClick={() => addPlanningCard('ato1')} className="text-indigo-400 hover:text-white">
-                        <PlusCircle size={14} />
-                      </button>
-                    </div>
-                    <div className="space-y-1.5 max-h-[16vh] overflow-y-auto pr-1">
-                      {planningCards.filter(c => c.column === 'ato1').map(card => (
-                        <div key={card.id} className="bg-neutral-950 border border-neutral-800 p-2 rounded-lg text-[11px] relative group space-y-1">
-                          <div className="font-serif font-semibold text-white pr-4">{card.title}</div>
-                          <p className="text-neutral-400 line-clamp-2 leading-tight font-sans">{card.content}</p>
-                          <div className="flex justify-between items-center pt-1">
-                            <span className="text-[8px] bg-indigo-500/15 text-indigo-400 px-1.5 py-0.5 rounded font-mono uppercase">{card.tag || 'Estrutura'}</span>
-                            <button onClick={() => deletePlanningCard(card.id)} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity">
-                              <Trash2 size={10} />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Ato 2 */}
-                  <div className="bg-neutral-900/40 p-3 border border-neutral-850 rounded-2xl space-y-2">
-                    <div className="flex justify-between items-center border-b border-neutral-800 pb-1">
-                      <span className="text-xs font-bold text-white uppercase font-serif">Ato II: Confronto</span>
-                      <button onClick={() => addPlanningCard('ato2')} className="text-indigo-400 hover:text-white">
-                        <PlusCircle size={14} />
-                      </button>
-                    </div>
-                    <div className="space-y-1.5 max-h-[16vh] overflow-y-auto pr-1">
-                      {planningCards.filter(c => c.column === 'ato2').map(card => (
-                        <div key={card.id} className="bg-neutral-950 border border-neutral-800 p-2 rounded-lg text-[11px] relative group space-y-1">
-                          <div className="font-serif font-semibold text-white pr-4">{card.title}</div>
-                          <p className="text-neutral-400 line-clamp-2 leading-tight font-sans">{card.content}</p>
-                          <div className="flex justify-between items-center pt-1">
-                            <span className="text-[8px] bg-emerald-500/15 text-emerald-400 px-1.5 py-0.5 rounded font-mono uppercase">{card.tag || 'Trama'}</span>
-                            <button onClick={() => deletePlanningCard(card.id)} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity">
-                              <Trash2 size={10} />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Ato 3 */}
-                  <div className="bg-neutral-900/40 p-3 border border-neutral-850 rounded-2xl space-y-2">
-                    <div className="flex justify-between items-center border-b border-neutral-800 pb-1">
-                      <span className="text-xs font-bold text-white uppercase font-serif">Ato III: Resolução</span>
-                      <button onClick={() => addPlanningCard('ato3')} className="text-indigo-400 hover:text-white">
-                        <PlusCircle size={14} />
-                      </button>
-                    </div>
-                    <div className="space-y-1.5 max-h-[16vh] overflow-y-auto pr-1">
-                      {planningCards.filter(c => c.column === 'ato3').map(card => (
-                        <div key={card.id} className="bg-neutral-950 border border-neutral-800 p-2 rounded-lg text-[11px] relative group space-y-1">
-                          <div className="font-serif font-semibold text-white pr-4">{card.title}</div>
-                          <p className="text-neutral-400 line-clamp-2 leading-tight font-sans">{card.content}</p>
-                          <div className="flex justify-between items-center pt-1">
-                            <span className="text-[8px] bg-amber-500/15 text-amber-400 px-1.5 py-0.5 rounded font-mono uppercase">{card.tag || 'Clímax'}</span>
-                            <button onClick={() => deletePlanningCard(card.id)} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity">
-                              <Trash2 size={10} />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Render left Tab: Custom Boards & Blocks (World Building) */}
-            {leftTab === 'boards' && (
-              <div className="p-4 flex-1 flex flex-col overflow-y-auto space-y-4">
-                {activeBoardId === null ? (
-                  // BOARDS LIST VIEW
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[10px] font-bold tracking-widest text-indigo-400 uppercase flex items-center gap-1.5 font-sans">
-                        <BookMarked size={12} /> Fichas de Criação
-                      </span>
-                      <button 
-                        onClick={() => setShowNewBoardModal(true)} 
-                        className="text-[10px] bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition-all"
-                      >
-                        <Plus size={12} /> Pasta
-                      </button>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-3">
-                      {planningBoards.map(board => {
-                        const count = planningBlocks.filter(b => b.boardId === board.id).length;
-                        return (
-                          <div 
-                            key={board.id}
-                            className="bg-neutral-900/40 border border-neutral-850 p-4 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group relative flex flex-col justify-between space-y-2"
-                            onClick={() => setActiveBoardId(board.id)}
-                          >
-                            <div className="flex items-start justify-between">
-                              <div className="flex items-center gap-3">
-                                <span className="text-2xl">{board.emoji}</span>
-                                <div className="text-left">
-                                  <h4 className="font-serif font-bold text-white text-sm group-hover:text-indigo-300 transition-colors">{board.name}</h4>
-                                  <p className="text-[10px] text-neutral-400 line-clamp-1 font-sans">{board.description || 'Sem descrição'}</p>
-                                </div>
-                              </div>
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDeleteBoard(board.id);
-                                }}
-                                className="opacity-0 group-hover:opacity-100 text-neutral-500 hover:text-red-400 transition-all p-1"
-                              >
-                                <Trash2 size={12} />
-                              </button>
-                            </div>
-                            <div className="flex items-center justify-between pt-1 border-t border-neutral-850/50">
-                              <span className="text-[9px] text-neutral-500 font-mono uppercase">Sub-fichas</span>
-                              <span className="text-[10px] font-mono font-bold bg-neutral-950 text-indigo-400 border border-neutral-800 px-2 py-0.5 rounded-full">{count}</span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {planningBoards.length === 0 && (
-                      <div className="text-center py-8 text-neutral-500 font-sans text-xs">
-                        Nenhuma pasta de fichas criada. Clique em "+ Pasta" para começar.
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  // BOARD DETAILS VIEW (GRID OF BLOCKS)
-                  <div className="space-y-4">
-                    {/* Header with back button */}
-                    {(() => {
-                      const board = planningBoards.find(b => b.id === activeBoardId);
-                      if (!board) return null;
-                      const boardBlocks = planningBlocks.filter(b => b.boardId === activeBoardId);
-                      return (
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between">
-                            <button 
-                              onClick={() => setActiveBoardId(null)}
-                              className="text-[10px] text-neutral-400 hover:text-white flex items-center gap-1 uppercase tracking-wider font-bold transition-all"
-                            >
-                              ← Voltar
-                            </button>
-                            <button 
-                              onClick={handleOpenNewCard}
-                              className="text-[10px] bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 transition-all"
-                            >
-                              <Plus size={12} /> Bloco
-                            </button>
-                          </div>
-
-                          <div className="bg-neutral-900/60 p-3.5 border border-neutral-800 rounded-2xl space-y-1.5">
-                            <div className="flex items-center gap-2">
-                              <span className="text-xl">{board.emoji}</span>
-                              <h3 className="font-serif font-bold text-white text-base leading-tight">{board.name}</h3>
-                            </div>
-                            <p className="text-[10px] text-neutral-400 leading-relaxed font-sans">{board.description || 'Organize as fichas deste tópico.'}</p>
-                          </div>
-
-                          <div className="grid grid-cols-1 gap-2.5 max-h-[50vh] overflow-y-auto pr-1">
-                            {boardBlocks.map(block => {
-                              const typeLabels = {
-                                character: { text: 'Personagem', color: 'bg-indigo-500/15 text-indigo-400 border-indigo-500/20' },
-                                location: { text: 'Local', color: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20' },
-                                event: { text: 'Evento', color: 'bg-amber-500/15 text-amber-400 border-amber-500/20' },
-                                note: { text: 'Nota', color: 'bg-purple-500/15 text-purple-400 border-purple-500/20' }
-                              };
-                              const badge = typeLabels[block.type] || typeLabels.note;
-                              return (
-                                <div 
-                                  key={block.id}
-                                  className="bg-neutral-950 border border-neutral-850 p-3 rounded-2xl hover:border-neutral-700 transition-all group relative space-y-2 cursor-pointer"
-                                  onClick={() => handleOpenEditCard(block)}
-                                >
-                                  <div className="flex justify-between items-start">
-                                    <div className="flex items-center gap-2 min-w-0">
-                                      <span className="text-sm shrink-0">{block.emoji || '📝'}</span>
-                                      <h5 className="font-serif font-bold text-white text-xs truncate">{block.title}</h5>
-                                    </div>
-                                    <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all shrink-0">
-                                      <button 
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleDeleteCard(block.id);
-                                        }}
-                                        className="text-neutral-500 hover:text-red-400 p-0.5"
-                                      >
-                                        <Trash2 size={11} />
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <p className="text-[11px] text-neutral-400 line-clamp-2 leading-relaxed font-sans">{block.content || 'Sem conteúdo.'}</p>
-                                  <div className="flex justify-between items-center pt-1">
-                                    <span className={`text-[8px] border px-2 py-0.5 rounded-full font-mono uppercase ${badge.color}`}>{badge.text}</span>
-                                  </div>
-                                </div>
-                              );
-                            })}
-
-                            {boardBlocks.length === 0 && (
-                              <div className="text-center py-8 text-neutral-500 font-sans text-xs">
-                                Nenhum bloco nesta pasta. Clique em "+ Bloco" para adicionar.
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })()}
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </aside>
       )}
 
       {/* CENTER WRITING AREA & CANVAS */}
-      <section className="flex-1 flex flex-col bg-[#09090b] relative">
+      <section className="flex-1 flex flex-col bg-[#09090b] relative overflow-hidden">
         
-        {/* Editor Controls Bar */}
-        <div className="px-6 py-4 border-b border-neutral-900 flex items-center justify-between bg-[#0c0c0e] shrink-0">
-          <div className="flex items-center gap-3">
-            <button 
-              id="btn-distraction-free"
-              onClick={() => setIsDistractionFree(!isDistractionFree)}
-              className="p-1.5 border border-neutral-800 hover:bg-neutral-900 text-neutral-300 rounded-lg transition-colors cursor-pointer"
-              title={isDistractionFree ? "Sair do modo sem distrações" : "Modo sem distrações"}
-            >
-              {isDistractionFree ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
-            </button>
+        {leftTab === 'planning' ? (
+          activePlanningCardId ? (
+            /* PLANNING CARD DETAILS EDITOR SCREEN (from 4th image) */
+            (() => {
+              const card = planningCards.find(c => c.id === activePlanningCardId);
+              if (!card) {
+                setTimeout(() => setActivePlanningCardId(null), 0);
+                return null;
+              }
+              const colLabel = card.column === 'planning' ? 'Planning' : card.column === 'ato1' ? 'Act I' : card.column === 'ato2' ? 'Act II' : 'Act III';
+              return (
+                <div className="flex-1 overflow-y-auto p-8 bg-white text-neutral-800 space-y-6 select-none font-sans">
+                  {/* Top breadcrumbs and actions bar */}
+                  <div className="flex justify-between items-center border-b border-neutral-200 pb-3">
+                    <div className="flex items-center gap-2 text-xs text-neutral-500 font-medium select-none">
+                      <span className="cursor-pointer hover:text-indigo-600 flex items-center gap-1" onClick={() => setActivePlanningCardId(null)}>
+                        📋 Planning
+                      </span>
+                      <span>&gt;</span>
+                      <span className="flex items-center gap-1 font-semibold text-neutral-600">
+                        📁 {colLabel}
+                      </span>
+                      <span>&gt;</span>
+                      <span className="text-neutral-800 font-bold">{card.title}</span>
+                    </div>
 
-            {!isDistractionFree && (
-              <button 
-                id="btn-toggle-left-panel"
-                onClick={() => setIsLeftPanelOpen(!isLeftPanelOpen)}
-                className={`p-1.5 border hover:bg-neutral-900 rounded-lg transition-colors cursor-pointer hidden lg:inline-flex items-center justify-center ${
-                  isLeftPanelOpen 
-                    ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400' 
-                    : 'border-neutral-800 text-neutral-300'
-                }`}
-                title={isLeftPanelOpen ? "Ocultar painel esquerdo" : "Mostrar painel esquerdo"}
-              >
-                <FolderOpen size={15} />
-              </button>
-            )}
+                    <div className="flex items-center gap-2 select-none">
+                      <button 
+                        onClick={() => {
+                          const clone = { ...card, id: `pc-${Date.now()}`, title: `${card.title} (Cópia)` };
+                          setPlanningCards(prev => [...prev, clone]);
+                          alert('Card duplicado!');
+                        }}
+                        className="flex items-center gap-1 px-2.5 py-1 text-xs border border-neutral-300 rounded-lg hover:bg-neutral-100 text-neutral-600 cursor-pointer font-semibold"
+                      >
+                        <Copy size={12} /> Duplicate
+                      </button>
+                      <button 
+                        onClick={() => {
+                          const nextCol = card.column === 'planning' ? 'ato1' : card.column === 'ato1' ? 'ato2' : card.column === 'ato2' ? 'ato3' : 'planning';
+                          setPlanningCards(prev => prev.map(c => c.id === card.id ? { ...c, column: nextCol } : c));
+                        }}
+                        className="flex items-center gap-1 px-2.5 py-1 text-xs border border-neutral-300 rounded-lg hover:bg-neutral-100 text-neutral-600 cursor-pointer font-semibold"
+                      >
+                        <Move size={12} /> Move
+                      </button>
+                      <button 
+                        onClick={() => {
+                          const newTag = window.prompt("Escolha uma tag ('Estrutura', 'Personagem', 'Trama', 'Cenário', 'Geral'):", card.tag || 'Geral');
+                          if (newTag) {
+                            setPlanningCards(prev => prev.map(c => c.id === card.id ? { ...c, tag: newTag as any } : c));
+                          }
+                        }}
+                        className="flex items-center gap-1 px-2.5 py-1 text-xs border border-neutral-300 rounded-lg hover:bg-neutral-100 text-neutral-600 cursor-pointer font-semibold"
+                      >
+                        <Pin size={12} /> Pin note
+                      </button>
+                      <button 
+                        onClick={() => {
+                          if (window.confirm('Excluir este card permanentemente?')) {
+                            setPlanningCards(prev => prev.filter(c => c.id !== card.id));
+                            setActivePlanningCardId(null);
+                          }
+                        }}
+                        className="flex items-center gap-1 px-2.5 py-1 text-xs border border-red-200 text-red-600 rounded-lg hover:bg-red-50 cursor-pointer font-semibold"
+                      >
+                        <Trash2 size={12} /> Delete
+                      </button>
+                    </div>
+                  </div>
 
-            {/* Mobile chapters list */}
-            <div className="lg:hidden">
-              <select 
-                value={activeChapterId}
-                onChange={(e) => setActiveChapterId(e.target.value)}
-                className="text-xs font-serif border border-neutral-800 bg-neutral-900 text-white p-1.5 rounded-lg focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-              >
-                {chapters.map((ch, idx) => (
-                  <option key={ch.id} value={ch.id}>
-                    Cap. {idx + 1}: {ch.title}
-                  </option>
-                ))}
-              </select>
-            </div>
+                  {/* Main Grid Layout */}
+                  <div className="grid grid-cols-3 gap-8 items-start">
+                    {/* Left & Middle Column */}
+                    <div className="col-span-2 space-y-6">
+                      <div className="space-y-2">
+                        <input 
+                          type="text" 
+                          value={card.title} 
+                          onChange={(e) => setPlanningCards(prev => prev.map(c => c.id === card.id ? { ...c, title: e.target.value } : c))}
+                          className="w-full text-3xl font-bold font-sans text-neutral-900 focus:outline-none border-none p-0 bg-transparent placeholder:text-neutral-300"
+                          placeholder="Untitled Card"
+                        />
+                        <textarea 
+                          value={card.content} 
+                          onChange={(e) => setPlanningCards(prev => prev.map(c => c.id === card.id ? { ...c, content: e.target.value } : c))}
+                          className="w-full text-base text-neutral-600 focus:outline-none border-none p-0 resize-none bg-transparent placeholder:text-neutral-300 h-16 font-sans leading-relaxed"
+                          placeholder="Add a brief description..."
+                        />
+                      </div>
 
-            {/* Typography fast adjusters */}
-            {!isDistractionFree && (
-              <div className="hidden sm:flex items-center gap-1.5 border-l border-neutral-850 pl-3">
-                <select
-                  value={settings.preferredFont}
-                  onChange={(e) => setSettings(prev => ({ ...prev, preferredFont: e.target.value as WritingSettings['preferredFont'] }))}
-                  className="text-xs border border-neutral-850 bg-neutral-900 text-neutral-300 px-2 py-1 rounded-lg focus:outline-none"
-                >
-                  <option value="serif">EB Garamond (Serif)</option>
-                  <option value="sans">Inter (Sans)</option>
-                  <option value="mono">JetBrains Mono (Mono)</option>
-                </select>
+                      {/* Attributes table */}
+                      <div className="border border-neutral-200 rounded-2xl overflow-hidden bg-neutral-50/50">
+                        <div className="p-4 space-y-3">
+                          <div className="grid grid-cols-3 gap-2 py-1 text-xs text-neutral-400 font-bold uppercase tracking-wider border-b border-neutral-200">
+                            <span>Atributo</span>
+                            <span className="col-span-2">Valor</span>
+                          </div>
+                          
+                          <div className="grid grid-cols-3 gap-2 items-center text-sm py-1.5 border-b border-neutral-100">
+                            <span className="font-semibold text-neutral-500">Tipo</span>
+                            <span className="col-span-2 text-neutral-800 font-mono bg-neutral-200/50 px-2 py-0.5 rounded w-fit text-xs font-bold uppercase">{card.tag || 'Geral'}</span>
+                          </div>
 
-                <select
-                  value={settings.fontSize}
-                  onChange={(e) => setSettings(prev => ({ ...prev, fontSize: e.target.value as WritingSettings['fontSize'] }))}
-                  className="text-xs border border-neutral-850 bg-neutral-900 text-neutral-300 px-2 py-1 rounded-lg focus:outline-none"
-                >
-                  <option value="sm">Pequeno</option>
-                  <option value="md">Médio</option>
-                  <option value="lg">Grande</option>
-                  <option value="xl">Extra Grande</option>
-                </select>
+                          <div className="grid grid-cols-3 gap-2 items-center text-sm py-1.5 border-b border-neutral-100">
+                            <span className="font-semibold text-neutral-500">Seção</span>
+                            <span className="col-span-2 text-neutral-700">{colLabel}</span>
+                          </div>
+                        </div>
+
+                        {/* Interactive actions */}
+                        <div className="bg-neutral-100/80 px-4 py-2 flex gap-2 border-t border-neutral-200 select-none">
+                          <button 
+                            onClick={() => {
+                              const label = window.prompt("Nome do novo atributo:");
+                              if (label) alert(`Atributo "${label}" adicionado ao card!`);
+                            }}
+                            className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-600 text-[10px] font-bold px-2.5 py-1 rounded-lg cursor-pointer"
+                          >
+                            + Add attribute
+                          </button>
+                          <button onClick={() => alert('Grupo adicionado!')} className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-600 text-[10px] font-bold px-2.5 py-1 rounded-lg cursor-pointer">+ Add group</button>
+                          <button onClick={() => alert('Perguntas e Respostas adicionadas!')} className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-600 text-[10px] font-bold px-2.5 py-1 rounded-lg cursor-pointer">+ Add Q&A</button>
+                          <button onClick={() => setShowTemplatesModal(true)} className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-650 text-[10px] font-bold px-2.5 py-1 rounded-lg cursor-pointer ml-auto">+ Add template</button>
+                        </div>
+                      </div>
+
+                      {/* Extended Notes area */}
+                      <div className="space-y-2 pt-2">
+                        <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block font-sans">Notas de Trama e Insights</label>
+                        <textarea
+                          placeholder="Esta cena é sobre tirar o protagonist da zona de conforto. Eles são confrontados com um problema ou desafio. Escreva aqui detalhes profundos da cena..."
+                          className="w-full min-h-[180px] bg-neutral-50 border border-neutral-200 rounded-2xl p-4 text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:border-indigo-500 font-sans leading-relaxed"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="space-y-4">
+                      <div className="border-2 border-dashed border-neutral-300 bg-neutral-50 rounded-2xl p-8 flex flex-col items-center justify-center text-center space-y-2 cursor-pointer hover:bg-neutral-100 hover:border-neutral-400 transition-all aspect-video">
+                        <Camera className="text-neutral-400" size={24} />
+                        <span className="text-xs text-neutral-500 font-bold">Add image</span>
+                        <span className="text-[10px] text-neutral-400 font-sans">Arraste uma ilustração aqui</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()
+          ) : (
+            /* FULL PAGE KANBAN PLANNING BOARD */
+            <div className="flex-1 overflow-y-auto p-8 bg-[#09090b] text-neutral-200 space-y-8 select-none">
+              {/* Planning Header */}
+              <div className="flex justify-between items-center border-b border-neutral-900 pb-4 relative">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">📋</span>
+                  <h2 className="text-xl font-bold font-serif text-white tracking-wide">Planejamento</h2>
+                </div>
+                
+                {/* Add Dropdown */}
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsAddDropdownOpen(!isAddDropdownOpen)}
+                    className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-full flex items-center gap-1.5 transition-all cursor-pointer shadow-lg"
+                  >
+                    Add <Plus size={14} />
+                  </button>
+                  {isAddDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-56 bg-neutral-950 border border-neutral-850 rounded-2xl shadow-2xl py-2 z-50 animate-fade-in text-left">
+                      <button 
+                        onClick={() => { addCardFromTemplate('Blank note'); setIsAddDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-neutral-300 hover:bg-neutral-900 flex items-center gap-3 cursor-pointer"
+                      >
+                        <span className="text-neutral-500 font-mono">🗒️</span> Blank note
+                      </button>
+                      <button 
+                        onClick={() => { addCardFromTemplate('Folder'); setIsAddDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-indigo-400 hover:bg-neutral-900 flex items-center gap-3 cursor-pointer"
+                      >
+                        <span className="text-indigo-400 font-mono">📁</span> Folder
+                      </button>
+                      <div className="border-t border-neutral-900 my-1.5" />
+                      <button 
+                        onClick={() => { addCardFromTemplate('Worldbuilding'); setIsAddDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-neutral-300 hover:bg-neutral-900 flex items-center gap-3 cursor-pointer"
+                      >
+                        <span className="text-emerald-400 font-mono">🗺️</span> Worldbuilding
+                      </button>
+                      <button 
+                        onClick={() => { addCardFromTemplate('Characters'); setIsAddDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-neutral-300 hover:bg-neutral-900 flex items-center gap-3 cursor-pointer"
+                      >
+                        <span className="text-amber-400 font-mono">👤</span> Characters
+                      </button>
+                      <button 
+                        onClick={() => { addCardFromTemplate('Settings'); setIsAddDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-neutral-300 hover:bg-neutral-900 flex items-center gap-3 cursor-pointer"
+                      >
+                        <span className="text-indigo-400 font-mono">⚙️</span> Settings
+                      </button>
+                      <button 
+                        onClick={() => { addCardFromTemplate('Narrative devices'); setIsAddDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-neutral-300 hover:bg-neutral-900 flex items-center gap-3 cursor-pointer"
+                      >
+                        <span className="text-purple-400 font-mono">🖋️</span> Narrative devices
+                      </button>
+                      <button 
+                        onClick={() => { setShowTemplatesModal(true); setIsAddDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-neutral-400 hover:bg-neutral-900 flex items-center gap-3 cursor-pointer italic"
+                      >
+                        <span className="text-neutral-600 font-mono">📋</span> Browse templates...
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
-          </div>
 
-          {/* Sync & word counts indicators */}
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-neutral-400 font-mono hidden md:inline">
-              Palavras no Capítulo: <strong className="text-white">{activeWords}</strong>
-            </span>
-            
-            <span className="flex items-center gap-1.5 text-xs text-neutral-400 font-mono">
-              <span className={`w-1.5 h-1.5 rounded-full ${
-                saveStatus === 'saved' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
-                saveStatus === 'saving' ? 'bg-amber-500 animate-pulse' : 'bg-gray-500'
-              }`} />
-              {saveStatus === 'saved' ? 'Sincronizado' :
-               saveStatus === 'saving' ? 'Salvando...' : 'Não salvo'}
-            </span>
-          </div>
-        </div>
+              {/* Drag & Drop Lanes Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
+                {/* Lane 1: Planning Geral */}
+                <div 
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'planning')}
+                  className="bg-neutral-900/30 border border-neutral-850 p-4 rounded-3xl space-y-4 min-h-[380px]"
+                >
+                  <div className="flex justify-between items-center border-b border-neutral-800 pb-2 select-none">
+                    <span className="text-sm font-bold text-neutral-300 font-serif">Planning</span>
+                    <button 
+                      onClick={() => addPlanningCard('planning')} 
+                      className="text-xs bg-neutral-950 text-indigo-400 border border-neutral-850 px-2 py-1 rounded-lg hover:text-white cursor-pointer font-bold"
+                    >
+                      Add +
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {planningCards.filter(c => c.column === 'planning').map(card => (
+                      <div 
+                        key={card.id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, card.id)}
+                        onClick={() => setActivePlanningCardId(card.id)}
+                        className="bg-neutral-950 border border-neutral-850 p-4 rounded-2xl text-sm relative group space-y-2 cursor-grab active:cursor-grabbing hover:border-neutral-750 hover:bg-neutral-900/10 transition-all shadow-md text-left"
+                      >
+                        <div className="font-serif font-bold text-white flex justify-between items-center">
+                          <span>{card.title}</span>
+                          <span className="text-xs text-neutral-500 font-mono">📌</span>
+                        </div>
+                        <p className="text-neutral-400 text-xs leading-relaxed font-sans">{card.content}</p>
+                        <div className="flex justify-between items-center pt-2 border-t border-neutral-850/50 mt-2">
+                          <span className="text-[10px] bg-neutral-900 text-neutral-500 border border-neutral-800 px-2 py-0.5 rounded font-mono uppercase font-bold">{card.tag || 'Geral'}</span>
+                          <button onClick={(e) => { e.stopPropagation(); deletePlanningCard(card.id); }} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity cursor-pointer">
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    {planningCards.filter(c => c.column === 'planning').length === 0 && (
+                      <div className="text-center py-8 text-neutral-600 text-xs italic font-sans select-none">Sem cards nesta coluna</div>
+                    )}
+                  </div>
+                </div>
 
-        {/* The Text Editor Canvas Sheet */}
-        <div className="flex-1 overflow-y-auto px-6 py-8 md:px-12 lg:px-20 flex justify-center bg-[#09090b]">
-          <div className="w-full max-w-3xl flex flex-col bg-neutral-900 border border-neutral-800 rounded-3xl shadow-2xl p-8 md:p-14 relative min-h-[70vh]">
-            
-            {/* Chapter Header */}
-            <div className="mb-6 border-b border-neutral-800/80 pb-4">
-              <input
-                type="text"
-                value={activeChapter ? activeChapter.title : ''}
-                onChange={handleTitleChange}
-                placeholder="Título do Capítulo..."
-                className="w-full font-serif text-2xl md:text-3xl text-white border-none bg-transparent focus:outline-none placeholder:text-neutral-700 font-medium"
+                {/* Lane 2: Act I */}
+                <div 
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'ato1')}
+                  className="bg-neutral-900/30 border border-neutral-855 p-4 rounded-3xl space-y-4 min-h-[380px]"
+                >
+                  <div className="flex justify-between items-center border-b border-neutral-800 pb-2 select-none">
+                    <span className="text-sm font-bold text-neutral-300 font-serif">Act I</span>
+                    <button 
+                      onClick={() => addPlanningCard('ato1')} 
+                      className="text-xs bg-neutral-950 text-indigo-400 border border-neutral-850 px-2 py-1 rounded-lg hover:text-white cursor-pointer font-bold"
+                    >
+                      Add +
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {planningCards.filter(c => c.column === 'ato1').map(card => (
+                      <div 
+                        key={card.id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, card.id)}
+                        onClick={() => setActivePlanningCardId(card.id)}
+                        className="bg-neutral-950 border border-neutral-850 p-4 rounded-2xl text-sm relative group space-y-2 cursor-grab active:cursor-grabbing hover:border-neutral-750 hover:bg-neutral-900/10 transition-all shadow-md text-left"
+                      >
+                        <div className="font-serif font-bold text-white">{card.title}</div>
+                        <p className="text-neutral-400 text-xs leading-relaxed font-sans">{card.content}</p>
+                        <div className="flex justify-between items-center pt-2 border-t border-neutral-850/50 mt-2">
+                          <span className="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded font-mono uppercase font-bold">{card.tag || 'Estrutura'}</span>
+                          <button onClick={(e) => { e.stopPropagation(); deletePlanningCard(card.id); }} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity cursor-pointer">
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    {planningCards.filter(c => c.column === 'ato1').length === 0 && (
+                      <div className="text-center py-8 text-neutral-600 text-xs italic font-sans select-none">Sem cards nesta coluna</div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Lane 3: Act II */}
+                <div 
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'ato2')}
+                  className="bg-neutral-900/30 border border-neutral-855 p-4 rounded-3xl space-y-4 min-h-[380px]"
+                >
+                  <div className="flex justify-between items-center border-b border-neutral-800 pb-2 select-none">
+                    <span className="text-sm font-bold text-neutral-300 font-serif">Act II</span>
+                    <button 
+                      onClick={() => addPlanningCard('ato2')} 
+                      className="text-xs bg-neutral-950 text-indigo-400 border border-neutral-850 px-2 py-1 rounded-lg hover:text-white cursor-pointer font-bold"
+                    >
+                      Add +
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {planningCards.filter(c => c.column === 'ato2').map(card => (
+                      <div 
+                        key={card.id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, card.id)}
+                        onClick={() => setActivePlanningCardId(card.id)}
+                        className="bg-neutral-950 border border-neutral-850 p-4 rounded-2xl text-sm relative group space-y-2 cursor-grab active:cursor-grabbing hover:border-neutral-755 hover:bg-neutral-900/10 transition-all shadow-md text-left"
+                      >
+                        <div className="font-serif font-bold text-white">{card.title}</div>
+                        <p className="text-neutral-400 text-xs leading-relaxed font-sans">{card.content}</p>
+                        <div className="flex justify-between items-center pt-2 border-t border-neutral-850/50 mt-2">
+                          <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono uppercase font-bold">{card.tag || 'Trama'}</span>
+                          <button onClick={(e) => { e.stopPropagation(); deletePlanningCard(card.id); }} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity cursor-pointer">
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    {planningCards.filter(c => c.column === 'ato2').length === 0 && (
+                      <div className="text-center py-8 text-neutral-600 text-xs italic font-sans select-none">Sem cards nesta coluna</div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Lane 4: Act III */}
+                <div 
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'ato3')}
+                  className="bg-neutral-900/30 border border-neutral-855 p-4 rounded-3xl space-y-4 min-h-[380px]"
+                >
+                  <div className="flex justify-between items-center border-b border-neutral-800 pb-2 select-none">
+                    <span className="text-sm font-bold text-neutral-300 font-serif">Act III</span>
+                    <button 
+                      onClick={() => addPlanningCard('ato3')} 
+                      className="text-xs bg-neutral-950 text-indigo-400 border border-neutral-850 px-2 py-1 rounded-lg hover:text-white cursor-pointer font-bold"
+                    >
+                      Add +
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {planningCards.filter(c => c.column === 'ato3').map(card => (
+                      <div 
+                        key={card.id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, card.id)}
+                        onClick={() => setActivePlanningCardId(card.id)}
+                        className="bg-neutral-950 border border-neutral-855 p-4 rounded-2xl text-sm relative group space-y-2 cursor-grab active:cursor-grabbing hover:border-neutral-750 hover:bg-neutral-900/10 transition-all shadow-md text-left"
+                      >
+                        <div className="font-serif font-bold text-white">{card.title}</div>
+                        <p className="text-neutral-400 text-xs leading-relaxed font-sans">{card.content}</p>
+                        <div className="flex justify-between items-center pt-2 border-t border-neutral-850/50 mt-2">
+                          <span className="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded font-mono uppercase font-bold">{card.tag || 'Clímax'}</span>
+                          <button onClick={(e) => { e.stopPropagation(); deletePlanningCard(card.id); }} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 ml-auto transition-opacity cursor-pointer">
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    {planningCards.filter(c => c.column === 'ato3').length === 0 && (
+                      <div className="text-center py-8 text-neutral-600 text-xs italic font-sans select-none">Sem cards nesta coluna</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        ) : (
+          /* The Text Editor Canvas Sheet */
+          <div className="flex-1 overflow-y-auto px-6 py-8 md:px-12 lg:px-20 flex justify-center bg-[#09090b]">
+            <div className="w-full max-w-3xl flex flex-col bg-neutral-900 border border-neutral-800 rounded-3xl shadow-2xl p-8 md:p-14 relative min-h-[70vh] editor-paper">
+              
+              {/* Chapter Header */}
+              <div className="mb-6 border-b border-neutral-800/80 pb-4">
+                <input
+                  type="text"
+                  value={activeChapter ? activeChapter.title : ''}
+                  onChange={handleTitleChange}
+                  placeholder="Título do Capítulo..."
+                  className="w-full font-serif text-2xl md:text-3xl text-white border-none bg-transparent focus:outline-none placeholder:text-neutral-700 font-medium"
+                />
+                <span className="text-[9px] font-mono text-neutral-500 mt-1 block uppercase tracking-wider">
+                  Última edição realizada hoje, às {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+
+              {/* Writing Area */}
+              <textarea
+                ref={textareaRef}
+                value={activeChapter ? activeChapter.content : ''}
+                onChange={handleContentChange}
+                placeholder="Sua inspiração começa a fluir... Escreva, edite e acompanhe os seus insights nas barras laterais."
+                className={`flex-1 w-full border-none resize-none bg-transparent focus:outline-none focus:ring-0 placeholder:text-neutral-700 ${getFontClass()} ${getFontSizeClass()} text-neutral-200`}
+                style={{ minHeight: '380px' }}
               />
-              <span className="text-[9px] font-mono text-neutral-500 mt-1 block uppercase tracking-wider">
-                Última edição realizada hoje, às {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              </span>
-            </div>
 
-            {/* Writing Area */}
-            <textarea
-              ref={textareaRef}
-              value={activeChapter ? activeChapter.content : ''}
-              onChange={handleContentChange}
-              placeholder="Sua inspiração começa a fluir... Escreva, edite e acompanhe os seus insights nas barras laterais."
-              className={`flex-1 w-full border-none resize-none bg-transparent focus:outline-none focus:ring-0 placeholder:text-neutral-700 ${getFontClass()} ${getFontSizeClass()} text-neutral-200`}
-              style={{ minHeight: '380px' }}
-            />
-
-            {/* Distraction free overlay indicators */}
-            {isDistractionFree && (
-              <div className="absolute bottom-6 left-12 right-12 flex justify-between items-center border-t border-neutral-850/50 pt-4 text-[10px] font-mono text-neutral-500 select-none">
-                <span>{activeChapter ? activeChapter.title : ''}</span>
-                <span>{activeWords} palavras</span>
-                <button 
-                  onClick={() => setIsDistractionFree(false)}
-                  className="hover:text-indigo-400 transition-colors"
-                >
-                  Sair do Modo Foco
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Bottom editor bar */}
-        {!isDistractionFree && (
-          <div className="bg-[#0c0c0e] border-t border-neutral-900 py-3 px-6 text-xs text-neutral-400 flex flex-col sm:flex-row justify-between items-center gap-2 font-mono select-none">
-            <span className="flex items-center gap-1.5 text-neutral-500">
-              <Sparkles size={11} className="text-indigo-400" /> GospelReads. Editor v2.1
-            </span>
-            <div className="flex items-center gap-4 text-neutral-500">
-              <span>Palavras Totais: <strong className="text-neutral-300">{totalWords}</strong></span>
-              <span>Estrutura: <strong className="text-neutral-300">{chapters.length} Capítulos</strong></span>
+              {/* Distraction free overlay indicators */}
+              {isDistractionFree && (
+                <div className="absolute bottom-6 left-12 right-12 flex justify-between items-center border-t border-neutral-850/50 pt-4 text-[10px] font-mono text-neutral-500 select-none">
+                  <span>{activeChapter ? activeChapter.title : ''}</span>
+                  <span>{activeWords} palavras</span>
+                  <button 
+                    onClick={() => setIsDistractionFree(false)}
+                    className="hover:text-indigo-400 transition-colors"
+                  >
+                    Sair do Modo Foco
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
+
+
       </section>
 
       {/* RIGHT SLIDE-OUT INTERACTIVE TOOLS SIDEBAR */}
@@ -2095,7 +2748,117 @@ export default function WorkspaceEditor({
           </div>
         </div>
       )}
+      {/* MODAL 6: TEMPLATES SELECTOR MODAL */}
+      {showTemplatesModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/80 backdrop-blur-sm px-4 select-none">
+          <div className="bg-[#09090b] border border-neutral-850 rounded-2xl w-full max-w-4xl h-[75vh] flex overflow-hidden shadow-2xl relative animate-fade-in">
+            {/* Sidebar filter list */}
+            <div className="w-60 border-r border-neutral-900 bg-[#0c0c0e] p-5 flex flex-col gap-4 shrink-0">
+              <h3 className="font-sans font-bold text-sm text-neutral-300 uppercase tracking-widest pl-1">Ativos / Assets</h3>
+              
+              <div className="relative">
+                <input 
+                  type="text"
+                  value={templateSearch}
+                  onChange={(e) => setTemplateSearch(e.target.value)}
+                  placeholder="Pesquisar..."
+                  className="w-full bg-neutral-950 border border-neutral-850 rounded-lg py-2 pl-8 pr-3 text-xs text-white focus:outline-none focus:border-indigo-500 font-sans"
+                />
+                <Search size={13} className="absolute left-2.5 top-3 text-neutral-500" />
+              </div>
 
+              <div className="flex flex-col gap-1 mt-2">
+                {[
+                  { key: 'all', label: 'All templates', emoji: '✨' },
+                  { key: 'Worldbuilding', label: 'Worldbuilding', emoji: '🗺️' },
+                  { key: 'Characters', label: 'Characters', emoji: '👤' },
+                  { key: 'Settings', label: 'Settings', emoji: '⚙️' },
+                  { key: 'Narrative devices', label: 'Narrative devices', emoji: '🖋️' }
+                ].map(item => (
+                  <button
+                    key={item.key}
+                    onClick={() => setTemplateFilter(item.key as any)}
+                    className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-sans text-left transition-all cursor-pointer ${
+                      templateFilter === item.key
+                        ? 'bg-indigo-600/10 border border-indigo-500/20 text-indigo-300 font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]'
+                        : 'border border-transparent text-neutral-400 hover:bg-neutral-900/60 hover:text-neutral-200'
+                    }`}
+                  >
+                    <span>{item.emoji}</span>
+                    <span>{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Right side templates list */}
+            <div className="flex-1 flex flex-col h-full bg-[#09090b]">
+              <div className="flex justify-between items-center px-6 py-4 border-b border-neutral-900 select-none">
+                <span className="font-serif font-bold text-base text-white">
+                  {templateFilter === 'all' ? 'Todos os Templates' : templateFilter}
+                </span>
+                <button 
+                  onClick={() => setShowTemplatesModal(false)}
+                  className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                {(() => {
+                  const filtered = PLANNING_TEMPLATES.filter(tpl => {
+                    const matchesSearch = tpl.title.toLowerCase().includes(templateSearch.toLowerCase()) || 
+                                          tpl.description.toLowerCase().includes(templateSearch.toLowerCase());
+                    const matchesFilter = templateFilter === 'all' || tpl.category === templateFilter;
+                    return matchesSearch && matchesFilter;
+                  });
+
+                  if (filtered.length === 0) {
+                    return (
+                      <div className="text-center py-20 text-neutral-600 text-xs italic font-sans">
+                        Nenhum template encontrado com os termos de busca.
+                      </div>
+                    );
+                  }
+
+                  return filtered.map(tpl => (
+                    <div 
+                      key={tpl.title}
+                      className="flex items-center justify-between border-b border-neutral-900/80 pb-4 select-none"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-neutral-900 border border-neutral-850 rounded-xl flex items-center justify-center text-xl shrink-0">
+                          {tpl.emoji}
+                        </div>
+                        <div className="space-y-0.5">
+                          <h4 className="text-xs font-bold text-white font-sans">{tpl.title}</h4>
+                          <p className="text-neutral-400 text-[11px] leading-relaxed max-w-xl font-sans">{tpl.description}</p>
+                          <span className="text-[9px] bg-neutral-950 border border-neutral-850 text-neutral-500 font-semibold px-2 py-0.5 rounded font-mono uppercase tracking-wider block w-fit">
+                            {tpl.category}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="text-right shrink-0">
+                        <button 
+                          onClick={() => {
+                            addTemplateCard(tpl);
+                          }}
+                          className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                        >
+                          Add
+                        </button>
+                        <span className="text-[8px] text-neutral-600 block mt-1 font-mono uppercase">Made by GospelReads</span>
+                      </div>
+                    </div>
+                  ));
+                })()}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

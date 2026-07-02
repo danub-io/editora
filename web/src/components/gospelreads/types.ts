@@ -9,7 +9,8 @@ export interface Chapter {
   content: string;
   order: number;
   section?: 'front' | 'body' | 'back';
-  type?: 'title-page' | 'copyright' | 'dedication' | 'foreword' | 'introduction' | 'chapter' | 'epilogue' | 'author-bio' | 'acknowledgments' | 'custom';
+  type?: 'title-page' | 'copyright' | 'dedication' | 'foreword' | 'introduction' | 'chapter' | 'epilogue' | 'author-bio' | 'acknowledgments' | 'custom' | 'part';
+  partId?: string;
 }
 
 export interface Book {
