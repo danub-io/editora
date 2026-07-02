@@ -75,14 +75,14 @@ dmypy.json
 logs/
 
 # Node/Next.js
-node_modules/
-web/.next/
-web/out/
-web/build/
+**/node_modules/
+**/.next/
+**/out/
+**/build/
 web/drizzle/
 
 # SQLite database
 *.db
 
 # Vercel
-web/.vercel/
+**/.vercel/
